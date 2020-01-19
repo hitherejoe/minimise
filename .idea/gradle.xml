@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/firebase_authentication" />
+            <option value="$PROJECT_DIR$/platform_android" />
+            <option value="$PROJECT_DIR$/platform_android/app" />
+            <option value="$PROJECT_DIR$/platform_android/authentication" />
+            <option value="$PROJECT_DIR$/platform_android/navigation" />
+            <option value="$PROJECT_DIR$/platform_android/onboarding" />
+            <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/shared/SharedAuthentication" />
+            <option value="$PROJECT_DIR$/shared/SharedCommon" />
+            <option value="$PROJECT_DIR$/shared/SharedCore" />
+            <option value="$PROJECT_DIR$/shared/remote" />
+            <option value="$PROJECT_DIR$/shared/remote/AuthenticationRemote" />
+            <option value="$PROJECT_DIR$/shared/remote/Remote" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

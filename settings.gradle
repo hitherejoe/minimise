@@ -1,0 +1,17 @@
+include ':firebase_authentication'
+include ':platform_android:onboarding'
+include ':platform_android:navigation'
+include ':platform_android:app'
+include ':platform_android:authentication'
+
+include ':shared:SharedAuthentication'
+include ':shared:SharedCommon'
+include ':shared:SharedCore'
+
+include ':shared:remote:AuthenticationRemote'
+include ':shared:remote:Remote'
+
+
+enableFeaturePreview('GRADLE_METADATA')
+
+rootProject.name='Minimise-mpp'

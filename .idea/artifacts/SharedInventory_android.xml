@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SharedInventory-android">
+    <output-path>$PROJECT_DIR$/SharedInventory/build/libs</output-path>
+    <root id="archive" name="SharedInventory-android.jar">
+      <element id="module-output" name="SharedInventory_androidMain" />
+    </root>
+  </artifact>
+</component>

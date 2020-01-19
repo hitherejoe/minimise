@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:KotlinIOS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:KotlinIOSTests">
+   </FileRef>
+   <FileRef
+      location = "group:KotlinIOSUITests">
+   </FileRef>
+   <FileRef
+      location = "group:Podfile">
+   </FileRef>
+   <FileRef
+      location = "group:KotlinIOS">
+   </FileRef>
+</Workspace>

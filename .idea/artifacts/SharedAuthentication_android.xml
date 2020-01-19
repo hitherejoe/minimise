@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SharedAuthentication-android">
+    <output-path>$PROJECT_DIR$/shared/SharedAuthentication/build/libs</output-path>
+    <root id="archive" name="SharedAuthentication-android.jar" />
+  </artifact>
+</component>

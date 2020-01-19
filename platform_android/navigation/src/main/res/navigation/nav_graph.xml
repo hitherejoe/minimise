@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/onboardingFragment">
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="co.joebirch.minimise.onboarding.OnboardingFragment"
+        app:moduleName="onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="co.joebirch.minimise.authentication.AuthenticationFragment" >
+        <action
+            android:id="@+id/action_authenticationFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_forgottenPasswordFragment"
+            app:destination="@id/forgottenPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgottenPasswordFragment"
+        android:name="co.joebirch.minimise.authentication.ForgottenPasswordFragment">
+        <action
+            android:id="@+id/action_forgottenPasswordFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
+    </fragment>
+</navigation>

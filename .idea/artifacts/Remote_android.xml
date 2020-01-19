@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Remote-android">
+    <output-path>$PROJECT_DIR$/shared/remote/Remote/build/libs</output-path>
+    <root id="archive" name="Remote-android.jar" />
+  </artifact>
+</component>

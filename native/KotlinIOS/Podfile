@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'KotlinIOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for KotlinIOS
+  
+  pod 'Swinject', '2.0.0'
+
+  target 'KotlinIOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'KotlinIOSUITests' do
+    # Pods for testing
+  end
+
+end
