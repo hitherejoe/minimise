@@ -3,8 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion Versions.compileSdk
 
     viewBinding {
         enabled = true
@@ -12,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId "co.joebirch.minimise.android"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -3,19 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Versions.compileSdk
 
     viewBinding {
         enabled = true
     }
 
     defaultConfig {
-
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     compileOptions {
