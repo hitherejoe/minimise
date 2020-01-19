@@ -5,5 +5,5 @@ import org.koin.dsl.module
 
 val authenticationRemoteModule = module {
 
-    factory<AuthenticationRemote> { AuthenticationApi("***REMOVED***") }
+    factory<AuthenticationRemote> { AuthenticationApi("") }
 }
