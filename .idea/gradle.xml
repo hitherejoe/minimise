@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/platform_android" />
             <option value="$PROJECT_DIR$/platform_android/app" />
             <option value="$PROJECT_DIR$/platform_android/authentication" />
+            <option value="$PROJECT_DIR$/platform_android/core" />
+            <option value="$PROJECT_DIR$/platform_android/design" />
             <option value="$PROJECT_DIR$/platform_android/navigation" />
             <option value="$PROJECT_DIR$/platform_android/onboarding" />
             <option value="$PROJECT_DIR$/shared" />

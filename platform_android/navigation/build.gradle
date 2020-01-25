@@ -3,18 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Versions.compileSdk
 
     defaultConfig {
 
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-
     }
 
     buildTypes {
@@ -27,14 +24,14 @@ android {
 }
 
 dependencies {
-    implementation Deps.kotlin_android
+    implementation AndroidDeps.kotlin
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    androidTestImplementation "org.mockito:mockito-core:3.1.0"
+    androidTestImplementation "org.mockito:mockito-android:3.1.0"
     api "androidx.navigation:navigation-dynamic-features-fragment:2.3.0-SNAPSHOT"
-
 
 }

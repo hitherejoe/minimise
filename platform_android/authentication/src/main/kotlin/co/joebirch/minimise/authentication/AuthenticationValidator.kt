@@ -1,14 +1,13 @@
 package co.joebirch.minimise.authentication
 
-import android.util.Patterns
+import javax.inject.Inject
 
-class AuthenticationValidator {
+class AuthenticationValidator @Inject constructor() {
 
     fun validateInputData(
         password: String,
         emailAddress: String
     ): Boolean {
-        return password.isNotEmpty() && emailAddress.isNotEmpty() &&
-                Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()
+        return password.isNotEmpty() && emailAddress.isNotEmpty()
     }
 }

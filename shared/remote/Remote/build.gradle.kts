@@ -26,23 +26,21 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation(Deps.kotlin)
 
-        api("io.ktor:ktor-client-core:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-json:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-serialization:${Versions.ktor_version}")
+        api(Deps.ktor_client_core)
+        api(Deps.ktor_client_json)
+        api(Deps.ktor_client_serialization)
 
-        api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serializer_version}")
+        api(Deps.kotlin_serialization)
     }
 
     sourceSets["androidMain"].dependencies {
         implementation(Deps.kotlin)
+        api(Deps.kotlin_serialization_runtime)
 
-        api("io.ktor:ktor-client-android:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-json-jvm:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-serialization-jvm:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-okhttp:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-serialization-jvm:${Versions.ktor_version}")
-        
-        api("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serializer_version}")
+        api(Deps.ktor_client_android)
+        api(Deps.ktor_json_jvm)
+        api(Deps.ktor_serialization_jvm)
+        api(Deps.ktor_client_okhttp)
     }
 
     sourceSets["iosMain"].dependencies {

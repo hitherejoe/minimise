@@ -9,8 +9,9 @@ import co.joebirch.minimise.shared_authentication.model.AuthenticationModel
 import co.joebirch.minimise.shared_authentication.presentation.AuthenticateView
 import co.joebirch.minimise.shared_authentication.presentation.AuthenticationState
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthenticationViewModel constructor(
+class AuthenticationViewModel @Inject constructor(
     private val authenticate: Authenticate
 ) : ViewModel(), AuthenticateView {
 

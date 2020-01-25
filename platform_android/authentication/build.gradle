@@ -1,6 +1,7 @@
 apply plugin: "com.android.dynamic-feature"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -36,19 +37,21 @@ android {
 
 dependencies {
     implementation project(":platform_android:app")
+    implementation project(":platform_android:core")
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedAuthentication')
     implementation project(":platform_android:navigation")
 
     implementation "androidx.core:core-ktx:1.1.0"
 
-    implementation Deps.kotlin_android
+    implementation AndroidDeps.kotlin
     implementation Deps.material
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
+    implementation AndroidDeps.dagger
+    kapt AndroidDeps.dagger_compiler
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

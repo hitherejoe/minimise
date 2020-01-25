@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#7b1fa2</color>
+    <color name="primaryLightColor">#ae52d4</color>
+    <color name="primaryDarkColor">#4a0072</color>
+    <color name="secondaryColor">#a5d6a7</color>
+    <color name="secondaryLightColor">#d7ffd9</color>
+    <color name="secondaryDarkColor">#75a478</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#757575</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="color_primary">@color/primaryColor</color>
+    <color name="color_primary_variant">@color/primaryDarkColor</color>
+    <color name="color_secondary">@color/secondaryColor</color>
+    <color name="color_secondary_variant">@color/secondaryDarkColor</color>
+
+    <!--colorBackground appears behind scrollable content and is used for the default window-->
+    <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
+    <!--and menus. colorError is used to indicate an error state for components such as-->
+    <!--text fields.-->
+    <color name="color_background">#e0e0e0</color>
+    <color name="color_surface">@color/white</color>
+    <color name="color_error">#e53935</color>
+
+    <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
+    <!--on which they appear.-->
+    <color name="color_on_primary">@color/text_primary</color>
+    <color name="color_on_primary_inverse">@color/white</color>
+    <color name="color_on_secondary">@color/white</color>
+    <color name="color_on_background">@color/text_secondary</color>
+    <color name="color_on_surface">#757575</color>
+    <color name="color_on_error">@color/white</color>
+
+</resources>
