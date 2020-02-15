@@ -66,5 +66,20 @@
       <option name="name" value="maven7" />
       <option name="url" value="https://ci.android.com/builds/submitted/6116482/androidx_snapshot/latest/repository/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlinx/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven9" />
+      <option name="name" value="maven9" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlinx" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven6" />
+      <option name="name" value="maven6" />
+      <option name="url" value="https://dl.bintray.com/kotlin/kotlin-js-wrappers" />
+    </remote-repository>
   </component>
 </project>

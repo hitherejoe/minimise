@@ -11,15 +11,12 @@
 		426F9AEB23C6437C00A8437A /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
 		426F9AF223C6437C00A8437A /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F9AF123C6437C00A8437A /* AuthenticationTests.swift */; };
 		426F9AF423C6437C00A8437A /* Authentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 426F9AE423C6437C00A8437A /* Authentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		426F9AF723C6437C00A8437A /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
-		426F9AF823C6437C00A8437A /* Authentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360423AE799000738FB7 /* AuthenticationViewModel.swift */; };
 		426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360623AE7B3400738FB7 /* AuthenticationView.swift */; };
-		426F9B0123C6439B00A8437A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0722F447C800B9B36B /* ViewController.swift */; };
-		426F9B0723C6471300A8437A /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9B0623C6471300A8437A /* SharedCode.framework */; };
-		426F9B0823C6471300A8437A /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9B0623C6471300A8437A /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		426F9B0923C9118100A8437A /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9B0623C6471300A8437A /* SharedCode.framework */; };
-		426F9B0A23C9118100A8437A /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9B0623C6471300A8437A /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		427ACDCB23E70C9F00225AA3 /* SharedAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; };
+		427ACDCC23E70C9F00225AA3 /* SharedAuthentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		427ACDCF23E8414700225AA3 /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
+		427ACDD023E8414700225AA3 /* Authentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
 		47729E0D22F447CA00B9B36B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47729E0C22F447CA00B9B36B /* Assets.xcassets */; };
 		47729E1B22F447CA00B9B36B /* KotlinIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E1A22F447CA00B9B36B /* KotlinIOSTests.swift */; };
@@ -41,7 +38,7 @@
 			remoteGlobalIDString = 47729E0122F447C800B9B36B;
 			remoteInfo = KotlinIOS;
 		};
-		426F9AF523C6437C00A8437A /* PBXContainerItemProxy */ = {
+		427ACDD123E8414700225AA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 47729DFA22F447C800B9B36B /* Project object */;
 			proxyType = 1;
@@ -65,25 +62,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4207965323B36FA200ED6E91 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				426F9B0823C6471300A8437A /* SharedCode.framework in Embed Frameworks */,
-				426F9AF823C6437C00A8437A /* Authentication.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		426F9B0B23C9118100A8437A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				426F9B0A23C9118100A8437A /* SharedCode.framework in Embed Frameworks */,
+				427ACDCC23E70C9F00225AA3 /* SharedAuthentication.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		427ACDD323E8414800225AA3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				427ACDD023E8414700225AA3 /* Authentication.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,11 +101,11 @@
 		426F9AF123C6437C00A8437A /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		426F9AF323C6437C00A8437A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		426F9B0623C6471300A8437A /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../../SharedCore/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
+		427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedAuthentication.framework; path = "../../shared/SharedAuthentication/build/xcode-frameworks/SharedAuthentication.framework"; sourceTree = "<group>"; };
 		429D17ED23AE07BB004B73F3 /* Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Data.framework; path = "../../data/build/fat-framework/Data.framework"; sourceTree = "<group>"; };
 		42A99D7B23B0DA6300EEE004 /* SharedAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedAuthentication.framework; path = "../../SharedAuthentication/build/xcode-frameworks/SharedAuthentication.framework"; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47729E0522F447C800B9B36B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		47729E0722F447C800B9B36B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		47729E0C22F447CA00B9B36B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47729E1122F447CA00B9B36B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47729E1622F447CA00B9B36B /* KotlinIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KotlinIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				426F9B0923C9118100A8437A /* SharedCode.framework in Frameworks */,
+				427ACDCB23E70C9F00225AA3 /* SharedAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,8 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				426F9B0723C6471300A8437A /* SharedCode.framework in Frameworks */,
-				426F9AF723C6437C00A8437A /* Authentication.framework in Frameworks */,
+				427ACDCF23E8414700225AA3 /* Authentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +161,6 @@
 		426F9AE323C6437C00A8437A /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				47729E0722F447C800B9B36B /* ViewController.swift */,
 				4219360423AE799000738FB7 /* AuthenticationViewModel.swift */,
 				4219360623AE7B3400738FB7 /* AuthenticationView.swift */,
 				426F9AE423C6437C00A8437A /* Authentication.h */,
@@ -187,6 +181,7 @@
 		429D17EC23AE07BB004B73F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */,
 				426F9B0623C6471300A8437A /* SharedCode.framework */,
 				4213268423B3E33100A8B295 /* SharedCommon.framework */,
 				4213267F23B3E09500A8B295 /* SharedCode.framework */,
@@ -321,12 +316,12 @@
 				47729DFE22F447C800B9B36B /* Sources */,
 				47729DFF22F447C800B9B36B /* Frameworks */,
 				47729E0022F447C800B9B36B /* Resources */,
-				4207965323B36FA200ED6E91 /* Embed Frameworks */,
+				427ACDD323E8414800225AA3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				426F9AF623C6437C00A8437A /* PBXTargetDependency */,
+				427ACDD223E8414700225AA3 /* PBXTargetDependency */,
 			);
 			name = KotlinIOS;
 			productName = KotlinIOS;
@@ -477,7 +472,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\ncd \"$SRCROOT/../../SharedAuthentication/build/xcode-frameworks\"\n./gradlew :SharedCore:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"$SRCROOT/../../shared/SharedAuthentication/build/xcode-frameworks\"\n./gradlew :shared:SharedAuthentication:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 		47729E7122F480EB00B9B36B /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -495,7 +490,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\ncd \"$SRCROOT/../../SharedCommon/build/xcode-frameworks\"\n./gradlew :SharedCore:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n\ncd \"$SRCROOT/../../SharedInventory/build/xcode-frameworks\"\n./gradlew :SharedInventory:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -504,7 +499,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				426F9B0123C6439B00A8437A /* ViewController.swift in Sources */,
 				426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */,
 				426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */,
 			);
@@ -556,10 +550,10 @@
 			target = 47729E0122F447C800B9B36B /* KotlinIOS */;
 			targetProxy = 426F9AEE23C6437C00A8437A /* PBXContainerItemProxy */;
 		};
-		426F9AF623C6437C00A8437A /* PBXTargetDependency */ = {
+		427ACDD223E8414700225AA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 426F9AE123C6437C00A8437A /* Authentication */;
-			targetProxy = 426F9AF523C6437C00A8437A /* PBXContainerItemProxy */;
+			targetProxy = 427ACDD123E8414700225AA3 /* PBXContainerItemProxy */;
 		};
 		47729E1822F447CA00B9B36B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -583,7 +577,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SharedCore/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/../../shared/SharedAuthentication/build/xcode-frameworks",
+				);
 				INFOPLIST_FILE = Authentication/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -612,7 +610,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SharedCore/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+					"$(SRCROOT)/../../shared/SharedAuthentication/build/xcode-frameworks",
+				);
 				INFOPLIST_FILE = Authentication/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -791,14 +793,12 @@
 		47729E2B22F447CA00B9B36B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(SRCROOT)/../../SharedInventory/build/xcode-frameworks",
-					"$(SRCROOT)/../../SharedCore/build/xcode-frameworks",
+					"$(SRCROOT)/../../shared/SharedAuthentication/build/xcode-frameworks",
 				);
 				INFOPLIST_FILE = KotlinIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -815,14 +815,12 @@
 		47729E2C22F447CA00B9B36B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(SRCROOT)/../../SharedInventory/build/xcode-frameworks",
-					"$(SRCROOT)/../../SharedCore/build/xcode-frameworks",
+					"$(SRCROOT)/../../shared/SharedAuthentication/build/xcode-frameworks",
 				);
 				INFOPLIST_FILE = KotlinIOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

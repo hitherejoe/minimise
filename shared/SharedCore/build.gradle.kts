@@ -27,8 +27,6 @@ kotlin {
         implementation(Deps.kotlin_common)
         implementation(project(":shared:remote:AuthenticationRemote"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.3")
-
-        implementation("co.touchlab:koin-core:3.0.2-khan")
     }
 
     sourceSets["androidMain"].dependencies {

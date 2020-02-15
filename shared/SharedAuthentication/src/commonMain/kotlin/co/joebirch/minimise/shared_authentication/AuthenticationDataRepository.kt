@@ -1,20 +1,20 @@
 package co.joebirch.minimise.shared_authentication
 
+import co.joebirch.minimise.authentication_remote.AuthenticationRemote
+import co.joebirch.minimise.shared_authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.shared_authentication.model.AuthenticationModel
-import co.joebirch.minimise.shared_authentication.store.AuthenticationRemote
 
-internal class AuthenticationDataRepository constructor(
-    private val authenticationRemote: AuthenticationRemote
+class AuthenticationDataRepository constructor(
+    private val authenticationRemote: AuthenticationRemote,
+    private val authenticationResponseMapper: AuthenticationResponseMapper
 ) : AuthenticationRepository {
 
     override suspend fun signUp(
         emailAddress: String,
         password: String
     ): AuthenticationModel {
-        val authenticationResponse = authenticationRemote.signUp(emailAddress, password, true)
-        return AuthenticationModel(
-            authenticationResponse.success,
-            authenticationResponse.token, authenticationResponse.errorCode?.toString()
+        return authenticationResponseMapper.mapFromAuthenticationResponse(
+            authenticationRemote.signUp(emailAddress, password, true)
         )
     }
 
@@ -22,10 +22,8 @@ internal class AuthenticationDataRepository constructor(
         emailAddress: String,
         password: String
     ): AuthenticationModel {
-        val authenticationResponse = authenticationRemote.signIn(emailAddress, password, true)
-        return AuthenticationModel(
-            authenticationResponse.success,
-            authenticationResponse.token, authenticationResponse.errorCode?.toString()
+        return authenticationResponseMapper.mapFromAuthenticationResponse(
+            authenticationRemote.signIn(emailAddress, password, true)
         )
     }
 }

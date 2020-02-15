@@ -7,19 +7,28 @@ import co.joebirch.minimise.shared_authentication.presentation.AuthenticateMode
 import co.joebirch.minimise.shared_common.ApplicationDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.core.context.GlobalContext.get
 
-open class Authenticate : UseCase<AuthenticationModel, Authenticate.Params>() {
+open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticate.Params>() {
 
-    private var authenticationRepository: AuthenticationRepository = get().get()
+    private lateinit var authenticationRepository: AuthenticationRepository
+
+    constructor(authenticationRepository: AuthenticationRepository) : this()  {
+        this.authenticationRepository = authenticationRepository
+    }
+
+    init {
+        if (!::authenticationRepository.isInitialized) {
+            authenticationRepository = AuthenticationRepository.get()
+        }
+    }
 
     override fun run(params: Params, completion: (AuthenticationModel) -> Unit) {
         GlobalScope.launch(ApplicationDispatcher) {
             completion.invoke(
                 when (params.authenticateMode) {
-                    AuthenticateMode.SIGN_UP ->
+                    AuthenticateMode.SignUp ->
                         authenticationRepository.signUp(params.emailAddress, params.password)
-                    AuthenticateMode.SIGN_IN ->
+                    AuthenticateMode.SignIn ->
                         authenticationRepository.signIn(params.emailAddress, params.password)
                 }
             )
@@ -38,7 +47,7 @@ open class Authenticate : UseCase<AuthenticationModel, Authenticate.Params>() {
                 password: String
             ) =
                 Params(
-                    AuthenticateMode.SIGN_UP,
+                    AuthenticateMode.SignUp,
                     emailAddress,
                     password
                 )
@@ -48,7 +57,7 @@ open class Authenticate : UseCase<AuthenticationModel, Authenticate.Params>() {
                 password: String
             ) =
                 Params(
-                    AuthenticateMode.SIGN_IN,
+                    AuthenticateMode.SignIn,
                     emailAddress,
                     password
                 )

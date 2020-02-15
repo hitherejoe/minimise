@@ -9,5 +9,7 @@ class FirebaseAuthenticationResponse(
     val email: String = "",
     val refreshToken: String = "",
     val expiresIn: String = "",
-    val localId: String = ""
+    val localId: String = "",
+    val code: Int = 0,
+    val message: String = ""
 )

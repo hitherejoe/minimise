@@ -4,6 +4,10 @@
     <bytecodeTargetLevel>
       <module name="AuthenticationRemote_androidMain" target="1.6" />
       <module name="AuthenticationRemote_androidTest" target="1.6" />
+      <module name="AuthenticationRemote_commonTestMain" target="1.6" />
+      <module name="AuthenticationRemote_commonTestTest" target="1.6" />
+      <module name="AuthenticationRemote_jvmTestMain" target="1.6" />
+      <module name="AuthenticationRemote_jvmTestTest" target="1.6" />
       <module name="Minimise-mpp.shared-SharedAuthentication_androidMain" target="1.6" />
       <module name="Minimise-mpp.shared-SharedAuthentication_androidTest" target="1.6" />
       <module name="Minimise-mpp.shared-SharedCommon_androidMain" target="1.6" />
@@ -18,6 +22,8 @@
       <module name="Remote_androidTest" target="1.6" />
       <module name="SharedAuthentication_androidMain" target="1.6" />
       <module name="SharedAuthentication_androidTest" target="1.6" />
+      <module name="SharedAuthentication_commonTestMain" target="1.6" />
+      <module name="SharedAuthentication_commonTestTest" target="1.6" />
       <module name="SharedCommon_androidMain" target="1.6" />
       <module name="SharedCommon_androidTest" target="1.6" />
       <module name="SharedCore_androidMain" target="1.6" />

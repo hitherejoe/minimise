@@ -6,6 +6,8 @@ sealed class AuthenticationState(
     val errorMessage: String? = null
 ) {
 
+    object Idle : AuthenticationState(isLoading = false)
+
     object Loading : AuthenticationState(isLoading = true)
 
     object Success : AuthenticationState(success = true)

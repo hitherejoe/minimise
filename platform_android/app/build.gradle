@@ -37,10 +37,12 @@ android {
 
 dependencies {
     api 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(':platform_android:core')
     implementation project(':platform_android:design')
     implementation project(':platform_android:navigation')
     implementation project(':platform_android:core')
     implementation project(':shared:SharedCore')
+    implementation project(':shared:SharedAuthentication')
     implementation Deps.kotlin
     implementation Deps.material
     api 'androidx.appcompat:appcompat:1.1.0'

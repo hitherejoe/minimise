@@ -1,9 +1,9 @@
 import Foundation
-import SharedCode
+import SharedAuthentication
 
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
-    @Published private(set) var state: AuthenticationState?
+    @Published internal var state: AuthenticationState = AuthenticationState.Idle()
     weak var authenticate: Authenticate?
     
     init(authenticate : Authenticate) {

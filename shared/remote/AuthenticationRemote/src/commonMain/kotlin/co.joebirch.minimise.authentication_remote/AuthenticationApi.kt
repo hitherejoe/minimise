@@ -1,9 +1,9 @@
 package co.joebirch.minimise.authentication_remote
 
+import co.joebirch.minimise.authentication_remote.model.AuthenticationResponse
 import co.joebirch.minimise.remote.BaseApi
 import co.joebirch.minimise.authentication_remote.model.FirebaseAuthenticationResponse
-import co.joebirch.minimise.shared_authentication.model.AuthenticationModel
-import co.joebirch.minimise.shared_authentication.store.AuthenticationRemote
+import io.ktor.client.HttpClient
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.url
@@ -11,15 +11,11 @@ import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
-import org.koin.core.context.loadKoinModules
 
 open class AuthenticationApi(
-    private val apiKey: String
-): BaseApi(), AuthenticationRemote {
-
-    init {
-        loadKoinModules(authenticationRemoteModule)
-    }
+    private val apiKey: String,
+    httpClient: HttpClient
+): BaseApi(httpClient), AuthenticationRemote {
 
     override suspend fun signUp(
         email: String,
@@ -39,7 +35,7 @@ open class AuthenticationApi(
         email: String,
         password: String,
         returnSecureToken: Boolean
-    ): AuthenticationModel {
+    ): AuthenticationResponse {
         return try {
             val response = client.post<HttpStatement> {
                 url(baseUrl + endpoint)
@@ -50,15 +46,15 @@ open class AuthenticationApi(
             }.execute()
 
             if (response.status != HttpStatusCode.OK) {
-                AuthenticationModel(success = false, errorCode = response.status.value)
+                AuthenticationResponse(success = false, errorCode = response.status.value)
             } else {
                 val jsonBody = response.readText()
                 val auth = Json.parse(FirebaseAuthenticationResponse.serializer(), jsonBody)
 
-                AuthenticationModel(success = true, token = auth.idToken)
+                AuthenticationResponse(success = true, token = auth.idToken)
             }
         } catch (cause: Throwable) {
-            AuthenticationModel(false)
+            AuthenticationResponse(false)
         }
     }
 

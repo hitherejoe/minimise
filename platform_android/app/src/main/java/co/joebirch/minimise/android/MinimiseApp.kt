@@ -4,7 +4,6 @@ import android.app.Application
 import co.joebirch.minimise.android.core.di.CoreComponent
 import co.joebirch.minimise.android.core.di.CoreComponentProvider
 import co.joebirch.minimise.android.core.di.DaggerCoreComponent
-import co.joebirch.minimise.shared_core.MinimiseApp
 
 class MinimiseApp : Application(), CoreComponentProvider {
 
@@ -12,7 +11,6 @@ class MinimiseApp : Application(), CoreComponentProvider {
 
     override fun onCreate() {
         super.onCreate()
-        MinimiseApp.startKoin()
 
         coreComponent = DaggerCoreComponent
             .builder()

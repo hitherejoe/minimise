@@ -1,19 +1,24 @@
 
 buildscript {
 
-    extra["kotlin_version"] = "1.3.61"
+    extra["kotlin_version"] = Versions.kotlin
     repositories {
         google()
+        mavenCentral()
         jcenter()
+        maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://dl.bintray.com/kotlin/kotlin-dev")
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
         maven(url = "https://kotlin.bintray.com/kotlinx")
+        maven(url = "https://dl.bintray.com/kotlin/kotlinx/")
         maven(url = "https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0-alpha08")
+        classpath("com.android.tools.build:gradle:4.0.0-alpha09")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
+        classpath("org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.45")
     }
 }
 
@@ -25,7 +30,9 @@ allprojects {
         maven(url = "https://jitpack.io")
         maven(url = "https://dl.bintray.com/kotlin/kotlinx.html")
         maven(url = "https://dl.bintray.com/kotlin/ktor")
+        maven(url = "https://dl.bintray.com/kotlin/kotlinx/")
         maven(url = "https://kotlin.bintray.com/kotlinx")
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-js-wrappers")
         maven(url = "https://kotlin.bintray.com/kotlin-dev")
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
         maven(url = "https://ci.android.com/builds/submitted/6116482/androidx_snapshot/latest/repository/")

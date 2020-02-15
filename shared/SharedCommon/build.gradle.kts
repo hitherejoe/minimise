@@ -26,18 +26,18 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(Deps.kotlin_common)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.coroutine_version}")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation(Deps.kotlin)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine_version}")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine_version}")
     }
 
     sourceSets["iosMain"].dependencies {
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.3")
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:1.3.3")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutine_version}")
+        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:${Versions.coroutine_version}")
     }
 }
 

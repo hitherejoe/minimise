@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AuthenticationRemote-commontest">
+    <output-path>$PROJECT_DIR$/shared/remote/AuthenticationRemote/build/libs</output-path>
+    <root id="archive" name="AuthenticationRemote-commontest.jar" />
+  </artifact>
+</component>

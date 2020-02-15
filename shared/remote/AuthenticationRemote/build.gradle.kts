@@ -24,11 +24,9 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":shared:remote:Remote"))
-        implementation(project(":shared:SharedAuthentication"))
+        implementation(project(":shared:SharedCommon"))
         implementation(Deps.kotlin)
         implementation(Deps.kotlin_common)
-
-        implementation("co.touchlab:koin-core:3.0.2-khan")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -38,7 +36,7 @@ kotlin {
     sourceSets["iosMain"].dependencies {
         implementation(project(":shared:remote:Remote"))
 
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.14.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serializer_version}")
 
         // HTTP
         implementation("io.ktor:ktor-client-ios:${Versions.ktor_version}")

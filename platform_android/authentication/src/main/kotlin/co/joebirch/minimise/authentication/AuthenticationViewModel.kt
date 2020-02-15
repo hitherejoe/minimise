@@ -15,7 +15,8 @@ class AuthenticationViewModel @Inject constructor(
     private val authenticate: Authenticate
 ) : ViewModel(), AuthenticateView {
 
-    private val uiState = MutableLiveData<AuthenticationState>()
+    private val uiState =
+        MutableLiveData<AuthenticationState>().default(AuthenticationState.Idle)
     fun observeAuthenticationState(): LiveData<AuthenticationState> = uiState
 
     override fun signUp(
@@ -23,8 +24,10 @@ class AuthenticationViewModel @Inject constructor(
         password: String
     ) {
         uiState.postValue(AuthenticationState.Loading)
-        authenticate.run(Authenticate.Params.forSignUp(emailAddress, password)) { result ->
-            handleResult(result)
+        viewModelScope.launch {
+            authenticate.run(Authenticate.Params.forSignUp(emailAddress, password)) { result ->
+                handleResult(result)
+            }
         }
     }
 
