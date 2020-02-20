@@ -35,17 +35,6 @@ open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticat
         }
     }
 
-    override fun runWithoutThreading(params: Params, completion: (AuthenticationModel) -> Unit) {
-        completion.invoke(
-            when (params.authenticateMode) {
-                AuthenticateMode.SignUp ->
-                    authenticationRepository.signUp(params.emailAddress, params.password)
-                AuthenticateMode.SignIn ->
-                    authenticationRepository.signIn(params.emailAddress, params.password)
-            }
-        )
-    }
-
     open class Params private constructor(
         val authenticateMode: AuthenticateMode,
         val emailAddress: String,
