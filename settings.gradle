@@ -1,3 +1,4 @@
+include ':platform_android:inventory'
 include ':platform_android:design'
 include ':platform_android:core'
 include ':firebase_authentication'

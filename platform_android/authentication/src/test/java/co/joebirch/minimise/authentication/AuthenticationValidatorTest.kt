@@ -1,12 +1,14 @@
 package co.joebirch.minimise.authentication
 
+import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import org.junit.Test
 
 import org.junit.Assert.*
 
 class AuthenticationValidatorTest {
 
-    private val authenticationValidator = AuthenticationValidator()
+    private val authenticationValidator =
+        AuthenticationValidator()
 
     @Test
     fun `Input data returns as valid`() {

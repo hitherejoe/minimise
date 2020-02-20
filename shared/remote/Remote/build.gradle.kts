@@ -44,11 +44,11 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serializer_version}")
+        api(Deps.kotlin_serialization_runtime_native)
 
-        implementation("io.ktor:ktor-client-ios:${Versions.ktor_version}")
-        implementation("io.ktor:ktor-client-json-native:${Versions.ktor_version}")
-        implementation("io.ktor:ktor-client-core-native:${Versions.ktor_version}")
-        implementation("io.ktor:ktor-client-serialization-native:${Versions.ktor_version}")
+        api(Deps.ktor_client_ios)
+        api(Deps.ktor_client_json_native)
+        api(Deps.ktor_client_core_native)
+        api(Deps.ktor_client_serialization_native)
     }
 }

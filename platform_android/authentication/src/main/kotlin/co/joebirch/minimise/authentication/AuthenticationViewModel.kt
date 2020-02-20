@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.shared_authentication.interactor.Authenticate
 import co.joebirch.minimise.shared_authentication.model.AuthenticationModel
 import co.joebirch.minimise.shared_authentication.presentation.AuthenticateView

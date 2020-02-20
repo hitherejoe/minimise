@@ -7,6 +7,7 @@ import co.joebirch.minimise.shared_authentication.util.DataFactory.randomString
 import co.joebirch.minimise.shared_authentication.util.MockAuthenticationRemote
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class AuthenticationDataRepositoryTest {
 

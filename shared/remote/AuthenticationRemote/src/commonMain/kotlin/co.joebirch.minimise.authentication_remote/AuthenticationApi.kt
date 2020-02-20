@@ -14,8 +14,12 @@ import kotlinx.serialization.json.Json
 
 open class AuthenticationApi(
     private val apiKey: String,
+    private val authenticationResponseMapper: AuthenticationResponseMapper,
     httpClient: HttpClient
 ): BaseApi(httpClient), AuthenticationRemote {
+
+    override val baseUrl: String
+        get() = "https://identitytoolkit.googleapis.com/v1/accounts:"
 
     override suspend fun signUp(
         email: String,
@@ -45,22 +49,14 @@ open class AuthenticationApi(
                 parameter("returnSecureToken", returnSecureToken)
             }.execute()
 
-            if (response.status != HttpStatusCode.OK) {
-                AuthenticationResponse(success = false, errorCode = response.status.value)
-            } else {
-                val jsonBody = response.readText()
-                val auth = Json.parse(FirebaseAuthenticationResponse.serializer(), jsonBody)
-
-                AuthenticationResponse(success = true, token = auth.idToken)
-            }
+            authenticationResponseMapper.map(response.status, response.readText())
         } catch (cause: Throwable) {
             AuthenticationResponse(false)
         }
     }
 
     companion object {
-        private const val baseUrl = "https://identitytoolkit.googleapis.com/v1/accounts:"
-        private const val ENDPOINT_SIGN_UP = "signUp"
-        private const val ENDPOINT_SIGN_IN = "signInWithPassword"
+        const val ENDPOINT_SIGN_UP = "signUp"
+        const val ENDPOINT_SIGN_IN = "signInWithPassword"
     }
 }

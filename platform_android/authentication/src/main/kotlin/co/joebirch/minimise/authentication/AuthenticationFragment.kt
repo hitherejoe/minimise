@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import co.joebirch.minimise.authentication.databinding.FragmentAuthenticationBinding
 import co.joebirch.minimise.authentication.di.inject
+import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import co.joebirch.minimise.navigation.navigateToOnboarding
 import co.joebirch.minimise.shared_authentication.presentation.AuthenticateMode
 import co.joebirch.minimise.shared_authentication.presentation.AuthenticationState
@@ -46,14 +47,15 @@ class AuthenticationFragment : Fragment() {
                     toggleContentVisibility(isLoading = false)
                     MaterialAlertDialogBuilder(context)
                         .setTitle("Success!")
-                        .setMessage("The operation was successful!")
+                        .setMessage("The operation was successful.")
+                        .setNeutralButton("OK", null)
                         .show()
                 }
                 is AuthenticationState.Failure -> {
                     toggleContentVisibility(isLoading = false)
                     MaterialAlertDialogBuilder(context)
                         .setTitle("Whoops!")
-                        .setMessage(it.errorMessage)
+                        .setMessage("Something went wrong,")
                         .setNeutralButton("OK", null)
                         .show()
                 }

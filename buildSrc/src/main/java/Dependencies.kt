@@ -31,6 +31,13 @@ object Deps {
     val ktor_client_okhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor_version}"
     val kotlin_serialization_runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serializer_version}"
 
+    val ktor_client_ios = "io.ktor:ktor-client-ios:${Versions.ktor_version}"
+    val ktor_client_json_native = "io.ktor:ktor-client-json-native:${Versions.ktor_version}"
+    val ktor_client_core_native = "io.ktor:ktor-client-core-native:${Versions.ktor_version}"
+    val ktor_client_serialization_native = "io.ktor:ktor-client-serialization-native:${Versions.ktor_version}"
+
+    val kotlin_serialization_runtime_native = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serializer_version}"
+
     val material = "com.google.android.material:material:${Versions.material_version}"
 
 

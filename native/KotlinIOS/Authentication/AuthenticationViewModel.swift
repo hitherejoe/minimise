@@ -13,11 +13,11 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
     func signIn(emailAddress: String, password: String) {
         self.state = AuthenticationState.Loading()
         authenticate?.run(params:
-            Authenticate.ParamsCompanion().forSignIn(emailAddress: emailAddress, password: password)) { (AuthenticationModel) in
-                if (AuthenticationModel.success) {
+            Authenticate.ParamsCompanion().forSignIn(emailAddress: emailAddress, password: password)) { (result) in
+                if (result.success) {
                     self.state = AuthenticationState.Success()
-                } else if (!AuthenticationModel.success) {
-                    self.state = AuthenticationState.Failure(error: AuthenticationModel.message)
+                } else if (!result.success) {
+                    self.state = AuthenticationState.Failure(error: result.message)
                 }
         }
     }
@@ -25,11 +25,11 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
     func signUp(emailAddress: String, password: String) {
         self.state = AuthenticationState.Loading()
         authenticate?.run(params:
-            Authenticate.ParamsCompanion().forSignUp(emailAddress: emailAddress, password: password)) { (AuthenticationModel) in
-                if (AuthenticationModel.success) {
+            Authenticate.ParamsCompanion().forSignUp(emailAddress: emailAddress, password: password)) { (result) in
+                if (result.success) {
                     self.state = AuthenticationState.Success()
-                } else if (!AuthenticationModel.success) {
-                    self.state = AuthenticationState.Failure(error: AuthenticationModel.message)
+                } else if (!result.success) {
+                    self.state = AuthenticationState.Failure(error: result.message)
                 }
         }
     }

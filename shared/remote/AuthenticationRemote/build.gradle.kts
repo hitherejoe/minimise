@@ -29,6 +29,19 @@ kotlin {
         implementation(Deps.kotlin_common)
     }
 
+    sourceSets["commonTest"].dependencies {
+        implementation(project(":shared:remote:Remote"))
+        api("io.ktor:ktor-client-mock-jvm:${Versions.ktor_version}")
+        api("io.ktor:ktor-client-mock-js:${Versions.ktor_version}")
+        api("io.ktor:ktor-client-mock-native:${Versions.ktor_version}")
+        api("io.ktor:ktor-client-mock:${Versions.ktor_version}")
+        implementation(kotlin("test"))
+        implementation(kotlin("test-junit"))
+        implementation("junit:junit:4.12")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3")
+    }
+
     sourceSets["androidMain"].dependencies {
         implementation(project(":shared:remote:Remote"))
     }

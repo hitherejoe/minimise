@@ -10,13 +10,12 @@
 		4219360923AE861000738FB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360823AE861000738FB7 /* SceneDelegate.swift */; };
 		426F9AEB23C6437C00A8437A /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
 		426F9AF223C6437C00A8437A /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F9AF123C6437C00A8437A /* AuthenticationTests.swift */; };
-		426F9AF423C6437C00A8437A /* Authentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 426F9AE423C6437C00A8437A /* Authentication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360423AE799000738FB7 /* AuthenticationViewModel.swift */; };
 		426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360623AE7B3400738FB7 /* AuthenticationView.swift */; };
-		427ACDCB23E70C9F00225AA3 /* SharedAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; };
-		427ACDCC23E70C9F00225AA3 /* SharedAuthentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		427ACDCF23E8414700225AA3 /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
 		427ACDD023E8414700225AA3 /* Authentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		42C2E7E823FE9240008416E1 /* SharedAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; };
+		42C2E7E923FE9240008416E1 /* SharedAuthentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
 		47729E0D22F447CA00B9B36B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47729E0C22F447CA00B9B36B /* Assets.xcassets */; };
 		47729E1B22F447CA00B9B36B /* KotlinIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E1A22F447CA00B9B36B /* KotlinIOSTests.swift */; };
@@ -62,17 +61,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		426F9B0B23C9118100A8437A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				427ACDCC23E70C9F00225AA3 /* SharedAuthentication.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		427ACDD323E8414800225AA3 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -80,6 +68,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				427ACDD023E8414700225AA3 /* Authentication.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42C2E7EA23FE9241008416E1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				42C2E7E923FE9240008416E1 /* SharedAuthentication.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +94,6 @@
 		4219360623AE7B3400738FB7 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		4219360823AE861000738FB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		426F9AE223C6437C00A8437A /* Authentication.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Authentication.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		426F9AE423C6437C00A8437A /* Authentication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
 		426F9AE523C6437C00A8437A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		426F9AEA23C6437C00A8437A /* AuthenticationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthenticationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		426F9AF123C6437C00A8437A /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
@@ -121,7 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				427ACDCB23E70C9F00225AA3 /* SharedAuthentication.framework in Frameworks */,
+				42C2E7E823FE9240008416E1 /* SharedAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +161,6 @@
 			children = (
 				4219360423AE799000738FB7 /* AuthenticationViewModel.swift */,
 				4219360623AE7B3400738FB7 /* AuthenticationView.swift */,
-				426F9AE423C6437C00A8437A /* Authentication.h */,
 				426F9AE523C6437C00A8437A /* Info.plist */,
 			);
 			path = Authentication;
@@ -262,7 +259,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				426F9AF423C6437C00A8437A /* Authentication.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +274,7 @@
 				426F9ADE23C6437C00A8437A /* Sources */,
 				426F9ADF23C6437C00A8437A /* Frameworks */,
 				426F9AE023C6437C00A8437A /* Resources */,
-				426F9B0B23C9118100A8437A /* Embed Frameworks */,
+				42C2E7EA23FE9241008416E1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
