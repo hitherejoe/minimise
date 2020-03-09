@@ -30,16 +30,10 @@ jobs:
   ios_test:
     name: Test
     runs-on: macos-latest
-    strategy:
-        matrix:
-          destination: ['platform=iOS Simulator,OS=12.2,name=iPhone X']
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Build and test
         run: |
           cd native/KotlinIOS
-          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-          bash <(curl -s https://codecov.io/bash)
-        env: 
-         destination: ${{ matrix.destination }}
+          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination "platform=iOS Simulator,name=iPhone 11 Pro"
