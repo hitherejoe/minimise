@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FirebaseAuthentication-android">
+    <output-path>$PROJECT_DIR$/FirebaseAuthentication/build/libs</output-path>
+    <root id="archive" name="FirebaseAuthentication-android.jar" />
+  </artifact>
+</component>

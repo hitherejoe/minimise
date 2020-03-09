@@ -5,15 +5,14 @@ import SharedAuthentication
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel = AuthenticationViewModel(authenticate: Authenticate())
-    @State private var email = ""
-    @State private var password = ""
-    @State private var authenticateMode: AuthenticateMode = AuthenticateMode.SignUp.init()
+    //@State private var email = ""
+    //@State private var password = ""
 
     public init() {
     }
 
     public func authenticateButtonText() -> String {
-        if (authenticateMode.isKind(of: AuthenticateMode.SignUp.self)) {
+        if (self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self)) {
             return "Sign Up"
         } else {
             return "Sign In"
@@ -21,7 +20,7 @@ public struct AuthenticationView: View {
     }
 
     public func switchAuthenticationModeText() -> String {
-        if (authenticateMode.isKind(of: AuthenticateMode.SignIn.self)) {
+        if (self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignIn.self)) {
             return "Don't have an account?"
         } else {
             return "Already have an account?"
@@ -34,24 +33,35 @@ public struct AuthenticationView: View {
                     .edgesIgnoringSafeArea(.all)
 
             AuthenticationContent(
-                    email: self.$email, password: self.$password,
+                email: Binding<String>(
+                        get: {
+                            self.viewModel.state.emailAddress
+                        },
+                        set: { emailAddress in
+                            self.viewModel.setEmailAddress(emailAddress: emailAddress)
+                        }
+                ), password: Binding<String>(
+                        get: {
+                            self.viewModel.state.password
+                        },
+                        set: { password in
+                            self.viewModel.setPassword(password: password)
+                        }
+                ),
                     authenticateButtonText: authenticateButtonText(),
                     switchAuthenticationModeText: switchAuthenticationModeText(),
+                    isSigningUp: self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self),
                     action: {
-                        if (self.authenticateMode.isKind(of: AuthenticateMode.SignUp.self)) {
-                            self.viewModel.signUp(emailAddress: self.email, password: self.password)
-                        } else {
-                            self.viewModel.signIn(emailAddress: self.email, password: self.password)
-                        }
+                        self.viewModel.authenticate()
                     }, switchAuthenticationAction: {
-                if (self.authenticateMode.isKind(of: AuthenticateMode.SignUp.self)) {
-                    self.authenticateMode = AuthenticateMode.SignIn.init()
-                } else {
-                    self.authenticateMode = AuthenticateMode.SignUp.init()
-                }
+                        self.viewModel.toggleAuthenticationMode()
             }).alert(isPresented: Binding<Bool>(
-                    get: { self.viewModel.state.isKind(of: AuthenticationState.Failure.self) },
-                    set: { _ in self.viewModel.state = AuthenticationState.Idle() }
+                    get: {
+                        self.viewModel.state.errorMessage != nil
+                    },
+                    set: { _ in
+                      //  self.viewModel.state = AuthenticationState.Idle()
+                    }
             ), content: {
                 Alert(title: Text("Whoops!"), message: Text("There was a problem authenticating with those credenitals. Please try again."), dismissButton: .default(Text("Got it!")))
             }).padding(.all, 24.0)
@@ -113,6 +123,7 @@ struct AuthenticationContent: View {
     let password: Binding<String>
     let authenticateButtonText: String
     let switchAuthenticationModeText: String
+    let isSigningUp: Bool
     var action: () -> Void
     var switchAuthenticationAction: () -> Void
 
@@ -120,6 +131,7 @@ struct AuthenticationContent: View {
          password: Binding<String>,
          authenticateButtonText: String,
          switchAuthenticationModeText: String,
+         isSigningUp: Bool,
          action: @escaping () -> Void,
          switchAuthenticationAction: @escaping () -> Void
     ) {
@@ -127,6 +139,7 @@ struct AuthenticationContent: View {
         self.password = password
         self.authenticateButtonText = authenticateButtonText
         self.switchAuthenticationModeText = switchAuthenticationModeText
+        self.isSigningUp = isSigningUp
         self.action = action
         self.switchAuthenticationAction = switchAuthenticationAction
     }
@@ -140,9 +153,17 @@ struct AuthenticationContent: View {
             TextField("Email", text: email)
                     .padding(.all, 10.0)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-            SecureField("Password", text: password)
+            TextField("Password", text: password)
                     .padding(.all, 10.0)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            if (isSigningUp) {
+                Button(action: self.action) {
+                    Text("Forgotten your password?")
+                    .padding(.all, 10.0)
+                }
+                
+            }
 
             Spacer()
 

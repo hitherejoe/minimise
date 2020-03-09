@@ -1,21 +1,23 @@
 package co.joebirch.minimise.shared_authentication
 
+import co.joebirch.minimise.authentication.AuthenticationDataRepository
 import co.joebirch.minimise.shared_authentication.mapper.MockAuthenticationResponseMapper
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationModel
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationResponse
 import co.joebirch.minimise.shared_authentication.util.DataFactory.randomString
-import co.joebirch.minimise.shared_authentication.util.MockAuthenticationRemote
+import co.joebirch.minimise.shared_authentication.util.MockAuthenticationStore
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class AuthenticationDataRepositoryTest {
 
     private val mockAuthenticationRemote =
-        MockAuthenticationRemote()
+        MockAuthenticationStore()
     private val mockAuthenticationMapper = MockAuthenticationResponseMapper()
-    private val authenticationRepository = AuthenticationDataRepository(
-        mockAuthenticationRemote, mockAuthenticationMapper)
+    private val authenticationRepository =
+        AuthenticationDataRepository(
+            mockAuthenticationRemote, mockAuthenticationMapper
+        )
 
     @Test
     fun `Sign up succeeds and returns data`() =
@@ -26,7 +28,8 @@ class AuthenticationDataRepositoryTest {
                 { _ -> authenticationModel }
             mockAuthenticationRemote.whenSignUp = { _, _, _ -> authenticationResponse }
 
-            val result = authenticationRepository.signUp(randomString(), randomString())
+            val result = authenticationRepository.signUp(randomString(), randomString(),
+                randomString())
             assertEquals(authenticationModel, result)
         }
 
@@ -40,7 +43,8 @@ class AuthenticationDataRepositoryTest {
                 { _ -> authenticationModel }
             mockAuthenticationRemote.whenSignIn = { _, _, _ -> authenticationResponse }
 
-            val result = authenticationRepository.signIn(randomString(), randomString())
+            val result = authenticationRepository.signIn(randomString(), randomString(),
+                randomString())
             assertEquals(authenticationModel, result)
         }
 }

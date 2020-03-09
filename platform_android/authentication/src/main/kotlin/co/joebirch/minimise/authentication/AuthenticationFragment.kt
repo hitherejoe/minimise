@@ -4,74 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.core.widget.addTextChangedListener
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import co.joebirch.minimise.authentication.databinding.FragmentAuthenticationBinding
 import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
-import co.joebirch.minimise.navigation.navigateToOnboarding
-import co.joebirch.minimise.shared_authentication.presentation.AuthenticateMode
-import co.joebirch.minimise.shared_authentication.presentation.AuthenticationState
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import javax.inject.Inject
 
 class AuthenticationFragment : Fragment() {
 
-    private lateinit var binding: FragmentAuthenticationBinding
-    private var authenticationMode: AuthenticateMode = AuthenticateMode.SignUp
     @Inject lateinit var viewModel: AuthenticationViewModel
     @Inject lateinit var authenticatonValidator: AuthenticationValidator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         inject(this)
-
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    navigateToOnboarding(findNavController())
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-
-        viewModel.observeAuthenticationState().observe(this, Observer {
-            when (it) {
-                //TODO: Constraint Layout group not working with view binding
-                is AuthenticationState.Loading -> {
-                    toggleContentVisibility(isLoading = true)
-                }
-                is AuthenticationState.Success -> {
-                    toggleContentVisibility(isLoading = false)
-                    MaterialAlertDialogBuilder(context)
-                        .setTitle("Success!")
-                        .setMessage("The operation was successful.")
-                        .setNeutralButton("OK", null)
-                        .show()
-                }
-                is AuthenticationState.Failure -> {
-                    toggleContentVisibility(isLoading = false)
-                    MaterialAlertDialogBuilder(context)
-                        .setTitle("Whoops!")
-                        .setMessage("Something went wrong,")
-                        .setNeutralButton("OK", null)
-                        .show()
-                }
-            }
-        })
-    }
-
-    private fun toggleContentVisibility(isLoading: Boolean) {
-        val authenticationContentVisibility =  if (isLoading) View.INVISIBLE else View.VISIBLE
-        binding.titleText.visibility = authenticationContentVisibility
-        binding.emailInput.visibility = authenticationContentVisibility
-        binding.passwordInput.visibility = authenticationContentVisibility
-        binding.forgotPasswordText.visibility = authenticationContentVisibility
-        binding.authenticateButton.visibility = authenticationContentVisibility
-        binding.switchAuthenticationModeButton.visibility = authenticationContentVisibility
-        binding.progress.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
     }
 
     override fun onCreateView(
@@ -79,69 +25,20 @@ class AuthenticationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAuthenticationBinding.inflate(inflater)
-        return binding.root
-    }
+        return FrameLayout(requireContext()).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        configureLayoutFor(authenticationMode)
-        handleAuthenticateButtonState()
-
-        binding.authenticateButton.setOnClickListener {
-            when (authenticationMode) {
-                AuthenticateMode.SignIn -> {
-                    viewModel.signIn(
-                        binding.emailInput.editText?.text.toString(),
-                        binding.passwordInput.editText?.text.toString()
-                    )
-                }
-                AuthenticateMode.SignUp -> {
-                    viewModel.signUp(
-                        binding.emailInput.editText?.text.toString(),
-                        binding.passwordInput.editText?.text.toString()
-                    )
-                }
-            }
-        }
-
-        binding.emailInput.editText?.addTextChangedListener {
-            handleAuthenticateButtonState()
-        }
-        binding.passwordInput.editText?.addTextChangedListener {
-            handleAuthenticateButtonState()
-        }
-
-        binding.switchAuthenticationModeButton.setOnClickListener {
-            authenticationMode = when (authenticationMode) {
-                AuthenticateMode.SignIn -> {
-                    AuthenticateMode.SignUp
-                }
-                AuthenticateMode.SignUp -> {
-                    AuthenticateMode.SignIn
-                }
-            }
-            configureLayoutFor(authenticationMode)
-        }
-    }
-
-    private fun handleAuthenticateButtonState() {
-        binding.authenticateButton.isEnabled = authenticatonValidator.validateInputData(
-            binding.emailInput.editText?.text.toString(),
-            binding.passwordInput.editText?.text.toString()
-        )
-    }
-
-    private fun configureLayoutFor(authenticateMode: AuthenticateMode) {
-        when (authenticateMode) {
-            AuthenticateMode.SignUp -> {
-                binding.authenticateButton.text = getString(R.string.sign_up)
-                binding.switchAuthenticationModeButton.text = getString(R.string.existing_account)
-            }
-            AuthenticateMode.SignIn -> {
-                binding.authenticateButton.text = getString(R.string.sign_in)
-                binding.switchAuthenticationModeButton.text = getString(R.string.no_account)
-            }
+            composeAuthenticationContent(
+                viewLifecycleOwner,
+                viewModel.observeAuthenticationState(),
+                viewModel::toggleAuthenticationMode,
+                viewModel::authenticate,
+                viewModel::setEmailAddress,
+                viewModel::setPassword
+            )
         }
     }
 }

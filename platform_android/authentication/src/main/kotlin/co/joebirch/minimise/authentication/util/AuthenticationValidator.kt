@@ -8,6 +8,12 @@ class AuthenticationValidator @Inject constructor() {
         password: String,
         emailAddress: String
     ): Boolean {
-        return password.isNotEmpty() && emailAddress.isNotEmpty()
+        return password.isNotEmpty() && validateEmailAddress(emailAddress)
+    }
+
+    fun validateEmailAddress(
+        emailAddress: String
+    ): Boolean {
+        return emailAddress.isNotEmpty()
     }
 }

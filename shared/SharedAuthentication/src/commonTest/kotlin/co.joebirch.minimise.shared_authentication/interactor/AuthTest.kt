@@ -1,5 +1,6 @@
 package co.joebirch.minimise.shared_authentication.interactor
 
+import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.shared_authentication.MockAuthenticationDataRepository
 import co.joebirch.minimise.shared_authentication.runTest
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationModel
@@ -10,7 +11,10 @@ import kotlin.test.assertEquals
 class AuthTest {
 
     private val mockAuthenticationDataRepository = MockAuthenticationDataRepository()
-    private val authenticationRepository = Authenticate(mockAuthenticationDataRepository)
+    private val authenticationRepository =
+        Authenticate(
+            mockAuthenticationDataRepository
+        )
 
     @Test
     fun `Sign up succeeds and returns data`() =
@@ -20,7 +24,7 @@ class AuthTest {
 
             authenticationRepository.run(
                 Authenticate.Params.forSignUp(
-                    randomString(), randomString()
+                    randomString(), randomString(), randomString()
                 )
             ) {
                 assertEquals(authenticationModel, it)
@@ -35,7 +39,7 @@ class AuthTest {
 
             authenticationRepository.run(
                 Authenticate.Params.forSignUp(
-                    randomString(), randomString()
+                    randomString(), randomString(), randomString()
                 )
             ) {
                 assertEquals(authenticationModel, it)

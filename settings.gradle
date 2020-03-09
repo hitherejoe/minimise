@@ -1,7 +1,8 @@
+include ':platform_android:common-ui'
+include ':platform_android:authentication-ui'
 include ':platform_android:inventory'
 include ':platform_android:design'
 include ':platform_android:core'
-include ':firebase_authentication'
 include ':platform_android:onboarding'
 include ':platform_android:navigation'
 include ':platform_android:app'
@@ -10,10 +11,7 @@ include ':platform_android:authentication'
 include ':shared:SharedAuthentication'
 include ':shared:SharedCommon'
 include ':shared:SharedCore'
-
-include ':shared:remote:AuthenticationRemote'
-include ':shared:remote:Remote'
-
+include ':FirebaseAuthentication'
 
 enableFeaturePreview('GRADLE_METADATA')
 

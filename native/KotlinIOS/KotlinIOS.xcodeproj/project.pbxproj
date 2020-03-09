@@ -14,6 +14,7 @@
 		426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360623AE7B3400738FB7 /* AuthenticationView.swift */; };
 		427ACDCF23E8414700225AA3 /* Authentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; };
 		427ACDD023E8414700225AA3 /* Authentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 426F9AE223C6437C00A8437A /* Authentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4286E8B2240AACFB0067D2FD /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */; };
 		42C2E7E823FE9240008416E1 /* SharedAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; };
 		42C2E7E923FE9240008416E1 /* SharedAuthentication.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
@@ -100,6 +101,7 @@
 		426F9AF323C6437C00A8437A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		426F9B0623C6471300A8437A /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../../SharedCore/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
 		427ACDCA23E70C9F00225AA3 /* SharedAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedAuthentication.framework; path = "../../shared/SharedAuthentication/build/xcode-frameworks/SharedAuthentication.framework"; sourceTree = "<group>"; };
+		4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		429D17ED23AE07BB004B73F3 /* Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Data.framework; path = "../../data/build/fat-framework/Data.framework"; sourceTree = "<group>"; };
 		42A99D7B23B0DA6300EEE004 /* SharedAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedAuthentication.framework; path = "../../SharedAuthentication/build/xcode-frameworks/SharedAuthentication.framework"; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 		426F9AE323C6437C00A8437A /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				4286E8B0240AACE20067D2FD /* forgot_password */,
 				4219360423AE799000738FB7 /* AuthenticationViewModel.swift */,
 				4219360623AE7B3400738FB7 /* AuthenticationView.swift */,
 				426F9AE523C6437C00A8437A /* Info.plist */,
@@ -173,6 +176,14 @@
 				426F9AF323C6437C00A8437A /* Info.plist */,
 			);
 			path = AuthenticationTests;
+			sourceTree = "<group>";
+		};
+		4286E8B0240AACE20067D2FD /* forgot_password */ = {
+			isa = PBXGroup;
+			children = (
+				4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */,
+			);
+			path = forgot_password;
 			sourceTree = "<group>";
 		};
 		429D17EC23AE07BB004B73F3 /* Frameworks */ = {
@@ -496,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */,
+				4286E8B2240AACFB0067D2FD /* ForgotPasswordView.swift in Sources */,
 				426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

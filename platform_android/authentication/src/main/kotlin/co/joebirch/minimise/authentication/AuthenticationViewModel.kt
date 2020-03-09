@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.joebirch.minimise.android.core.di.default
-import co.joebirch.minimise.shared_authentication.interactor.Authenticate
-import co.joebirch.minimise.shared_authentication.model.AuthenticationModel
-import co.joebirch.minimise.shared_authentication.presentation.AuthenticateView
-import co.joebirch.minimise.shared_authentication.presentation.AuthenticationState
+import co.joebirch.minimise.authentication.BuildConfig.FIREBASE_API_KEY
+import co.joebirch.minimise.authentication.interactor.Authenticate
+import co.joebirch.minimise.authentication.model.AuthenticationModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,38 +16,97 @@ class AuthenticationViewModel @Inject constructor(
 ) : ViewModel(), AuthenticateView {
 
     private val uiState =
-        MutableLiveData<AuthenticationState>().default(AuthenticationState.Idle)
+        MutableLiveData<AuthenticationState>().default(
+            AuthenticationState()
+        )
+
     fun observeAuthenticationState(): LiveData<AuthenticationState> = uiState
 
-    override fun signUp(
-        emailAddress: String,
-        password: String
-    ) {
-        uiState.postValue(AuthenticationState.Loading)
+    override fun toggleAuthenticationMode() {
+        if (uiState.value!!.authenticationMode == AuthenticateMode.SignIn) {
+            uiState.postValue(
+                uiState.value!!.build {
+                    authenticateMode = AuthenticateMode.SignUp
+                }
+            )
+        } else {
+            uiState.postValue(
+                uiState.value!!.build {
+                    authenticateMode = AuthenticateMode.SignIn
+                }
+            )
+        }
+    }
+
+    override fun setEmailAddress(emailAddress: String) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.emailAddress = emailAddress
+            }
+        )
+    }
+
+    override fun setPassword(password: String) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.password = password
+            }
+        )
+    }
+
+    override fun authenticate() {
+        if (uiState.value?.authenticationMode == AuthenticateMode.SignIn) {
+            signUp()
+        } else {
+            signIn()
+        }
+    }
+
+    override fun signUp() {
+        uiState.value!!.build {
+            errorMessage = null
+            isLoading = true
+        }
         viewModelScope.launch {
-            authenticate.run(Authenticate.Params.forSignUp(emailAddress, password)) { result ->
+            authenticate.run(
+                Authenticate.Params.forSignUp(
+                    FIREBASE_API_KEY,
+                    uiState.value!!.emailAddress, uiState.value!!.password
+                )
+            ) { result ->
                 handleResult(result)
             }
         }
     }
 
-    override fun signIn(
-        emailAddress: String,
-        password: String
-    ) {
-        uiState.postValue(AuthenticationState.Loading)
+    override fun signIn() {
+        uiState.value!!.build {
+            errorMessage = null
+            isLoading = true
+        }
         viewModelScope.launch {
-            authenticate.run(Authenticate.Params.forSignIn(emailAddress, password)) { result ->
+            authenticate.run(
+                Authenticate.Params.forSignIn(
+                    FIREBASE_API_KEY,
+                    uiState.value!!.emailAddress, uiState.value!!.password
+                )
+            ) { result ->
                 handleResult(result)
             }
         }
     }
 
     private fun handleResult(result: AuthenticationModel) {
-        if (result.success) {
-            uiState.postValue(AuthenticationState.Success)
+        if (result.token != null) {
+            uiState.value!!.build {
+                isLoading = false
+                success = true
+            }
         } else {
-            uiState.postValue(AuthenticationState.Failure(result.message))
+            uiState.value!!.build {
+                isLoading = false
+                errorMessage = result.message
+            }
         }
     }
 }

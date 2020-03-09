@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:1.2.0-rc01"
+
+    implementation Deps.compose_material
+    implementation Deps.compose_layout
+    implementation Deps.compose_framework
+    implementation Deps.compose_foundation
+    implementation Deps.compose_runtime
+    implementation Deps.compose_tooling
+
+    implementation Deps.material
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+    implementation "android.arch.lifecycle:runtime:1.1.1"
+
+    implementation Deps.kotlin
+}

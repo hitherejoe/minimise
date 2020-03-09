@@ -5,6 +5,12 @@ plugins {
     kotlin("multiplatform")
 }
 
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
+
 
 kotlin {
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
@@ -28,7 +34,7 @@ kotlin {
         implementation(Deps.coroutines_core)
         implementation(Deps.coroutines_core_common)
         implementation(project(":shared:SharedCommon"))
-        implementation(project(":shared:remote:AuthenticationRemote"))
+        implementation(project(":FirebaseAuthentication"))
     }
 
     sourceSets["commonTest"].dependencies {
@@ -46,7 +52,7 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         implementation(Deps.kotlin)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutine_version}")
+        implementation(Deps.coroutines_native)
     }
 }
 

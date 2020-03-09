@@ -11,11 +11,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/FirebaseAuthentication" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/firebase_authentication" />
             <option value="$PROJECT_DIR$/platform_android" />
             <option value="$PROJECT_DIR$/platform_android/app" />
             <option value="$PROJECT_DIR$/platform_android/authentication" />
+            <option value="$PROJECT_DIR$/platform_android/authentication-ui" />
+            <option value="$PROJECT_DIR$/platform_android/common-ui" />
             <option value="$PROJECT_DIR$/platform_android/core" />
             <option value="$PROJECT_DIR$/platform_android/design" />
             <option value="$PROJECT_DIR$/platform_android/inventory" />
@@ -25,9 +27,6 @@
             <option value="$PROJECT_DIR$/shared/SharedAuthentication" />
             <option value="$PROJECT_DIR$/shared/SharedCommon" />
             <option value="$PROJECT_DIR$/shared/SharedCore" />
-            <option value="$PROJECT_DIR$/shared/remote" />
-            <option value="$PROJECT_DIR$/shared/remote/AuthenticationRemote" />
-            <option value="$PROJECT_DIR$/shared/remote/Remote" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    implementation AndroidDeps.kotlin
+    implementation Deps.kotlin
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
@@ -32,6 +32,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "org.mockito:mockito-core:3.1.0"
     androidTestImplementation "org.mockito:mockito-android:3.1.0"
-    api "androidx.navigation:navigation-dynamic-features-fragment:2.3.0-alpha01"
+    def nav_version = "2.3.0-alpha03"
 
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    // Kotlin
+    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    api "androidx.navigation:navigation-ui-ktx:$nav_version"
 }

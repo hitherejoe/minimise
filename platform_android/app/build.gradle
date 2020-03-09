@@ -6,24 +6,15 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion Versions.compileSdk
 
-    viewBinding {
-        enabled = true
-    }
-
     defaultConfig {
-        applicationId "co.joebirch.minimise.android"
+        applicationId "co.joebirch.minimise"
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
@@ -32,22 +23,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dynamicFeatures = [':platform_android:onboarding', ':platform_android:authentication']
 }
 
 dependencies {
-    api 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(':platform_android:core')
     implementation project(':platform_android:design')
     implementation project(':platform_android:navigation')
     implementation project(':platform_android:core')
+    implementation project(':platform_android:authentication')
+    implementation project(':platform_android:onboarding')
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
     implementation Deps.kotlin
     implementation Deps.material
     api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.core:core-ktx:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'androidx.core:core-ktx:1.2.0'
 
     kapt AndroidDeps.dagger_compiler
     kapt AndroidDeps.dagger_processor

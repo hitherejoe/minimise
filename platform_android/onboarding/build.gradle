@@ -1,4 +1,4 @@
-apply plugin: "com.android.dynamic-feature"
+apply plugin: "com.android.library"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -24,10 +24,9 @@ android {
 
 dependencies {
 
-    implementation project(":platform_android:app")
     implementation project(":platform_android:navigation")
     implementation Deps.material
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

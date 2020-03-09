@@ -1,14 +1,18 @@
-apply plugin: "com.android.dynamic-feature"
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
+apply plugin: 'kotlin-android-extensions'
+androidExtensions {
+    experimental = true
+}
 
 android {
     compileSdkVersion Versions.compileSdk
-
-    viewBinding {
-        enabled = true
-    }
 
     defaultConfig {
         minSdkVersion Versions.minSdk
@@ -16,13 +20,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-    }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+        buildConfigField 'String', 'FIREBASE_API_KEY',
+                "\"" + getKey('FIREBASE_API_KEY') + "\""
     }
 
     sourceSets {
@@ -40,28 +40,33 @@ android {
 }
 
 dependencies {
-    implementation project(":platform_android:app")
     implementation project(":platform_android:core")
+    implementation project(":platform_android:authentication-ui")
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedAuthentication')
-    implementation project(":platform_android:navigation")
+    implementation project(':platform_android:common-ui')
+    implementation "androidx.core:core-ktx:1.2.0"
+    implementation Deps.kotlin
+    implementation Deps.kotlin_reflect
 
-    implementation "androidx.core:core-ktx:1.1.0"
-
-    implementation AndroidDeps.kotlin
     implementation Deps.material
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common:2.2.0"
     implementation AndroidDeps.dagger
     kapt AndroidDeps.dagger_compiler
-    implementation 'androidx.fragment:fragment:1.3.0-SNAPSHOT'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.fragment:fragment:1.2.2'
     testImplementation 'junit:junit:4.12'
 
-    def fragment_version = "1.2.1"
+    def fragment_version = "1.2.2"
     androidTestImplementation "androidx.fragment:fragment-testing:$fragment_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+def getKey(String key) {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(file('../../local.properties')))
+    return props[key]
 }
