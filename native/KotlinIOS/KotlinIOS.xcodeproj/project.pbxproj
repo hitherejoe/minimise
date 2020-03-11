@@ -104,6 +104,7 @@
 		4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		429D17ED23AE07BB004B73F3 /* Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Data.framework; path = "../../data/build/fat-framework/Data.framework"; sourceTree = "<group>"; };
 		42A99D7B23B0DA6300EEE004 /* SharedAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedAuthentication.framework; path = "../../SharedAuthentication/build/xcode-frameworks/SharedAuthentication.framework"; sourceTree = "<group>"; };
+		42C8A8162416E109004D0777 /* KotlinIOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = KotlinIOS.xctestplan; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47729E0522F447C800B9B36B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47729E0C22F447CA00B9B36B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		47729DF922F447C800B9B36B = {
 			isa = PBXGroup;
 			children = (
+				42C8A8162416E109004D0777 /* KotlinIOS.xctestplan */,
 				47729E0422F447C800B9B36B /* KotlinIOS */,
 				47729E1922F447CA00B9B36B /* KotlinIOSTests */,
 				47729E2422F447CA00B9B36B /* KotlinIOSUITests */,
@@ -331,6 +333,8 @@
 				427ACDD223E8414700225AA3 /* PBXTargetDependency */,
 			);
 			name = KotlinIOS;
+			packageProductDependencies = (
+			);
 			productName = KotlinIOS;
 			productReference = 47729E0222F447C800B9B36B /* KotlinIOS.app */;
 			productType = "com.apple.product-type.application";
@@ -410,6 +414,8 @@
 				Base,
 			);
 			mainGroup = 47729DF922F447C800B9B36B;
+			packageReferences = (
+			);
 			productRefGroup = 47729E0322F447C800B9B36B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -603,7 +609,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -636,7 +642,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -646,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AuthenticationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -666,6 +673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AuthenticationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -780,6 +788,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -930,7 +939,7 @@
 				426F9AFB23C6437C00A8437A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		426F9AFC23C6437C00A8437A /* Build configuration list for PBXNativeTarget "AuthenticationTests" */ = {
 			isa = XCConfigurationList;
@@ -939,7 +948,7 @@
 				426F9AFE23C6437C00A8437A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		47729DFD22F447C800B9B36B /* Build configuration list for PBXProject "KotlinIOS" */ = {
 			isa = XCConfigurationList;
@@ -948,7 +957,7 @@
 				47729E2922F447CA00B9B36B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		47729E2A22F447CA00B9B36B /* Build configuration list for PBXNativeTarget "KotlinIOS" */ = {
 			isa = XCConfigurationList;
@@ -957,7 +966,7 @@
 				47729E2C22F447CA00B9B36B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		47729E2D22F447CA00B9B36B /* Build configuration list for PBXNativeTarget "KotlinIOSTests" */ = {
 			isa = XCConfigurationList;
@@ -966,7 +975,7 @@
 				47729E2F22F447CA00B9B36B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		47729E3022F447CA00B9B36B /* Build configuration list for PBXNativeTarget "KotlinIOSUITests" */ = {
 			isa = XCConfigurationList;
@@ -975,7 +984,7 @@
 				47729E3222F447CA00B9B36B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

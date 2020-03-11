@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.BuildConfig.FIREBASE_API_KEY
 import co.joebirch.minimise.authentication.interactor.Authenticate
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class AuthenticationViewModel @Inject constructor(
     private val authenticate: Authenticate
-) : ViewModel(), AuthenticateView {
+) : BaseViewModel(), AuthenticateView {
 
     private val uiState =
         MutableLiveData<AuthenticationState>().default(

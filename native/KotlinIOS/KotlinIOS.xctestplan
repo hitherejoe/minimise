@@ -1,0 +1,43 @@
+{
+  "configurations" : [
+    {
+      "id" : "C5ADB152-C64A-414A-A7DB-BCA99D5DDFE4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:KotlinIOS.xcodeproj",
+      "identifier" : "47729E0122F447C800B9B36B",
+      "name" : "KotlinIOS"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:KotlinIOS.xcodeproj",
+        "identifier" : "47729E1522F447CA00B9B36B",
+        "name" : "KotlinIOSTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:KotlinIOS.xcodeproj",
+        "identifier" : "47729E2022F447CA00B9B36B",
+        "name" : "KotlinIOSUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:KotlinIOS.xcodeproj",
+        "identifier" : "426F9AE923C6437C00A8437A",
+        "name" : "AuthenticationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

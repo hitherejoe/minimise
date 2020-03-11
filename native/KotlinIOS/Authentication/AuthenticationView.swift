@@ -5,8 +5,6 @@ import SharedAuthentication
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel = AuthenticationViewModel(authenticate: Authenticate())
-    //@State private var email = ""
-    //@State private var password = ""
 
     public init() {
     }

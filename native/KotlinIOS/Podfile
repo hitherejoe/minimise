@@ -13,9 +13,14 @@ target 'KotlinIOS' do
     inherit! :search_paths
     # Pods for testing
   end
-
-  target 'KotlinIOSUITests' do
+  
+  target 'AuthenticationTests' do
+    inherit! :search_paths
     # Pods for testing
   end
 
+end
+
+target 'KotlinIOSUITests' do
+  # Pods for testing
 end

@@ -5,19 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.fragment.app.Fragment
+import co.joebirch.minimise.android.core.di.BaseFragment
+import co.joebirch.minimise.android.core.di.ViewModelFactory
 import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
+import androidx.fragment.app.viewModels
 
-class AuthenticationFragment : Fragment() {
+class AuthenticationFragment : BaseFragment() {
 
-    @Inject lateinit var viewModel: AuthenticationViewModel
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var authenticatonValidator: AuthenticationValidator
+
+    private val authenticationViewModel: AuthenticationViewModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         inject(this)
+        viewModel = authenticationViewModel
     }
 
     override fun onCreateView(
@@ -33,11 +40,11 @@ class AuthenticationFragment : Fragment() {
 
             composeAuthenticationContent(
                 viewLifecycleOwner,
-                viewModel.observeAuthenticationState(),
-                viewModel::toggleAuthenticationMode,
-                viewModel::authenticate,
-                viewModel::setEmailAddress,
-                viewModel::setPassword
+                authenticationViewModel.observeAuthenticationState(),
+                authenticationViewModel::toggleAuthenticationMode,
+                authenticationViewModel::authenticate,
+                authenticationViewModel::setEmailAddress,
+                authenticationViewModel::setPassword
             )
         }
     }

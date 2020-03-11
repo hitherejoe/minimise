@@ -6,10 +6,11 @@ import co.joebirch.minimise.android.core.di.scope.FragmentScope
 import co.joebirch.minimise.authentication.AuthenticationFragment
 import dagger.Component
 import co.joebirch.minimise.authentication.di.module.AuthenticationModule
+import co.joebirch.minimise.authentication.di.module.ViewModelModule
 
 @FragmentScope
 @Component(
-    modules = [AuthenticationModule::class],
+    modules = [AuthenticationModule::class, ViewModelModule::class],
     dependencies = [CoreComponent::class]
 )
 interface AuthenticationComponent : BaseComponent<AuthenticationFragment> {
