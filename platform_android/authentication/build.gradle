@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation project(":platform_android:core")
     implementation project(":platform_android:authentication-ui")
+    implementation project(":platform_android:navigation")
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedAuthentication')
     implementation project(':platform_android:common-ui')

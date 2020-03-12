@@ -9,6 +9,7 @@ import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.BuildConfig.FIREBASE_API_KEY
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
+import co.joebirch.minimise.navigation.AuthenticationDirections
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -103,6 +104,7 @@ class AuthenticationViewModel @Inject constructor(
                 isLoading = false
                 success = true
             }
+            navigate(AuthenticationDirections.Inventory, finishActivity = true)
         } else {
             uiState.value!!.build {
                 isLoading = false

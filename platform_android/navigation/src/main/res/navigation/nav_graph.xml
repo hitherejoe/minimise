@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_authenticationFragment_to_forgottenPasswordFragment"
             app:destination="@id/forgottenPasswordFragment" />
+        <action
+            android:id="@+id/action_authenticationFragment_to_inventoryFragment"
+            app:destination="@id/inventoryFragment" />
     </fragment>
 
     <fragment
@@ -30,4 +33,8 @@
             android:id="@+id/action_forgottenPasswordFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/inventoryFragment"
+        android:name="co.joebirch.minimise.inventory.InventoryFragment" />
 </navigation>
