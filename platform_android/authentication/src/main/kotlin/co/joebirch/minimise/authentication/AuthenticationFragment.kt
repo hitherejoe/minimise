@@ -11,6 +11,7 @@ import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 
 class AuthenticationFragment : BaseFragment() {
 
