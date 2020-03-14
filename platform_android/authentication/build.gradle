@@ -1,3 +1,5 @@
+import co.joebirch.minimise.buildsrc.*
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -46,25 +48,28 @@ dependencies {
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedAuthentication')
     implementation project(':platform_android:common-ui')
-    implementation Deps.kotlin
-    implementation Deps.kotlin_reflect
 
-    implementation Deps.material
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.fragment:fragment:1.2.2'
-    implementation 'androidx.fragment:fragment-ktx:1.2.2'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.coreKtx
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-common:2.2.0"
-    implementation AndroidDeps.dagger
-    kapt AndroidDeps.dagger_compiler
-    testImplementation 'junit:junit:4.12'
+    implementation Deps.Dagger.dagger
+    kapt Deps.Dagger.compiler
 
-    def fragment_version = "1.2.2"
-    androidTestImplementation "androidx.fragment:fragment-testing:$fragment_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation Deps.Fragment.base
+    implementation Deps.Fragment.ktx
+
+    implementation Deps.Google.material
+
+    implementation Deps.Kotlin.stdLib
+
+    implementation Deps.Lifecycle.common
+    implementation Deps.Lifecycle.viewModelKtx
+
+    testImplementation Deps.junit
+
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
+    androidTestImplementation Deps.Fragment.testing
 }
 
 def getKey(String key) {

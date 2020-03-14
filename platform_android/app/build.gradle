@@ -1,3 +1,6 @@
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -34,11 +37,11 @@ dependencies {
     implementation project(':platform_android:onboarding')
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
-    implementation Deps.kotlin
-    implementation Deps.material
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.core:core-ktx:1.2.0'
+    implementation Deps.Kotlin.stdLib
+    implementation Deps.Google.material
+    api Deps.AndroidX.appCompat
+    api Deps.AndroidX.coreKtx
 
-    kapt AndroidDeps.dagger_compiler
-    kapt AndroidDeps.dagger_processor
+    kapt Deps.Dagger.compiler
+    kapt Deps.Dagger.processor
 }

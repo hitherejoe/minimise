@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
 
-        plugins {
-            kotlin("multiplatform")
-            id("kotlinx-serialization")
-        }
+plugins {
+    kotlin("multiplatform")
+    id("kotlinx-serialization")
+}
 
 kotlin {
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
@@ -24,19 +26,21 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation(project(":shared:SharedCommon"))
-        implementation(Deps.kotlin)
-        implementation(Deps.kotlin_common)
-        implementation(Deps.ktor_client_core)
-        implementation(Deps.ktor_client_json)
-        implementation(Deps.ktor_client_serialization)
-        implementation(Deps.kotlin_serialization)
+
+        implementation(Deps.Kotlin.common)
+        implementation(Deps.Kotlin.kotlinSerialization)
+        implementation(Deps.Kotlin.stdLib)
+
+        implementation(Deps.Ktor.clientCore)
+        implementation(Deps.Ktor.clientJson)
+        implementation(Deps.Ktor.clientSerialization)
     }
 
     sourceSets["commonTest"].dependencies {
-        api("io.ktor:ktor-client-mock-jvm:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-mock-js:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-mock-native:${Versions.ktor_version}")
-        api("io.ktor:ktor-client-mock:${Versions.ktor_version}")
+        api(Deps.Ktor.clientMock)
+        api(Deps.Ktor.clintMockJvm)
+        api(Deps.Ktor.clientMockNative)
+
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
         implementation("junit:junit:4.12")
@@ -45,22 +49,21 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation(Deps.kotlin_serialization_runtime)
-        implementation(Deps.ktor_client_android)
-        implementation(Deps.ktor_json_jvm)
-        implementation(Deps.ktor_serialization_jvm)
-        implementation(Deps.ktor_client_okhttp)
+        implementation(Deps.Kotlin.serializationRuntime)
+        implementation(Deps.Ktor.clientAndroid)
+        implementation(Deps.Ktor.clientJsonJvm)
+        implementation(Deps.Ktor.clientSerializationJvm)
+        implementation(Deps.Ktor.clientOkhttp)
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation(Deps.kotlin_serialization_runtime_native)
-        implementation(Deps.ktor_client_core_native)
-        implementation(Deps.ktor_client_serialization_native)
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serializer_version}")
+        implementation(Deps.Kotlin.serializationRuntimeNative)
+        implementation(Deps.Ktor.clientIos)
+        implementation(Deps.Ktor.clientSerializationNative)
+        implementation(Deps.Kotlin.serializationRuntimeNative)
 
         // HTTP
-        implementation("io.ktor:ktor-client-ios:${Versions.ktor_version}")
-        implementation("io.ktor:ktor-client-json-native:${Versions.ktor_version}")
-        implementation("io.ktor:ktor-client-serialization-iosx64:${Versions.ktor_version}")
+        implementation(Deps.Ktor.clientJsonNative)
+        implementation(Deps.Ktor.clientSerializationNativeX64)
     }
 }

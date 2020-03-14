@@ -1,3 +1,5 @@
+import co.joebirch.minimise.buildsrc.*
+
 apply plugin: "com.android.library"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -31,17 +33,19 @@ dependencies {
 
     implementation project(":platform_android:navigation")
     implementation project(":platform_android:core")
-    implementation Deps.material
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.fragment:fragment:1.2.2'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation Deps.Google.material
+    implementation Deps.AndroidX.coreKtx
+    implementation Deps.Fragment.base
+    implementation Deps.AndroidX.appCompat
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    implementation AndroidDeps.dagger
-    kapt AndroidDeps.dagger_compiler
+    implementation Deps.Dagger.dagger
+    kapt Deps.Dagger.compiler
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    implementation Deps.Lifecycle.viewModelKtx
+
+    testImplementation Deps.junit
+
+    androidTestImplementation Deps.AndroidX.annotation
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
 }

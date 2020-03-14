@@ -1,3 +1,5 @@
+import co.joebirch.minimise.buildsrc.*
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -24,21 +26,22 @@ android {
 }
 
 dependencies {
-    implementation Deps.kotlin
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "org.mockito:mockito-core:3.1.0"
-    androidTestImplementation "org.mockito:mockito-android:3.1.0"
-    def nav_version = "2.3.0-alpha03"
+    implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.coreKtx
 
-    // Java language implementation
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation Deps.Kotlin.stdLib
 
-    // Kotlin
-    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    api "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation Deps.Navigation.fragment
+    implementation Deps.Navigation.ui
+
+    api Deps.Navigation.fragmentKtx
+    api Deps.Navigation.uiKtx
+
+    testImplementation Deps.junit
+
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
+
+    androidTestImplementation Deps.Mockito.core
+    androidTestImplementation Deps.Mockito.android
 }

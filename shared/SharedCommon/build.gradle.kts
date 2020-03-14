@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
 
 plugins {
     kotlin("multiplatform")
@@ -25,19 +27,19 @@ kotlin {
     jvm("android")
 
     sourceSets["commonMain"].dependencies {
-        implementation(Deps.kotlin_common)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.coroutine_version}")
+        implementation(Deps.Kotlin.common)
+        implementation(Deps.Coroutines.coreCommon)
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation(Deps.kotlin)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine_version}")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine_version}")
+        implementation(Deps.Kotlin.stdLib)
+        implementation(Deps.Coroutines.android)
+        implementation(Deps.Coroutines.core)
     }
 
     sourceSets["iosMain"].dependencies {
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutine_version}")
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:${Versions.coroutine_version}")
+        api(Deps.Coroutines.native)
+        api(Deps.Coroutines.iOS)
     }
 }
 

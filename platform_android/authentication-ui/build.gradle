@@ -1,3 +1,5 @@
+import co.joebirch.minimise.buildsrc.*
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
@@ -25,7 +27,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerExtensionVersion Deps.Compose.version
     }
 
     kotlinOptions {
@@ -38,27 +40,25 @@ dependencies {
     api project(':platform_android:common-ui')
     implementation project(':shared:SharedAuthentication')
 
-    implementation Deps.compose_runtime
-    implementation Deps.compose_layout
-    implementation Deps.compose_framework
-    implementation Deps.compose_material
-    implementation Deps.compose_tooling
-    implementation Deps.compose_foundation
-    implementation Deps.compose_text
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.framework
+    implementation Deps.Compose.material
+    implementation Deps.Compose.tooling
+    implementation Deps.Compose.foundation
+    implementation Deps.Compose.text
 
-    implementation "androidx.core:core-ktx:1.2.0"
-    implementation Deps.kotlin
-    implementation Deps.kotlin_reflect
-    implementation Deps.material
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation Deps.AndroidX.coreKtx
+    implementation Deps.Kotlin.stdLib
+    implementation Deps.Google.material
+    implementation Deps.AndroidX.appCompat
 
-    implementation "androidx.lifecycle:lifecycle-common:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    implementation 'androidx.fragment:fragment:1.2.2'
-    testImplementation 'junit:junit:4.12'
+    implementation Deps.Lifecycle.common
+    implementation Deps.Lifecycle.viewModelKtx
+    implementation Deps.Fragment.base
+    testImplementation Deps.junit
 
-    def fragment_version = "1.2.2"
-    androidTestImplementation "androidx.fragment:fragment-testing:$fragment_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation Deps.Fragment.testing
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
 }

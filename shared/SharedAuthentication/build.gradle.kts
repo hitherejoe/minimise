@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
 
 plugins {
     id("org.jetbrains.kotlin.native.cocoapods")
@@ -30,9 +32,9 @@ kotlin {
     jvm("android")
 
     sourceSets["commonMain"].dependencies {
-        implementation(Deps.kotlin_common)
-        implementation(Deps.coroutines_core)
-        implementation(Deps.coroutines_core_common)
+        implementation(Deps.Kotlin.common)
+        implementation(Deps.Coroutines.core)
+        implementation(Deps.Coroutines.coreCommon)
         implementation(project(":shared:SharedCommon"))
         implementation(project(":FirebaseAuthentication"))
     }
@@ -46,13 +48,13 @@ kotlin {
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation(Deps.kotlin)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine_version}")
+        implementation(Deps.Kotlin.stdLib)
+        implementation(Deps.Coroutines.android)
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation(Deps.kotlin)
-        implementation(Deps.coroutines_native)
+        implementation(Deps.Kotlin.stdLib)
+        implementation(Deps.Coroutines.native)
     }
 }
 

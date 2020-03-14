@@ -1,66 +1,144 @@
+package co.joebirch.minimise.buildsrc
+
 object Versions {
     val minSdk = 21
     val targetSdk = 29
     val compileSdk = 29
-    val kotlin = "1.3.61"
-    val compose = "0.1.0-dev06"
-    val coroutine_version = "1.3.3"
-    val serializer_version = "0.14.0"
-    val ktor_version = "1.3.1"
-
-    val material_version = "1.2.0-alpha03"
-    val dagger = "2.25.4"
+    val kotlin = Deps.Kotlin.version
 }
 
 object Deps {
-    val coroutines_core_common = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.coroutine_version}"
-    val coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine_version}"
-    val coroutines_native = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutine_version}"
 
-    val compose_tooling = "androidx.ui:ui-tooling:${Versions.compose}"
-    val compose_layout = "androidx.ui:ui-layout:${Versions.compose}"
-    val compose_material = "androidx.ui:ui-material:${Versions.compose}"
-    val compose_core = "androidx.ui:ui-core:${Versions.compose}"
-    val compose_framework = "androidx.ui:ui-framework:${Versions.compose}"
-    val compose_android = "androidx.ui:ui-android:${Versions.compose}"
-    val compose_text = "androidx.ui:ui-text:${Versions.compose}"
-    val compose_foundation = "androidx.ui:ui-foundation:${Versions.compose}"
-    val compose_runtime = "androidx.compose:compose-runtime:${Versions.compose}"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha02"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
+
+    const val junit = "junit:junit:4.12"
+
+    object Kotlin {
+        const val version = "1.3.61"
+        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
+        const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
+        const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
+        const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
+
+        const val serializationRuntimeNative =
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.14.0"
+
+        const val serializationRuntime =
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0"
+
+        const val kotlinSerialization =
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.14.0"
+    }
+
+    object Lifecycle {
+        const val lifecycleVersion = "2.2.0"
+
+        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+        const val extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+        const val common = "androidx.lifecycle:lifecycle-common:$lifecycleVersion"
+        const val commonJava8 = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+        const val runtime = "androidx.lifecycle:lifecycle-runtime:$lifecycleVersion"
+    }
+
+    object AndroidX {
+        const val annotation = "androidx.annotation:annotation:1.1.0"
+        const val coreKtx = "androidx.core:core-ktx:1.2.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.1.0"
+        const val junit = "androidx.test.ext:junit:1.1.1"
+    }
+
+    object Navigation {
+        const val version = "2.3.0-alpha03"
+        const val fragment = "androidx.navigation:navigation-fragment:$version"
+        const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
+        const val ui = "androidx.navigation:navigation-ui:$version"
+        const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+    }
+
+    object Espresso {
+        const val version = "3.2.0"
+        const val core = "androidx.test.espresso:espresso-core:$version"
+    }
+
+    object Mockito {
+        const val version = "3.2.0"
+        const val core = "androidx.test.espresso:espresso-core:$version"
+        const val android = "org.mockito:mockito-android:$version"
+    }
+
+    object Fragment {
+        const val version = "1.2.2"
+
+        const val base = "androidx.fragment:fragment:$version"
+        const val ktx = "androidx.fragment:fragment-ktx:$version"
+        const val testing = "androidx.fragment:fragment-testing:$version"
+    }
+
+    object Coroutines {
+        const val version = "1.3.3"
+        const val coreCommon =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+        const val android =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
+        const val native =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
+        const val iOS =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
+    }
+
+    object Compose {
+        const val version = "0.1.0-dev06"
+
+        const val android = "androidx.ui:ui-android:$version"
+        const val core = "androidx.ui:ui-core:$version"
+        const val foundation = "androidx.ui:ui-foundation:$version"
+        const val framework = "androidx.ui:ui-framework:$version"
+        const val layout = "androidx.ui:ui-layout:$version"
+        const val material = "androidx.ui:ui-material:$version"
+        const val runtime = "androidx.compose:compose-runtime:$version"
+        const val text = "androidx.ui:ui-text:$version"
+        const val tooling = "androidx.ui:ui-tooling:$version"
+    }
+
+    object Ktor {
+        const val version = "1.3.1"
+
+        const val clientCore = "io.ktor:ktor-client-core:$version"
+        const val clientJson = "io.ktor:ktor-client-json:$version"
+        const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
+
+        const val clientAndroid = "io.ktor:ktor-client-android:$version"
+        const val clientJsonJvm = "io.ktor:ktor-client-json-jvm:$version"
+        const val clientSerializationJvm = "io.ktor:ktor-client-serialization-jvm:$version"
+        const val clientOkhttp = "io.ktor:ktor-client-okhttp:$version"
 
 
-    val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-    val kotlin_extensions = "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}"
-    val kotlin_common = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"
-    val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
+        const val clientIos = "io.ktor:ktor-client-ios:$version"
+        const val clientJsonNative = "io.ktor:ktor-client-json-native:$version"
+        const val clientCoreNative = "io.ktor:ktor-client-core-native:$version"
+        const val clientSerializationNative =
+            "io.ktor:ktor-client-serialization-native:$version"
+        const val clientSerializationNativeX64 =
+            "io.ktor:ktor-client-serialization-iosx64:$version"
 
-    val ktor_client_core = "io.ktor:ktor-client-core:${Versions.ktor_version}"
-    val ktor_client_json = "io.ktor:ktor-client-json:${Versions.ktor_version}"
-    val ktor_client_serialization = "io.ktor:ktor-client-serialization:${Versions.ktor_version}"
-    val kotlin_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serializer_version}"
+        const val clintMockJvm = "io.ktor:ktor-client-mock-jvm:$version"
+        const val clientMockJs = "io.ktor:ktor-client-mock-js:$version"
+        const val clientMockNative = "io.ktor:ktor-client-mock-native:$version"
+        const val clientMock = "io.ktor:ktor-client-mock:$version"
+    }
 
-    val ktor_client_android = "io.ktor:ktor-client-android:${Versions.ktor_version}"
-    val ktor_json_jvm = "io.ktor:ktor-client-json-jvm:${Versions.ktor_version}"
-    val ktor_serialization_jvm = "io.ktor:ktor-client-serialization-jvm:${Versions.ktor_version}"
-    val ktor_client_okhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor_version}"
-    val kotlin_serialization_runtime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serializer_version}"
+    object Google {
+        val material = "com.google.android.material:material:1.2.0-alpha03"
+    }
 
-    val ktor_client_json_nativektor_client_ios = "io.ktor:ktor-client-ios:${Versions.ktor_version}"
-    val ktor_client_json_native = "io.ktor:ktor-client-json-native:${Versions.ktor_version}"
-    val ktor_client_core_native = "io.ktor:ktor-client-core-native:${Versions.ktor_version}"
-    val ktor_client_serialization_native = "io.ktor:ktor-client-serialization-native:${Versions.ktor_version}"
+    object Dagger {
+        private const val version = "2.25.4"
 
-    val kotlin_serialization_runtime_native = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:${Versions.serializer_version}"
+        const val dagger = "com.google.dagger:dagger:$version"
+        const val compiler = "com.google.dagger:dagger-compiler:$version"
+        const val processor = "com.google.dagger:dagger-android-processor:$version"
+    }
 
-    val material = "com.google.android.material:material:${Versions.material_version}"
-
-
-}
-
-object AndroidDeps {
-    val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-
-    val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    val dagger_compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    val dagger_support = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    val dagger_processor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 }

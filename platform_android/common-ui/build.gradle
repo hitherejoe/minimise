@@ -1,12 +1,13 @@
-apply plugin: 'com.android.library'
+import co.joebirch.minimise.buildsrc.*
 
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Versions.compileSdk
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion Versions.minSdk
     }
 
     compileOptions {
@@ -19,7 +20,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerExtensionVersion Deps.Compose.version
     }
 
     kotlinOptions {
@@ -28,21 +29,22 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:1.2.0-rc01"
+    implementation Deps.AndroidX.coreKtx
 
-    implementation Deps.compose_material
-    implementation Deps.compose_layout
-    implementation Deps.compose_framework
-    implementation Deps.compose_foundation
-    implementation Deps.compose_runtime
-    implementation Deps.compose_tooling
+    implementation Deps.Compose.material
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.framework
+    implementation Deps.Compose.foundation
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.tooling
 
-    implementation Deps.material
+    implementation Deps.Google.material
 
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation "android.arch.lifecycle:runtime:1.1.1"
+    implementation Deps.Lifecycle.extensions
+    implementation Deps.Lifecycle.viewModelKtx
+    implementation Deps.Lifecycle.commonJava8
+    implementation Deps.Lifecycle.commonJava8
+    implementation Deps.Lifecycle.runtime
 
-    implementation Deps.kotlin
+    implementation Deps.Kotlin.stdLib
 }

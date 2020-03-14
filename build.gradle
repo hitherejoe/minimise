@@ -1,0 +1,50 @@
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
+
+buildscript {
+    ext.buildConfig = [
+        'compileSdk': 29,
+        'minSdk'    : 21,
+        'targetSdk' : 29,
+    ]
+
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        maven { url 'https://kotlin.bintray.com/kotlinx' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlinx/' }
+        maven { url 'https://dl.bintray.com/jetbrains/kotlin-native-dependencies' }
+        maven { url 'https://dl.bintray.com/joebirch/joebirch' }
+        maven { url 'https://dl.bintray.com/florent37/maven' }
+
+        jcenter()
+    }
+
+    dependencies {
+        classpath Deps.androidGradlePlugin
+        classpath Deps.kotlinGradlePlugin
+        classpath Deps.Kotlin.serialization
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlinx.html' }
+        maven { url 'https://dl.bintray.com/kotlin/ktor' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlinx/' }
+        maven { url 'https://kotlin.bintray.com/kotlinx' }
+        maven { url 'https://kotlin.bintray.com/kotlin-dev' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://ci.android.com/builds/submitted/6116482/androidx_snapshot/latest/repository/' }
+        maven { url 'https://dl.bintray.com/joebirch/joebirch' }
+        maven { url 'https://dl.bintray.com/florent37/maven' }
+        mavenLocal()
+    }
+}
