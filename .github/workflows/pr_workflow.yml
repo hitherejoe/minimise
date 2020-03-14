@@ -27,13 +27,3 @@ jobs:
           java-version: 1.8
       - name: Unit tests
         run: bash ./gradlew :shared:SharedAuthentication:allTests
-  ios_test:
-    name: Test
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Build and test
-        run: |
-          cd native/KotlinIOS
-          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination "platform=iOS Simulator,name=iPhone 11 Pro"
