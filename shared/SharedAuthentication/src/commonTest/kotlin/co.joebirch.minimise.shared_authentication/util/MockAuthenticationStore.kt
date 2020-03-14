@@ -1,12 +1,21 @@
 package co.joebirch.minimise.shared_authentication.util
 
-import co.joebirch.minimise.authentication_remote.AuthenticationStore
-import co.joebirch.minimise.authentication_remote.model.*
+import co.joebirch.firebase_auth_multiplatform.AuthenticationStore
+import co.joebirch.firebase_auth_multiplatform.model.*
 
 internal class MockAuthenticationStore : AuthenticationStore {
 
-    lateinit var whenSignUp: (email: String, password: String, returnSecureToken: Boolean) -> FirebaseAuthenticationResponse
-    lateinit var whenSignIn: (email: String, password: String, returnSecureToken: Boolean) -> FirebaseAuthenticationResponse
+    lateinit var whenSignUp: (
+        email: String,
+        password: String,
+        returnSecureToken: Boolean
+    ) -> FirebaseAuthenticationResponse
+
+    lateinit var whenSignIn: (
+        email: String,
+        password: String,
+        returnSecureToken: Boolean
+    ) -> FirebaseAuthenticationResponse
 
     override suspend fun signUp(
         apiKey: String,

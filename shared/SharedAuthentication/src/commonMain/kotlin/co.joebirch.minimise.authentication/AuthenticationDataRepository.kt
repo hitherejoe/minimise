@@ -18,7 +18,7 @@ class AuthenticationDataRepository constructor(
         password: String
     ): AuthenticationModel {
         return authenticationResponseMapper.mapFromAuthenticationResponse(
-            authenticationStore.signIn(apiKey, emailAddress, password, true)
+            authenticationStore.signUp(apiKey, emailAddress, password, true)
         )
     }
 

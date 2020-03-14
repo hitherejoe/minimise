@@ -2,6 +2,7 @@ package co.joebirch.minimise.shared_authentication
 
 import co.joebirch.minimise.authentication.AuthenticationDataRepository
 import co.joebirch.minimise.shared_authentication.mapper.MockAuthenticationResponseMapper
+import co.joebirch.minimise.shared_authentication.mapper.MockResetPasswordResponseMapper
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationModel
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationResponse
 import co.joebirch.minimise.shared_authentication.util.DataFactory.randomString
@@ -14,9 +15,10 @@ class AuthenticationDataRepositoryTest {
     private val mockAuthenticationRemote =
         MockAuthenticationStore()
     private val mockAuthenticationMapper = MockAuthenticationResponseMapper()
+    private val mockPasswordResponseMapper = MockResetPasswordResponseMapper()
     private val authenticationRepository =
         AuthenticationDataRepository(
-            mockAuthenticationRemote, mockAuthenticationMapper
+            mockAuthenticationRemote, mockAuthenticationMapper, mockPasswordResponseMapper
         )
 
     @Test
@@ -24,6 +26,7 @@ class AuthenticationDataRepositoryTest {
         runTest {
             val authenticationModel = makeAuthenticationModel()
             val authenticationResponse = makeAuthenticationResponse(authenticationModel.token!!)
+
             mockAuthenticationMapper.whenMapFromAuthenticationResponse =
                 { _ -> authenticationModel }
             mockAuthenticationRemote.whenSignUp = { _, _, _ -> authenticationResponse }

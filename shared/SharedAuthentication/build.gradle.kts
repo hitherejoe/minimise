@@ -40,9 +40,10 @@ kotlin {
     }
 
     sourceSets["commonTest"].dependencies {
+        implementation(project(":FirebaseAuthentication"))
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
-        implementation("junit:junit:4.12")
+        implementation(Deps.junit)
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3")
     }
