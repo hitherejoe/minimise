@@ -3,20 +3,9 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+ 
   test:
-    name: Run Android Unit Tests
+    name: Run all Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
@@ -26,14 +15,4 @@ jobs:
         with:
           java-version: 1.8
       - name: Unit tests
-        run: bash ./gradlew :shared:SharedAuthentication:allTests
-  ios_test:
-    name: Test
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Build and test
-        run: |
-          cd native/KotlinIOS
-          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme KotlinIOS -destination "platform=iOS Simulator,name=iPhone 11 Pro"
+        run: bash ./gradlew allTests
