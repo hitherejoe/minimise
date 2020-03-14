@@ -22,9 +22,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-
-        buildConfigField 'String', 'FIREBASE_API_KEY',
-                "\"" + getKey('FIREBASE_API_KEY') + "\""
     }
 
     sourceSets {
@@ -70,10 +67,4 @@ dependencies {
     androidTestImplementation Deps.AndroidX.junit
     androidTestImplementation Deps.Espresso.core
     androidTestImplementation Deps.Fragment.testing
-}
-
-def getKey(String key) {
-    def Properties props = new Properties()
-    props.load(new FileInputStream(file('../../local.properties')))
-    return props[key]
 }

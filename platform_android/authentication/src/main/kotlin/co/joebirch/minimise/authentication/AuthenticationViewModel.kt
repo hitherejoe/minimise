@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
-import co.joebirch.minimise.authentication.BuildConfig.FIREBASE_API_KEY
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
@@ -72,7 +71,7 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignUp(
-                    FIREBASE_API_KEY,
+                    "FIREBASE_API_KEY",
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->
@@ -89,7 +88,7 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignIn(
-                    FIREBASE_API_KEY,
+                    "FIREBASE_API_KEY",
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->
