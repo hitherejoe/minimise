@@ -9,7 +9,14 @@ sealed class AuthenticationState(
     val errorMessage: String? = null
 ) {
 
-    object Idle : AuthenticationState()
+    data class Idle(
+        val userEmail: String = "",
+        val userPassword: String = "",
+        val mode: AuthenticateMode = AuthenticateMode.SignUp
+    ) : AuthenticationState(
+        emailAddress = userEmail, password = userPassword,
+        authenticationMode = mode
+    )
 
     data class Loading(
         val userEmail: String,
@@ -47,7 +54,7 @@ sealed class AuthenticationState(
             } else if (success == true) {
                 Success
             } else {
-                Idle
+                Idle(emailAddress, password, authenticateMode)
             }
         }
     }

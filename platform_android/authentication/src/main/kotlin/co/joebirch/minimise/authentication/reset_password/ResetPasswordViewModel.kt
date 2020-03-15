@@ -17,7 +17,7 @@ class ResetPasswordViewModel @Inject constructor(
 
     private val uiState =
         MutableLiveData<AuthenticationState>().default(
-            AuthenticationState.Idle)
+            AuthenticationState.Idle())
     fun observeAuthenticationState(): LiveData<AuthenticationState> = uiState
 
     override fun resetPassword(emailAddress: String) {
