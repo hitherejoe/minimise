@@ -11,6 +11,7 @@ import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
+import co.joebirch.minimise.navigation.AuthenticationDirections
 
 class AuthenticationFragment : BaseFragment() {
 
@@ -45,6 +46,7 @@ class AuthenticationFragment : BaseFragment() {
                 authenticationViewModel.observeAuthenticationState(),
                 authenticationViewModel::toggleAuthenticationMode,
                 authenticationViewModel::authenticate,
+                { authenticationViewModel.navigate(AuthenticationDirections.ResetPassword) },
                 authenticationViewModel::setEmailAddress,
                 authenticationViewModel::setPassword
             )
