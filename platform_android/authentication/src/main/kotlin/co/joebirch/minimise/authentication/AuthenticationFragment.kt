@@ -11,12 +11,13 @@ import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 
 class AuthenticationFragment : BaseFragment() {
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var authenticatonValidator: AuthenticationValidator
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var authenticatonValidator: AuthenticationValidator
 
     private val authenticationViewModel: AuthenticationViewModel by viewModels {
         viewModelFactory
