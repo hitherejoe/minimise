@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Text
 import androidx.ui.core.TextField
+import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.DrawBackground
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.graphics.Color
@@ -19,6 +20,8 @@ import androidx.ui.layout.LayoutAlign.End
 import androidx.ui.material.Button
 import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.MaterialTheme
+import androidx.ui.material.TextButton
+import androidx.ui.material.ripple.Ripple
 import androidx.ui.material.surface.Surface
 import androidx.ui.res.stringResource
 import androidx.ui.text.TextStyle
@@ -34,6 +37,7 @@ fun ViewGroup.composeAuthenticationContent(
     state: LiveData<AuthenticationState>,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
+    forgotPasswordClicked: () -> Unit,
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
@@ -41,6 +45,7 @@ fun ViewGroup.composeAuthenticationContent(
         state,
         authenticationModeToggled,
         authenticateClicked,
+        forgotPasswordClicked,
         emailChanged,
         passwordChanged
     )
@@ -51,6 +56,7 @@ private fun ComposeAuthenticationContent(
     state: LiveData<AuthenticationState>,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
+    forgotPasswordClicked: () -> Unit,
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
@@ -62,6 +68,7 @@ private fun ComposeAuthenticationContent(
             state.value!!.authenticationMode,
             authenticationModeToggled,
             authenticateClicked,
+            forgotPasswordClicked,
             emailChanged,
             passwordChanged
         )
@@ -80,6 +87,7 @@ private fun FormContent(
     authenticationMode: AuthenticateMode,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
+    forgotPasswordClicked: () -> Unit,
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
@@ -112,9 +120,14 @@ private fun FormContent(
                 )
                 Spacer(LayoutHeight(12.dp))
                 if (authenticationMode == AuthenticateMode.SignIn) {
-                    Button(modifier = LayoutGravity.Center) {
+                    TextButton(onClick = {
+                        forgotPasswordClicked()
+                    }, modifier = LayoutGravity.Center.plus(LayoutWidth.Fill)) {
                         Text(
-                            text = stringResource(R.string.forgotten_your_password)
+                            text = stringResource(R.string.forgotten_your_password),
+                            modifier = LayoutGravity.Center.plus(
+                                LayoutPadding(16.dp)
+                            )
                         )
                     }
                 }
