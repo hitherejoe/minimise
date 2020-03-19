@@ -12,7 +12,7 @@ import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import kotlinx.serialization.json.Json
 
-public class FirebaseAuthenticationStore(
+class FirebaseAuthenticationStore(
     private val httpClient: HttpClient
 ) : AuthenticationStore {
 
@@ -235,14 +235,14 @@ public class FirebaseAuthenticationStore(
     }
 
     companion object {
-        const val ENDPOINT_SIGN_UP = "signUp"
-        const val ENDPOINT_SIGN_IN = "signInWithPassword"
-        const val ENDPOINT_SIGN_IN_WITH_CUSTOM_TOKEN = "signInWithCustomToken"
-        const val ENDPOINT_SEND_RESET_PASSWORD_EMAIL = "sendOobCode"
-        const val ENDPOINT_RESET_PASSWORD = "resetPassword"
-        const val ENDPOINT_UPDATE_USER = "update"
-        const val ENDPOINT_RETRIEVE_USER = "lookup"
-        const val ENDPOINT_DELETE_USER = "delete"
-        const val BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:"
+        private const val ENDPOINT_SIGN_UP = "signUp"
+        private const val ENDPOINT_SIGN_IN = "signInWithPassword"
+        private const val ENDPOINT_SIGN_IN_WITH_CUSTOM_TOKEN = "signInWithCustomToken"
+        private const val ENDPOINT_SEND_RESET_PASSWORD_EMAIL = "sendOobCode"
+        private const val ENDPOINT_RESET_PASSWORD = "resetPassword"
+        private const val ENDPOINT_UPDATE_USER = "update"
+        private const val ENDPOINT_RETRIEVE_USER = "lookup"
+        private const val ENDPOINT_DELETE_USER = "delete"
+        private const val BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:"
     }
 }

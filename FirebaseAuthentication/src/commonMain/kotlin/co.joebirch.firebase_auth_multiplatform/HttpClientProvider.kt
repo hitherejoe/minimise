@@ -4,7 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 
-internal class HttpClientProvider {
+class HttpClientProvider {
     val httpClient = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer()

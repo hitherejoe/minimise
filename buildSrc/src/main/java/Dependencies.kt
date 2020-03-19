@@ -80,6 +80,7 @@ object Deps {
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+        const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         const val android =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native =
