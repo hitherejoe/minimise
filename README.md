@@ -10,3 +10,4 @@ Minimise app built using kotlin multiplatform
 
 [Building an App with Kotlin Multiplatform: Structuring our app
 ](https://joebirch.co/2020/01/16/building-an-app-with-kotlin-multiplatform-structuring-our-app/)
+[Building our Authentication Module](https://joebirch.co/2020/03/19/building-an-app-with-kotlin-multiplatform-building-our-authentication-module/)
