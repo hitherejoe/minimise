@@ -38,8 +38,7 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        api(Deps.Coroutines.native)
-        api(Deps.Coroutines.iOS)
+        implementation(Deps.Coroutines.native)
     }
 }
 
