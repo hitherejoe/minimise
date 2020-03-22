@@ -13,4 +13,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Unit tests
-        run: bash xcodebuild test -project KotlinIOS.xcodeproj -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' -derivedDataPath build ONLY_ACTIVE_ARCH=YES
+        run: |
+          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
