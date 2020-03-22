@@ -9,7 +9,9 @@ Minimise is an app for Android & iOS. It's purposeful is to help us think more a
 Minimise is currently under heavy development and is not open to outside contributions. Once things are more buil out, this will change!
 
 [Android App source code](https://github.com/hitherejoe/minimise/tree/master/platform_android)
+
 [iOS App source code](https://github.com/hitherejoe/minimise/tree/master/native/KotlinIOS)
+
 [Shared Multiplatform code](https://github.com/hitherejoe/minimise/tree/master/shared)
 
 ## Supporting blog posts
