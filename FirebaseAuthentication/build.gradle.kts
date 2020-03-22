@@ -54,13 +54,10 @@ kotlin {
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation(Deps.Kotlin.serializationRuntimeNative)
         implementation(Deps.Ktor.clientIos)
         implementation(Deps.Ktor.clientSerializationNative)
         implementation(Deps.Kotlin.serializationRuntimeNative)
 
-        // HTTP
         implementation(Deps.Ktor.clientJsonNative)
-        implementation(Deps.Ktor.clientSerializationNativeX64)
     }
 }

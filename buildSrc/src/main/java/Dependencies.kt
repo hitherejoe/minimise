@@ -9,26 +9,26 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha02"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha03"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
 
     const val junit = "junit:junit:4.12"
 
     object Kotlin {
-        const val version = "1.3.61"
+        const val version = "1.3.70"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
         const val serializationRuntimeNative =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.14.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0"
 
         const val serializationRuntime =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
         const val kotlinSerialization =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.14.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0"
     }
 
     object Lifecycle {
@@ -45,6 +45,10 @@ object Deps {
         const val annotation = "androidx.annotation:annotation:1.1.0"
         const val coreKtx = "androidx.core:core-ktx:1.2.0"
         const val appCompat = "androidx.appcompat:appcompat:1.1.0"
+
+        const val activity = "androidx.activity:activity:1.2.0-alpha02"
+        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha02"
+
         const val junit = "androidx.test.ext:junit:1.1.1"
     }
 
@@ -70,13 +74,13 @@ object Deps {
     object Fragment {
         const val version = "1.2.2"
 
-        const val base = "androidx.fragment:fragment:$version"
+        const val base = "androidx.fragment:fragment:1.3.0-alpha02"
         const val ktx = "androidx.fragment:fragment-ktx:$version"
         const val testing = "androidx.fragment:fragment-testing:$version"
     }
 
     object Coroutines {
-        const val version = "1.3.3"
+        const val version = "1.3.4"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -85,8 +89,8 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
-        const val iOS =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
+       // const val iOS =
+       //     "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
     }
 
     object Compose {
@@ -104,7 +108,7 @@ object Deps {
     }
 
     object Ktor {
-        const val version = "1.3.1"
+        const val version = "1.3.2"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"
@@ -121,8 +125,8 @@ object Deps {
         const val clientCoreNative = "io.ktor:ktor-client-core-native:$version"
         const val clientSerializationNative =
             "io.ktor:ktor-client-serialization-native:$version"
-        const val clientSerializationNativeX64 =
-            "io.ktor:ktor-client-serialization-iosx64:$version"
+       // const val clientSerializationNativeX64 =
+       //     "io.ktor:ktor-client-serialization-iosx64:$version"
 
         const val clintMockJvm = "io.ktor:ktor-client-mock-jvm:$version"
         const val clientMockJs = "io.ktor:ktor-client-mock-js:$version"
