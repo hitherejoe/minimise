@@ -15,4 +15,4 @@ jobs:
       - name: Unit tests
         run: |
           cd native/KotlinIOS
-          xcodebuild clean test -project KotlinIOS.xcodeproj -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+          xcodebuild -workspace Minimise.xcworkspace -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' test
