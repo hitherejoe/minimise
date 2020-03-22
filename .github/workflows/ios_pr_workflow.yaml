@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - 'native/KotlinIOS/Authentication/**'
+
+jobs:
+ 
+  test:
+    name: Run all Unit Tests
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Unit tests
+        run: bash xcodebuild test -project KotlinIOS.xcodeproj -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' -derivedDataPath build ONLY_ACTIVE_ARCH=YES
