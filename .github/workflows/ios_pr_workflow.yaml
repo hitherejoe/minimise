@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Unit tests
-        run: cd native/KotlinIOS xcodebuild -workspace Minimise.xcworkspace -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
+        run: cd native/KotlinIOS xcodebuild -workspace Minimise.xcworkspace -scheme Authentication -destination 'platform=iOS Simulator,name=iPhone 11' test
