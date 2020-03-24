@@ -20,10 +20,6 @@ class AuthenticationViewModelTest: XCTestCase {
     }
 
     override func tearDown() { }
-    
-    func testStateDefaultsToSignUp() {
-        XCTAssertTrue(viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self))
-    }
 
     func testSetEmailAddressEmitsExpectedEmailState() {
         let email = "joe@birch.com"
