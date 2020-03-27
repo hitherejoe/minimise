@@ -1,6 +1,7 @@
 include ':platform_android:common-ui'
 include ':platform_android:authentication-ui'
-include ':platform_android:inventory'
+include ':platform_android:dashboard'
+include ':platform_android:dashboard-ui'
 include ':platform_android:design'
 include ':platform_android:core'
 include ':platform_android:onboarding'
@@ -11,6 +12,7 @@ include ':platform_android:authentication'
 include ':shared:SharedAuthentication'
 include ':shared:SharedCommon'
 include ':shared:SharedCore'
+include ':shared:SharedDashboard'
 include ':FirebaseAuthentication'
 
 enableFeaturePreview('GRADLE_METADATA')
