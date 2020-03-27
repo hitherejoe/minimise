@@ -1,0 +1,9 @@
+name: iOS Beta Release
+
+on:
+  push:
+    tags:        
+      - 'iOS-*.*.*-RC[0-9]+'
+      
+jobs:
+  build:
