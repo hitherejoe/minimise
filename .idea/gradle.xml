@@ -19,14 +19,16 @@
             <option value="$PROJECT_DIR$/platform_android/authentication-ui" />
             <option value="$PROJECT_DIR$/platform_android/common-ui" />
             <option value="$PROJECT_DIR$/platform_android/core" />
+            <option value="$PROJECT_DIR$/platform_android/dashboard" />
+            <option value="$PROJECT_DIR$/platform_android/dashboard-ui" />
             <option value="$PROJECT_DIR$/platform_android/design" />
-            <option value="$PROJECT_DIR$/platform_android/inventory" />
             <option value="$PROJECT_DIR$/platform_android/navigation" />
             <option value="$PROJECT_DIR$/platform_android/onboarding" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/shared/SharedAuthentication" />
             <option value="$PROJECT_DIR$/shared/SharedCommon" />
             <option value="$PROJECT_DIR$/shared/SharedCore" />
+            <option value="$PROJECT_DIR$/shared/SharedDashboard" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

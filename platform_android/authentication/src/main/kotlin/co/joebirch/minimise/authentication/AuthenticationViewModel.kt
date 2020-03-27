@@ -103,7 +103,7 @@ class AuthenticationViewModel @Inject constructor(
                 isLoading = false
                 success = true
             }
-            navigate(AuthenticationDirections.Inventory, finishActivity = true)
+            navigate(AuthenticationDirections.Dashboard, finishActivity = true)
         } else {
             uiState.value!!.build {
                 isLoading = false
