@@ -1,0 +1,64 @@
+import co.joebirch.minimise.buildsrc.*
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion Versions.compileSdk
+
+    buildFeatures {
+        compose true
+    }
+
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Deps.Compose.version
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation project(":shared:SharedDashboard")
+    implementation project(":platform_android:core")
+    api project(':platform_android:common-ui')
+
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.framework
+    implementation Deps.Compose.material
+    implementation Deps.Compose.tooling
+    implementation Deps.Compose.foundation
+    implementation Deps.Compose.text
+
+    implementation Deps.AndroidX.coreKtx
+    implementation Deps.Kotlin.stdLib
+    implementation Deps.Google.material
+    implementation Deps.AndroidX.appCompat
+
+    implementation Deps.Lifecycle.common
+    implementation Deps.Lifecycle.viewModelKtx
+    implementation Deps.Fragment.base
+    testImplementation Deps.junit
+
+    androidTestImplementation Deps.Fragment.testing
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
+}

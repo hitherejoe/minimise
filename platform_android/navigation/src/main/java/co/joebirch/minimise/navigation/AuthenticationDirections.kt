@@ -17,9 +17,9 @@ object AuthenticationDirections {
         override fun getActionId() = R.id.action_authenticationFragment_to_forgottenPasswordFragment
     }
 
-    val Inventory = object : NavDirections {
+    val Dashboard = object : NavDirections {
         override fun getArguments() = Bundle()
 
-        override fun getActionId() = R.id.action_authenticationFragment_to_inventoryFragment
+        override fun getActionId() = R.id.action_authenticationFragment_to_dashboard
     }
 }
