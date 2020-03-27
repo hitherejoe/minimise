@@ -4,7 +4,7 @@ import SharedAuthentication
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     @Published internal var state: AuthenticationState = AuthenticationState.init(emailAddress: "", password: "", authenticationMode: AuthenticateMode.SignIn.init(), isLoading: false, success: false, errorMessage: nil)
-    weak var authenticateUser: Authenticate?
+    weak var authenticateUser: Authenticate!
     
     init(authenticate : Authenticate) {
         self.authenticateUser = authenticate
