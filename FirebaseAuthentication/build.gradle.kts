@@ -23,41 +23,51 @@ kotlin {
 
     jvm("android")
 
-    sourceSets["commonMain"].dependencies {
-        implementation(Deps.Kotlin.common)
-        implementation(Deps.Kotlin.kotlinSerialization)
-        implementation(Deps.Kotlin.stdLib)
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(Deps.Kotlin.common)
+                implementation(Deps.Kotlin.kotlinSerialization)
+                implementation(Deps.Kotlin.stdLib)
 
-        implementation(Deps.Ktor.clientCore)
-        implementation(Deps.Ktor.clientJson)
-        implementation(Deps.Ktor.clientSerialization)
-    }
+                implementation(Deps.Ktor.clientCore)
+                implementation(Deps.Ktor.clientJson)
+                implementation(Deps.Ktor.clientSerialization)
+            }
+        }
 
-    sourceSets["commonTest"].dependencies {
-        implementation(Deps.Ktor.clientMock)
-        implementation(Deps.Ktor.clintMockJvm)
-        implementation(Deps.Ktor.clientMockNative)
+        val commonTest by getting {
+            dependencies {
+                implementation(Deps.Ktor.clientMock)
+                implementation(Deps.Ktor.clintMockJvm)
+                implementation(Deps.Ktor.clientMockNative)
 
-        implementation(kotlin("test"))
-        implementation(kotlin("test-junit"))
-        implementation(Deps.junit)
-        implementation(Deps.Coroutines.core)
-        implementation(Deps.Coroutines.test)
-    }
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+                implementation(Deps.junit)
+                implementation(Deps.Coroutines.core)
+                implementation(Deps.Coroutines.test)
+            }
+        }
 
-    sourceSets["androidMain"].dependencies {
-        implementation(Deps.Kotlin.serializationRuntime)
-        implementation(Deps.Ktor.clientAndroid)
-        implementation(Deps.Ktor.clientJsonJvm)
-        implementation(Deps.Ktor.clientSerializationJvm)
-        implementation(Deps.Ktor.clientOkhttp)
-    }
+        val androidMain by getting {
+            dependencies {
+                implementation(Deps.Kotlin.serializationRuntime)
+                implementation(Deps.Ktor.clientAndroid)
+                implementation(Deps.Ktor.clientJsonJvm)
+                implementation(Deps.Ktor.clientSerializationJvm)
+                implementation(Deps.Ktor.clientOkhttp)
+            }
+        }
 
-    sourceSets["iosMain"].dependencies {
-        implementation(Deps.Ktor.clientIos)
-        implementation(Deps.Ktor.clientSerializationNative)
-        implementation(Deps.Kotlin.serializationRuntimeNative)
+        val iosMain by getting {
+            dependencies {
+                implementation(Deps.Ktor.clientIos)
+                implementation(Deps.Ktor.clientSerializationNative)
+                implementation(Deps.Kotlin.serializationRuntimeNative)
 
-        implementation(Deps.Ktor.clientJsonNative)
+                implementation(Deps.Ktor.clientJsonNative)
+            }
+        }
     }
 }
