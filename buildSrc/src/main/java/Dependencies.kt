@@ -9,7 +9,7 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha03"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha04"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
 
     const val junit = "junit:junit:4.12"
@@ -80,7 +80,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.4"
+        const val version = "1.3.5"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -89,12 +89,14 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
-       // const val iOS =
-       //     "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
+        const val iOS64 =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
+        const val iOSarm64 =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:$version"
     }
 
     object Compose {
-        const val version = "0.1.0-dev06"
+        const val version = "0.1.0-dev07"
 
         const val android = "androidx.ui:ui-android:$version"
         const val core = "androidx.ui:ui-core:$version"

@@ -17,4 +17,4 @@ include ':FirebaseAuthentication'
 
 enableFeaturePreview('GRADLE_METADATA')
 
-rootProject.name='Minimise-mpp'
+rootProject.name='Minimise'

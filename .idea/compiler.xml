@@ -2,24 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="authentication" target="1.8" />
-      <module name="authentication-ui" target="1.8" />
-      <module name="AuthenticationRemote_androidMain" target="1.6" />
-      <module name="AuthenticationRemote_androidTest" target="1.6" />
-      <module name="AuthenticationRemote_commonTestMain" target="1.6" />
-      <module name="AuthenticationRemote_commonTestTest" target="1.6" />
-      <module name="AuthenticationRemote_jvmTestMain" target="1.6" />
-      <module name="AuthenticationRemote_jvmTestTest" target="1.6" />
-      <module name="common-ui" target="1.8" />
-      <module name="core" target="1.7" />
-      <module name="dashboard" target="1.8" />
-      <module name="design" target="1.7" />
-      <module name="firebase_authentication_androidMain" target="1.6" />
-      <module name="firebase_authentication_androidTest" target="1.6" />
-      <module name="FirebaseAuthentication_androidMain" target="1.6" />
-      <module name="FirebaseAuthentication_androidTest" target="1.6" />
-      <module name="inventory" target="1.7" />
-      <module name="inventory-ui" target="1.8" />
+      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidMain" target="1.6" />
+      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidTest" target="1.6" />
       <module name="Minimise-mpp.buildSrc" target="1.8" />
       <module name="Minimise-mpp.FirebaseAuthentication.androidMain" target="1.6" />
       <module name="Minimise-mpp.FirebaseAuthentication.androidTest" target="1.6" />
@@ -31,45 +15,33 @@
       <module name="Minimise-mpp.platform_android.dashboard" target="1.8" />
       <module name="Minimise-mpp.platform_android.dashboard-ui" target="1.8" />
       <module name="Minimise-mpp.platform_android.design" target="1.7" />
-      <module name="Minimise-mpp.platform_android.inventory" target="1.8" />
-      <module name="Minimise-mpp.platform_android.inventory-ui" target="1.8" />
       <module name="Minimise-mpp.platform_android.navigation" target="1.7" />
       <module name="Minimise-mpp.platform_android.onboarding" target="1.8" />
-      <module name="Minimise-mpp.shared-SharedAuthentication_androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared-SharedAuthentication_androidTest" target="1.6" />
-      <module name="Minimise-mpp.shared-SharedCommon_androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared-SharedCommon_androidTest" target="1.6" />
-      <module name="Minimise-mpp.shared-SharedCore_androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared-SharedCore_androidTest" target="1.6" />
-      <module name="Minimise-mpp.shared.remote-AuthenticationRemote_androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared.remote-AuthenticationRemote_androidTest" target="1.6" />
-      <module name="Minimise-mpp.shared.remote-Remote_androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared.remote-Remote_androidTest" target="1.6" />
-      <module name="Minimise-mpp.shared.SharedAuthentication.androidMain" target="1.6" />
-      <module name="Minimise-mpp.shared.SharedAuthentication.androidTest" target="1.6" />
       <module name="Minimise-mpp.shared.SharedCommon.androidMain" target="1.6" />
       <module name="Minimise-mpp.shared.SharedCommon.androidTest" target="1.6" />
       <module name="Minimise-mpp.shared.SharedCore.androidMain" target="1.6" />
       <module name="Minimise-mpp.shared.SharedCore.androidTest" target="1.6" />
       <module name="Minimise-mpp.shared.SharedDashboard.androidMain" target="1.6" />
       <module name="Minimise-mpp.shared.SharedDashboard.androidTest" target="1.6" />
-      <module name="Minimise-mpp_buildSrc" target="1.8" />
-      <module name="navigation" target="1.7" />
-      <module name="onboarding" target="1.8" />
-      <module name="platform_android-app" target="1.8" />
-      <module name="platform_android.app" target="1.8" />
-      <module name="Remote_androidMain" target="1.6" />
-      <module name="Remote_androidTest" target="1.6" />
-      <module name="SharedAuthentication_androidMain" target="1.6" />
-      <module name="SharedAuthentication_androidTest" target="1.6" />
-      <module name="SharedAuthentication_commonTestMain" target="1.6" />
-      <module name="SharedAuthentication_commonTestTest" target="1.6" />
-      <module name="SharedCommon_androidMain" target="1.6" />
-      <module name="SharedCommon_androidTest" target="1.6" />
-      <module name="SharedCore_androidMain" target="1.6" />
-      <module name="SharedCore_androidTest" target="1.6" />
-      <module name="SharedInventory_androidMain" target="1.6" />
-      <module name="SharedInventory_androidTest" target="1.6" />
+      <module name="Minimise.buildSrc" target="1.8" />
+      <module name="Minimise.FirebaseAuthentication.androidMain" target="1.6" />
+      <module name="Minimise.FirebaseAuthentication.androidTest" target="1.6" />
+      <module name="Minimise.platform_android.app" target="1.8" />
+      <module name="Minimise.platform_android.authentication" target="1.8" />
+      <module name="Minimise.platform_android.authentication-ui" target="1.8" />
+      <module name="Minimise.platform_android.common-ui" target="1.8" />
+      <module name="Minimise.platform_android.core" target="1.7" />
+      <module name="Minimise.platform_android.dashboard" target="1.8" />
+      <module name="Minimise.platform_android.dashboard-ui" target="1.8" />
+      <module name="Minimise.platform_android.design" target="1.7" />
+      <module name="Minimise.platform_android.navigation" target="1.7" />
+      <module name="Minimise.platform_android.onboarding" target="1.8" />
+      <module name="Minimise.shared.SharedCommon.androidMain" target="1.6" />
+      <module name="Minimise.shared.SharedCommon.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedCore.androidMain" target="1.6" />
+      <module name="Minimise.shared.SharedCore.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedDashboard.androidMain" target="1.6" />
+      <module name="Minimise.shared.SharedDashboard.androidTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
