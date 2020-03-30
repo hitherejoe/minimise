@@ -39,7 +39,8 @@ class DashboardFragment : BaseFragment() {
             composeDashboardContent(
                 viewLifecycleOwner,
                 dashboardViewModel.observeAuthenticationState(),
-                listOf(Category.PendingBelongings, Category.Belongings)
+                listOf(Category.PendingBelongings, Category.Belongings),
+                { category -> dashboardViewModel.setSelectedCategory(category) }
             )
         }
     }

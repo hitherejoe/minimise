@@ -5,12 +5,11 @@ import co.joebirch.minimise.android.core.di.CoreComponent
 import co.joebirch.minimise.android.core.di.scope.FragmentScope
 import dagger.Component
 import co.joebirch.minimise.dashboard.DashboardFragment
-import co.joebirch.minimise.dashboard.di.module.DashboardModule
 import co.joebirch.minimise.dashboard.di.module.ViewModelModule
 
 @FragmentScope
 @Component(
-    modules = [DashboardModule::class, ViewModelModule::class],
+    modules = [ViewModelModule::class],
     dependencies = [CoreComponent::class]
 )
 interface DashboardComponent : BaseComponent<DashboardFragment> {
