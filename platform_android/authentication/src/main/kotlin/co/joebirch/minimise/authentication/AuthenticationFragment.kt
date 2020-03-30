@@ -12,7 +12,6 @@ import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
 import co.joebirch.minimise.navigation.AuthenticationDirections
-import co.joebirch.minimise.navigation.AuthenticationDirections.Dashboard
 
 class AuthenticationFragment : BaseFragment() {
 
@@ -29,8 +28,6 @@ class AuthenticationFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         inject(this)
         viewModel = authenticationViewModel
-
-        viewModel.navigate(Dashboard)
     }
 
     override fun onCreateView(
