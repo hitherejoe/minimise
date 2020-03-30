@@ -16,48 +16,57 @@ import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
-    state: LiveData<Any>,
-    categories: List<Category>
+    state: LiveData<DashboardState>,
+    categories: List<Category>,
+    updateSelectedCategory: (Category) -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
-    ComposeInventoryContent(state, categories)
+    ComposeInventoryContent(state, categories, updateSelectedCategory)
 }
 
 @Composable
 private fun ComposeInventoryContent(
-    state: LiveData<Any>,
-    categories: List<Category>
+    state: LiveData<DashboardState>,
+    categories: List<Category>,
+    updateSelectedCategory: (Category) -> Unit
 ) {
     val viewState = observe(state)
     if (viewState != null) {
-        FormContent(categories)
+        DashboardContent(viewState.selectedCategory, categories, updateSelectedCategory)
     }
 }
 
 @Composable
-private fun FormContent(
-    categories: List<Category>
+private fun DashboardContent(
+    currentCategory: Category,
+    categories: List<Category>,
+    updateSelectedCategory: (Category) -> Unit
 ) {
-    var tab by state { Category.PendingBelongings as Category }
     val tabTitles = categories.map { it }
-    Column(
-        modifier = LayoutSize.Fill,
-        arrangement = Arrangement.SpaceEvenly
-    ) {
-        TopAppBar(title = {
-            Text(text = "Minimise")
-        })
-        Align(alignment = Alignment.TopCenter) {
-            TabRow(
-                items = tabTitles, selectedIndex = categories.indexOf(tab)
-            ) { index, currentTab ->
-                Tab(
-                    selected = categories.indexOf(tab) == index,
-                    onSelected = { tab = categories[index] }
-                )
-                {
-                    Text(text = currentTab.title, modifier = LayoutPadding(16.dp), style = TextStyle())
+    Scaffold(
+        topAppBar = {
+            TopAppBar(title = {
+                Text(text = "Minimise")
+            }, elevation = 0.dp)
+        },
+        bodyContent = {
+            Column {
+
+                TabRow(
+                    items = tabTitles, selectedIndex = categories.indexOf(currentCategory)
+                ) { index, currentTab ->
+                    Tab(
+                        selected = categories.indexOf(currentCategory) == index,
+                        onSelected = { updateSelectedCategory(categories[index]) }
+                    )
+                    {
+                        Text(
+                            text = currentTab.title,
+                            modifier = LayoutPadding(16.dp),
+                            style = TextStyle()
+                        )
+                    }
                 }
             }
         }
-    }
+    )
 }

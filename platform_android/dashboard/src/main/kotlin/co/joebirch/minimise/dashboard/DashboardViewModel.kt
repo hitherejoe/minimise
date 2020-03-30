@@ -7,13 +7,20 @@ import co.joebirch.minimise.android.core.di.default
 import javax.inject.Inject
 
 class DashboardViewModel @Inject constructor(
-) : BaseViewModel() {
+) : BaseViewModel(), DashboardView {
 
     private val uiState =
-        MutableLiveData<Any>().default(
-            ""
+        MutableLiveData<DashboardState>().default(
+            DashboardState.Idle()
         )
 
-    fun observeAuthenticationState(): LiveData<Any> = uiState
+    fun observeAuthenticationState(): LiveData<DashboardState> = uiState
 
+    override fun setSelectedCategory(category: Category) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.category = category
+            }
+        )
+    }
 }

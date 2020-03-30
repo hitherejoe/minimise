@@ -22,7 +22,6 @@ import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TextButton
 import androidx.ui.material.ripple.Ripple
-import androidx.ui.material.surface.Surface
 import androidx.ui.res.stringResource
 import androidx.ui.text.TextStyle
 import androidx.ui.text.style.TextAlign
@@ -92,44 +91,40 @@ private fun FormContent(
     passwordChanged: (String) -> Unit
 ) {
     Column(
-        modifier = LayoutSize.Fill.plus(LayoutPadding(32.dp)),
-        arrangement = Arrangement.SpaceEvenly
     ) {
         Text(
             text = stringResource(id = R.string.title_minimise),
             modifier = LayoutGravity.Center
         )
         Spacer(LayoutHeight(24.dp))
-        Surface(color = Color.White) {
-            Column(modifier = LayoutPadding(16.dp)) {
-                TextField(
-                    value = emailAddress,
-                    onValueChange = { emailChanged(it) },
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next,
-                    modifier = LayoutGravity.Center
-                )
-                Spacer(LayoutHeight(12.dp))
-                TextField(
-                    value = password,
-                    onValueChange = { passwordChanged(it) },
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done,
-                    modifier = LayoutGravity.Center,
-                    visualTransformation = PasswordVisualTransformation()
-                )
-                Spacer(LayoutHeight(12.dp))
-                if (authenticationMode == AuthenticateMode.SignIn) {
-                    TextButton(onClick = {
-                        forgotPasswordClicked()
-                    }, modifier = LayoutGravity.Center.plus(LayoutWidth.Fill)) {
-                        Text(
-                            text = stringResource(R.string.forgotten_your_password),
-                            modifier = LayoutGravity.Center.plus(
-                                LayoutPadding(16.dp)
-                            )
+        Column(modifier = LayoutPadding(16.dp)) {
+            TextField(
+                value = emailAddress,
+                onValueChange = { emailChanged(it) },
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+                modifier = LayoutGravity.Center
+            )
+            Spacer(LayoutHeight(12.dp))
+            TextField(
+                value = password,
+                onValueChange = { passwordChanged(it) },
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+                modifier = LayoutGravity.Center,
+                visualTransformation = PasswordVisualTransformation()
+            )
+            Spacer(LayoutHeight(12.dp))
+            if (authenticationMode == AuthenticateMode.SignIn) {
+                TextButton(onClick = {
+                    forgotPasswordClicked()
+                }, modifier = LayoutGravity.Center.plus(LayoutWidth.Fill)) {
+                    Text(
+                        text = stringResource(R.string.forgotten_your_password),
+                        modifier = LayoutGravity.Center.plus(
+                            LayoutPadding(16.dp)
                         )
-                    }
+                    )
                 }
             }
         }
