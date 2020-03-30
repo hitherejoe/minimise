@@ -9,59 +9,49 @@ plugins {
 }
 
 kotlin {
-    //select iOS target platform depending on the Xcode environment variables
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
             ::iosArm64
         else
             ::iosX64
+    jvm("android")
 
     iOSTarget("ios") {
         binaries {
-            framework("SharedCommon") {
-                baseName = "SharedCommon"
+            framework("SharedAuthentication") {
+                baseName = "SharedAuthentication"
             }
         }
     }
 
-    jvm("android")
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(Deps.Kotlin.common)
+                implementation(Deps.Coroutines.coreCommon)
+            }
+        }
 
-    sourceSets["commonMain"].dependencies {
-        implementation(Deps.Kotlin.common)
-        implementation(Deps.Coroutines.coreCommon)
-    }
+        val mobileMain by creating {
+            dependsOn(commonMain)
+        }
 
-    sourceSets["androidMain"].dependencies {
-        implementation(Deps.Kotlin.stdLib)
-        implementation(Deps.Coroutines.android)
-        implementation(Deps.Coroutines.core)
-    }
+        val androidMain by getting {
+            dependsOn(mobileMain)
+            dependencies {
+                implementation(Deps.Kotlin.stdLib)
+                implementation(Deps.Coroutines.android)
+                implementation(Deps.Coroutines.core)
+            }
+        }
 
-    sourceSets["iosMain"].dependencies {
-        implementation(Deps.Coroutines.native)
-    }
-}
-
-
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-
-    //selecting the right configuration for the iOS framework depending on the Xcode environment variables
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>("ios").binaries.getFramework(mode)
-
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-
-    doLast {
-        val gradlew = File(targetDir, "gradlew")
-        gradlew.writeText("#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n")
-        gradlew.setExecutable(true)
+        val iosMain by getting {
+            dependsOn(mobileMain)
+            dependencies {
+                implementation(Deps.Coroutines.native)
+                //api(Deps.Coroutines.iOS64)
+                //api(Deps.Coroutines.iOSarm64)
+            }
+        }
     }
 }
-
-tasks.getByName("build").dependsOn(packForXcode)
