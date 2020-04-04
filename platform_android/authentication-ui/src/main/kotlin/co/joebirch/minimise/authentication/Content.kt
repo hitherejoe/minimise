@@ -1,33 +1,22 @@
 package co.joebirch.minimise.authentication
 
-import android.view.Gravity
 import android.view.ViewGroup
 import androidx.compose.Composable
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.ui.core.Text
-import androidx.ui.core.TextField
-import androidx.ui.foundation.Clickable
-import androidx.ui.foundation.DrawBackground
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.graphics.Color
+import androidx.ui.core.Modifier
+import androidx.ui.foundation.Text
+import androidx.ui.foundation.TextField
 import androidx.ui.input.ImeAction
 import androidx.ui.input.KeyboardType
 import androidx.ui.input.PasswordVisualTransformation
 import androidx.ui.layout.*
-import androidx.ui.layout.LayoutAlign.Center
-import androidx.ui.layout.LayoutAlign.End
 import androidx.ui.material.Button
 import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.MaterialTheme
 import androidx.ui.material.TextButton
-import androidx.ui.material.ripple.Ripple
 import androidx.ui.res.stringResource
-import androidx.ui.text.TextStyle
-import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import co.joebirch.minimise.authentication.ui.R
-import co.joebirch.minimise.common_ui.MaterialThemeFromAndroidTheme
 import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
@@ -96,8 +85,8 @@ private fun FormContent(
             text = stringResource(id = R.string.title_minimise),
             modifier = LayoutGravity.Center
         )
-        Spacer(LayoutHeight(24.dp))
-        Column(modifier = LayoutPadding(16.dp)) {
+        Spacer(Modifier.preferredSize(24.dp))
+        Column(modifier = Modifier.padding(16.dp)) {
             TextField(
                 value = emailAddress,
                 onValueChange = { emailChanged(it) },

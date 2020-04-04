@@ -2,14 +2,13 @@ package co.joebirch.minimise.dashboard
 
 import android.view.ViewGroup
 import androidx.compose.Composable
-import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.ui.core.Alignment
-import androidx.ui.core.Text
+import androidx.ui.core.Modifier
+import androidx.ui.foundation.Text
+import androidx.ui.graphics.Color
 import androidx.ui.layout.*
 import androidx.ui.material.*
-import androidx.ui.text.TextStyle
 import androidx.ui.unit.dp
 import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
@@ -50,9 +49,9 @@ private fun DashboardContent(
         },
         bodyContent = {
             Column {
-
                 TabRow(
-                    items = tabTitles, selectedIndex = categories.indexOf(currentCategory)
+                    items = tabTitles,
+                    selectedIndex = categories.indexOf(currentCategory)
                 ) { index, currentTab ->
                     Tab(
                         selected = categories.indexOf(currentCategory) == index,
@@ -61,12 +60,10 @@ private fun DashboardContent(
                     {
                         Text(
                             text = currentTab.title,
-                            modifier = LayoutPadding(16.dp),
-                            style = TextStyle()
+                            modifier = Modifier.padding(16.dp)
                         )
                     }
                 }
             }
-        }
-    )
+        })
 }
