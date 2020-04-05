@@ -11,7 +11,13 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+      - name: Update version
+        run: |
+          latest_beta="$(git describe --match "iOS*-RC*" --abbrev=0 --tags)"
+          version=${latest_beta#"iOS-"}
+          xcrun agvtool new-marketing-version $latest_beta
+          xcrun agvtool next-version -all
       - name: Install gpg
         run: brew install gnupg
       - name: Setup provisioning profile
