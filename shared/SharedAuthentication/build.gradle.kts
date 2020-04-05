@@ -23,11 +23,12 @@ kotlin {
         else
             ::iosX64
     jvm("android")
-
+    val buildForDevice = project.findProperty("device") as? Boolean ?: false
     iOSTarget("ios") {
         binaries {
             framework("SharedAuthentication") {
                 baseName = "SharedAuthentication"
+                if (!buildForDevice) embedBitcode("disable")
             }
         }
     }

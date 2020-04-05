@@ -1,5 +1,4 @@
 import UIKit
-import SharedAuthentication
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
