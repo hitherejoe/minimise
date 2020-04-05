@@ -1,16 +1,16 @@
 PODS:
-  - Swinject (2.0.0)
+  - SharedAuthentication (1.0)
 
 DEPENDENCIES:
-  - Swinject (= 2.0.0)
+  - SharedAuthentication (from `/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication`)
 
-SPEC REPOS:
-  trunk:
-    - Swinject
+EXTERNAL SOURCES:
+  SharedAuthentication:
+    :path: "/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication"
 
 SPEC CHECKSUMS:
-  Swinject: 2e964a80d70ab09b3949c99032711f89147bfd60
+  SharedAuthentication: e490b8fac561199a4f6551b86bc25c243b803f6a
 
-PODFILE CHECKSUM: cafd4bc5c2429c9eda647ef611c8df7b420b408d
+PODFILE CHECKSUM: c1639145d25ba315eb03990c76a595598657c4ac
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
