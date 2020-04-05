@@ -16,6 +16,7 @@ jobs:
         run: |
           latest_beta="$(git describe --match "iOS*-RC*" --abbrev=0 --tags)"
           version=${latest_beta#"iOS-"}
+          cd native/KotlinIOS
           xcrun agvtool new-marketing-version $latest_beta
           xcrun agvtool next-version -all
       - name: Install gpg
