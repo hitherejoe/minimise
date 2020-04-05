@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eo pipefail
 
-gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.IOS_KEYS }}" --output ./.github/secrets/github_actions.mobileprovision.mobileprovision ./.github/secrets/github_actions.mobileprovision.gpg
-gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.IOS_KEYS }}" --output ./.github/secrets/Certificates.p12 ./.github/secrets/Certificates.p12.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$IOS_KEYS" --output ./.github/secrets/github_actions.mobileprovision.mobileprovision ./.github/secrets/github_actions.mobileprovision.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$IOS_KEYS" --output ./.github/secrets/Certificates.p12 ./.github/secrets/Certificates.p12.gpg
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
