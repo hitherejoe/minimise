@@ -706,7 +706,7 @@
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.joebirch.minimise.Authentication;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = debugging;
 				STRIP_SWIFT_SYMBOLS = NO;
@@ -751,7 +751,7 @@
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = co.joebirch.minimise.Authentication;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = debugging;
 				STRIP_SWIFT_SYMBOLS = NO;
