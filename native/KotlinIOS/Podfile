@@ -4,23 +4,29 @@ platform :ios, '13.0'
 target 'Authentication' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  inherit! :search_paths
-  
+
+  # Pods for Authentication
   pod 'SharedAuthentication', :path => '/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication'
-
-end
-
-target 'KotlinIOSTests' do
-  inherit! :search_paths
-  # Pods for testing
-end
-
-target 'KotlinIOSUITests' do
-  # Pods for testing
-end
-
+  
 target 'AuthenticationTests' do
+    # Pods for testing
+  end
+
+end
+
+target 'KotlinIOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  inherit! :search_paths
-  # Pods for testing
+
+  # Pods for KotlinIOS
+
+  target 'KotlinIOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'KotlinIOSUITests' do
+    # Pods for testing
+  end
+
 end
