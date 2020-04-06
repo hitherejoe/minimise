@@ -22,7 +22,9 @@ jobs:
       - name: Install cocoapods
         run: gem install cocoapods-clean
       - name: Install pods
-        run: bundle exec pod install
+        run: |
+          cd native/KotlinIOS
+          bundle exec pod install
       - name: Install gpg
         run: brew install gnupg
       - name: Setup provisioning profile
