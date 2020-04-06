@@ -6,7 +6,7 @@ target 'Authentication' do
   use_frameworks!
 
   # Pods for Authentication
-  pod 'SharedAuthentication', :path => '/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication'
+  pod 'SharedAuthentication', :path => '../../shared/SharedAuthentication'
   
 target 'AuthenticationTests' do
     # Pods for testing

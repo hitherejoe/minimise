@@ -2,15 +2,15 @@ PODS:
   - SharedAuthentication (1.0)
 
 DEPENDENCIES:
-  - SharedAuthentication (from `/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication`)
+  - SharedAuthentication (from `../../shared/SharedAuthentication`)
 
 EXTERNAL SOURCES:
   SharedAuthentication:
-    :path: "/Users/joebirch/Dev/MinimiseMultiplatform/shared/SharedAuthentication"
+    :path: "../../shared/SharedAuthentication"
 
 SPEC CHECKSUMS:
   SharedAuthentication: e490b8fac561199a4f6551b86bc25c243b803f6a
 
-PODFILE CHECKSUM: 9a6a4e35a72264e7b092c4fdad8522ee05cd5053
+PODFILE CHECKSUM: 3de647828b54db7028caf24904c303af38e826e6
 
 COCOAPODS: 1.9.1
