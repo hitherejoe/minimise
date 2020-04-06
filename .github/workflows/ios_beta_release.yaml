@@ -19,6 +19,15 @@ jobs:
           cd native/KotlinIOS
           xcrun agvtool new-marketing-version $version
           xcrun agvtool next-version -all
+      - name: Install cocoapods
+        run: |
+          cd native/KotlinIOS
+          sudo gem install cocoapods
+          sudo bundle install
+      - name: Install pods
+        run: |
+          cd native/KotlinIOS
+          bundle exec pod install
       - name: Install gpg
         run: brew install gnupg
       - name: Setup provisioning profile
