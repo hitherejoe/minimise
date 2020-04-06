@@ -20,7 +20,9 @@ jobs:
           xcrun agvtool new-marketing-version $version
           xcrun agvtool next-version -all
       - name: Install cocoapods
-        run: gem install cocoapods-clean
+        run: |
+          cd native/KotlinIOS
+          sudo gem install cocoapods
       - name: Install pods
         run: |
           cd native/KotlinIOS
