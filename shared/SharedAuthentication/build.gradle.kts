@@ -28,7 +28,7 @@ kotlin {
         binaries {
             framework("SharedAuthentication") {
                 baseName = "SharedAuthentication"
-                if (!buildForDevice) embedBitcode("disable")
+                //if (!buildForDevice) embedBitcode("disable")
             }
         }
     }
