@@ -23,6 +23,7 @@ jobs:
         run: |
           cd native/KotlinIOS
           sudo gem install cocoapods
+          sudo bundle install
       - name: Install pods
         run: |
           cd native/KotlinIOS
