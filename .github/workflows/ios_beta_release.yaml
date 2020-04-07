@@ -45,13 +45,13 @@ jobs:
         env:
           IOS_KEYS: ${{ secrets.IOS_KEYS }}
         run: ./.github/secrets/decrypt_secrets.sh
-      - name: Archiving project
+      - name: Archive project
         env:
           PR_NUMBER: $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         run: ./.github/scripts/archive_app.sh
-      - name: Exporting .ipa
+      - name: Export .ipa
         run: ./.github/scripts/export_ipa.sh
-      - name: Publishing app
+      - name: Publish app to TestFlight
         if: success()
         env:
           APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
