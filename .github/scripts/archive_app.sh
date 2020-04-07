@@ -9,5 +9,5 @@ xcodebuild -workspace KotlinIOS.xcworkspace \
             -sdk iphoneos \
             -configuration Release \
             -derivedDataPath DerivedData \
-            -archivePath DerivedData/Archive/KotlinIOS \
-            clean archive | xcpretty
+            -archivePath DerivedData/Archive/Minimise \
+            clean archive
