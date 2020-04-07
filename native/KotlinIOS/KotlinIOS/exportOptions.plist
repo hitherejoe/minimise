@@ -11,7 +11,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>co.joebirch.minimise</key>
-		<string>match AppStore co.joebirch.minimise</string>
+		<string>3bd14cf8-32e9-44ca-b37e-ad910d0d975f</string>
 	</dict>
 </dict>
 </plist>
