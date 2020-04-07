@@ -20,12 +20,12 @@ jobs:
          gradle-version: 6.3-rc-1
       - uses: sinoru/actions-setup-xcode@v1.1
         with:
-          xcode-version: '11.4' # Exact version of a Xcode version to use
-          apple-id: ${{ secrets.APPLEID_USERNAME }} # Apple ID to download from Apple Developer when Xcode not available in local
+          xcode-version: '11.4'
+          apple-id: ${{ secrets.APPLEID_USERNAME }}
           apple-id-password: ${{ secrets.APPLEID_PASSWORD }}
       - name: Update version
         run: |
-          latest_beta="$(git describe --match "iOS*-RC*" --abbrev=0 --tags)"
+          latest_beta="$(git describe --match "iOS*" --abbrev=0 --tags)"
           version=${latest_beta#"iOS-"}
           cd native/KotlinIOS
           xcrun agvtool new-marketing-version $version
