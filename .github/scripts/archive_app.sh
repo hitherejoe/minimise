@@ -10,4 +10,4 @@ xcodebuild -workspace KotlinIOS.xcworkspace \
             -configuration Release \
             -derivedDataPath DerivedData \
             -archivePath DerivedData/Archive/KotlinIOS \
-            clean archive | xcpretty
+            clean archive
