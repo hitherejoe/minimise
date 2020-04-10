@@ -93,21 +93,32 @@ private fun FormContent(
             shape = RoundedCornerShape(CornerSize(4.dp))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                TextField(
-                    value = TextFieldValue(text = emailAddress),
-                    onValueChange = { emailChanged(it.text) },
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next,
-                    modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
+                Text(
+                    "Email Address", modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 16.dp
+                    )
                 )
-                TextField(
-                    value = TextFieldValue(text = password),
-                    onValueChange = { passwordChanged(it.text) },
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done,
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
-                )
+                Surface(color = Color.LightGray, modifier = Modifier.padding(16.dp)) {
+                    TextField(
+                        value = TextFieldValue(text = emailAddress),
+                        onValueChange = { emailChanged(it.text) },
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next,
+                        modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
+                    )
+                }
+                Text("Password", modifier = Modifier.padding(start = 16.dp, top = 8.dp))
+                Surface(color = Color.LightGray, modifier = Modifier.padding(16.dp)) {
+                    TextField(
+                        value = TextFieldValue(text = password),
+                        onValueChange = { passwordChanged(it.text) },
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
+                    )
+                }
                 if (authenticationMode == AuthenticateMode.SignIn) {
                     TextButton(onClick = {
                         forgotPasswordClicked()
