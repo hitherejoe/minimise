@@ -9,7 +9,7 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha04"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha05"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
 
     const val junit = "junit:junit:4.12"
