@@ -8,6 +8,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import kotlinx.serialization.json.Json
@@ -219,14 +220,13 @@ class FirebaseAuthenticationStore(
         returnSecureToken: Boolean
     ): FirebaseAuthenticationResponse {
         return try {
-            val response = httpClient.post<HttpStatement> {
+            return httpClient.post {
                 url("$BASE_URL$endpoint")
                 parameter("key", apiKey)
                 parameter("email", email)
                 parameter("password", password)
                 parameter("returnSecureToken", returnSecureToken)
-            }.execute()
-            Json.parse(FirebaseAuthenticationResponse.serializer(), response.readText())
+            }
         } catch (cause: Throwable) {
             FirebaseAuthenticationResponse(
                 message = cause.message ?: ""
