@@ -63,6 +63,15 @@ public struct AuthenticationView: View {
             ), content: {
                 Alert(title: Text("Whoops!"), message: Text("There was a problem authenticating with those credenitals. Please try again."), dismissButton: .default(Text("Got it!")))
             }).padding(.all, 24.0)
+                .navigate(to: DashboardView(), when:
+                    Binding<Bool>(
+                            get: {
+                                self.viewModel.state.isKind(of: AuthenticationState.Success.self)
+                            },
+                            set: { _ in
+                              //  self.viewModel.state = AuthenticationState.Idle()
+                            }
+                    ))
         }
     }
 }
@@ -160,7 +169,6 @@ struct AuthenticationContent: View {
                     Text("Forgotten your password?")
                     .padding(.all, 10.0)
                 }
-                
             }
 
             Spacer()
@@ -168,6 +176,44 @@ struct AuthenticationContent: View {
             ConnectButton(label:self.authenticateButtonText, action: self.action)
 
             ConnectButton(label:self.switchAuthenticationModeText, action: self.switchAuthenticationAction)
+        }
+    }
+}
+
+extension View {
+
+    /// Navigate to a new view.
+    /// - Parameters:
+    ///   - view: View to navigate to.
+    ///   - binding: Only navigates when this condition is `true`.
+    func navigate<SomeView: View>(to view: SomeView, when binding: Binding<Bool>) -> some View {
+        modifier(NavigateModifier(destination: view, binding: binding))
+    }
+}
+
+
+// MARK: - NavigateModifier
+fileprivate struct NavigateModifier<SomeView: View>: ViewModifier {
+
+    // MARK: Private properties
+    fileprivate let destination: SomeView
+    @Binding fileprivate var binding: Bool
+
+
+    // MARK: - View body
+    fileprivate func body(content: Content) -> some View {
+        NavigationView {
+            ZStack {
+                content
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                NavigationLink(destination: destination
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true),
+                               isActive: $binding) {
+                    EmptyView()
+                }
+            }
         }
     }
 }

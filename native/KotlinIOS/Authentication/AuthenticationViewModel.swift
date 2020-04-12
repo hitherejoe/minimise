@@ -3,8 +3,8 @@ import SharedAuthentication
 
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
-    @Published internal var state: AuthenticationState = AuthenticationState.Idle(userEmail: "", userPassword: "", mode: AuthenticateMode.SignIn.init())
-    weak var authenticateUser: Authenticate!
+    @Published internal var state: AuthenticationState = AuthenticationState.Idle(userEmail: "", userPassword: "", mode: AuthenticateMode.SignUp.init())
+    var authenticateUser: Authenticate!
     
     init(authenticate : Authenticate) {
         self.authenticateUser = authenticate
@@ -35,7 +35,7 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
     }
     
     func authenticate() {
-        if (state.authenticationMode.isKind(of: AuthenticateMode.SignIn.self)) {
+        if (state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self)) {
             signUp()
         } else {
             signIn()
@@ -46,8 +46,9 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
         self.state = self.state.build { (builder) in
             builder.isLoading = true
             builder.errorMessage = nil
+            builder.authenticateMode = self.state.authenticationMode
         }
-        authenticateUser?.run(params:
+        authenticateUser?.runOnNative(params:
         Authenticate.ParamsCompanion().forSignIn(apiKey: "AIzaSyBFLpvP6vOjrl_5s_R45E6s33FOFg6y5wQ", emailAddress: self.state.emailAddress, password: self.state.password)) { (result) in
                 if (result.token != nil) {
                     self.state = self.state.build { (builder) in
@@ -55,10 +56,9 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
                         builder.isLoading = false
                     }
                 } else {
-                    self.state = self.state.build { (builder) in
-                        builder.isLoading = false
-                        builder.errorMessage = result.message
-                    }
+                    self.state = AuthenticationState.Error.init(
+                        userEmail: self.state.emailAddress, userPassword: self.state.password,
+                        mode: self.state.authenticationMode, message: result.message)
                 }
         }
     }
@@ -67,8 +67,9 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
         self.state = self.state.build { (builder) in
             builder.isLoading = true
             builder.errorMessage = nil
+            builder.authenticateMode = self.state.authenticationMode
         }
-        authenticateUser?.run(params:
+        authenticateUser?.runOnNative(params:
             Authenticate.ParamsCompanion().forSignUp(apiKey: "AIzaSyBFLpvP6vOjrl_5s_R45E6s33FOFg6y5wQ", emailAddress: self.state.emailAddress, password: self.state.password)) { (result) in
                 if (result.token != nil) {
                     self.state = self.state.build { (builder) in

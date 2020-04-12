@@ -4,6 +4,7 @@ import co.joebirch.minimise.authentication.AuthenticationRepository
 import co.joebirch.minimise.shared_common.interactor.UseCase
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.AuthenticateMode
+import co.joebirch.minimise.authentication.dispatcher
 import co.joebirch.minimise.shared_common.ApplicationDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,7 +38,7 @@ open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticat
         }
     }
 
-    override fun runWithoutThreading(params: Params, completion: (AuthenticationModel) -> Unit) {
+    override fun runOnNative(params: Params, completion: (AuthenticationModel) -> Unit) {
         GlobalScope.launch(Dispatchers.Main) {
             val result =  when (params.authenticateMode) {
                 AuthenticateMode.SignUp ->

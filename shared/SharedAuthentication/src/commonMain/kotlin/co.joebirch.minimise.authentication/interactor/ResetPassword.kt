@@ -28,9 +28,9 @@ open class ResetPassword constructor() : UseCase<ResetPasswordResponse, ResetPas
         }
     }
 
-    override fun runWithoutThreading(params: Params, completion: (ResetPasswordResponse) -> Unit) {
+    override fun runOnNative(params: Params, completion: (ResetPasswordResponse) -> Unit) {
         GlobalScope.launch(Dispatchers.Main) {
-            completion(authenticationRepository.resetPassword(params.apiKey, params.emailAddress))
+            completion(authenticationRepository.resetPassword(params!!.apiKey, params.emailAddress))
         }
     }
 

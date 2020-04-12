@@ -33,6 +33,7 @@ kotlin {
                 implementation(Deps.Ktor.clientCore)
                 implementation(Deps.Ktor.clientJson)
                 implementation(Deps.Ktor.clientSerialization)
+                implementation(Deps.Ktor.logging)
             }
         }
 
@@ -53,6 +54,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.serializationRuntime)
+                implementation(Deps.Ktor.loggingAndroid)
                 implementation(Deps.Ktor.clientAndroid)
                 implementation(Deps.Ktor.clientJsonJvm)
                 implementation(Deps.Ktor.clientSerializationJvm)
@@ -62,6 +64,8 @@ kotlin {
 
         val iosMain by getting {
             dependencies {
+                implementation(Deps.Ktor.loggingIos)
+                implementation(Deps.Ktor.clientCoreNative)
                 implementation(Deps.Ktor.clientIos)
                 implementation(Deps.Ktor.clientSerializationNative)
                 implementation(Deps.Kotlin.serializationRuntimeNative)

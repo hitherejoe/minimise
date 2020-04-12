@@ -1,6 +1,6 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.firebase_auth_multiplatform.AuthenticationStore
+import co.joebirch.minimise.authentication.firebase.AuthenticationStore
 import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
 

@@ -15,6 +15,7 @@
 		426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360423AE799000738FB7 /* AuthenticationViewModel.swift */; };
 		426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360623AE7B3400738FB7 /* AuthenticationView.swift */; };
 		4286E8B2240AACFB0067D2FD /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */; };
+		42FEB56D2440A09600B2DD36 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FEB56C2440A09600B2DD36 /* DashboardView.swift */; };
 		47729E0622F447C800B9B36B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E0522F447C800B9B36B /* AppDelegate.swift */; };
 		47729E0D22F447CA00B9B36B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47729E0C22F447CA00B9B36B /* Assets.xcassets */; };
 		47729E1B22F447CA00B9B36B /* KotlinIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47729E1A22F447CA00B9B36B /* KotlinIOSTests.swift */; };
@@ -103,6 +104,7 @@
 		4286E8B1240AACFB0067D2FD /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		429D17ED23AE07BB004B73F3 /* Data.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Data.framework; path = "../../data/build/fat-framework/Data.framework"; sourceTree = "<group>"; };
 		42C8A8162416E109004D0777 /* KotlinIOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = KotlinIOS.xctestplan; sourceTree = "<group>"; };
+		42FEB56C2440A09600B2DD36 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		47729E0222F447C800B9B36B /* KotlinIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47729E0522F447C800B9B36B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47729E0C22F447CA00B9B36B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				4219360423AE799000738FB7 /* AuthenticationViewModel.swift */,
 				4219360623AE7B3400738FB7 /* AuthenticationView.swift */,
 				426F9AE523C6437C00A8437A /* Info.plist */,
+				42FEB56C2440A09600B2DD36 /* DashboardView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -510,7 +513,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		570AA7274DC95BD84EEE6C71 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -630,6 +634,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */,
+				42FEB56D2440A09600B2DD36 /* DashboardView.swift in Sources */,
 				4286E8B2240AACFB0067D2FD /* ForgotPasswordView.swift in Sources */,
 				426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */,
 			);

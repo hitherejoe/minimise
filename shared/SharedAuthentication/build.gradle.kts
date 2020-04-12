@@ -5,6 +5,7 @@ import co.joebirch.minimise.buildsrc.Versions
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.native.cocoapods")
+    id("kotlinx-serialization")
 }
 
 repositories {
@@ -45,6 +46,8 @@ kotlin {
                 implementation(Deps.Coroutines.coreCommon)
                 implementation(project(":shared:SharedCommon"))
                 implementation(project(":FirebaseAuthentication"))
+
+                implementation(Deps.Kotlin.kotlinSerialization)
             }
         }
 
@@ -56,27 +59,35 @@ kotlin {
                 implementation(Deps.junit)
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5")
+
+                implementation(Deps.Ktor.clientMock)
+                implementation(Deps.Ktor.clintMockJvm)
+                implementation(Deps.Ktor.clientMockNative)
+
+                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
+                implementation(Deps.junit)
+                implementation(Deps.Coroutines.core)
+                implementation(Deps.Coroutines.test)
             }
         }
 
-        val mobileMain by creating {
-            dependsOn(commonMain)
-        }
-
         val androidMain by getting {
-            dependsOn(mobileMain)
             dependencies {
                 implementation(Deps.Kotlin.stdLib)
                 implementation(Deps.Coroutines.android)
                 implementation(Deps.Coroutines.core)
+
+                implementation(Deps.Kotlin.serializationRuntime)
             }
         }
 
         val iosMain by getting {
-            dependsOn(mobileMain)
             dependencies {
-                implementation(Deps.Kotlin.stdLib)
                 implementation(Deps.Coroutines.native)
+
+                implementation(Deps.Ktor.loggingIos)
+                implementation(Deps.Kotlin.serializationRuntimeNative)
             }
         }
     }

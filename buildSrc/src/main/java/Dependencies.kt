@@ -15,8 +15,8 @@ object Deps {
     const val junit = "junit:junit:4.12"
 
     object Kotlin {
-        const val version = "1.3.70"
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
+        const val version = "1.3.71"
+        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
@@ -80,7 +80,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.5"
+        const val version = "1.3.5-native-mt"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -88,7 +88,7 @@ object Deps {
         const val android =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val native =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$version"
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.5-native-mt"
         const val iOS64 =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:$version"
         const val iOSarm64 =
@@ -112,16 +112,19 @@ object Deps {
     object Ktor {
         const val version = "1.3.2"
 
+        const val logging = "io.ktor:ktor-client-logging:$version"
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"
         const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
 
         const val clientAndroid = "io.ktor:ktor-client-android:$version"
+        const val loggingAndroid = "io.ktor:ktor-client-logging-jvm:$version"
         const val clientJsonJvm = "io.ktor:ktor-client-json-jvm:$version"
         const val clientSerializationJvm = "io.ktor:ktor-client-serialization-jvm:$version"
         const val clientOkhttp = "io.ktor:ktor-client-okhttp:$version"
 
 
+        const val loggingIos = "io.ktor:ktor-client-logging-native:$version"
         const val clientIos = "io.ktor:ktor-client-ios:$version"
         const val clientJsonNative = "io.ktor:ktor-client-json-native:$version"
         const val clientCoreNative = "io.ktor:ktor-client-core-native:$version"
