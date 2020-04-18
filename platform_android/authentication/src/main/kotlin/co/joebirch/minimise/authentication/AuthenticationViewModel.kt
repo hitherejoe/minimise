@@ -17,7 +17,7 @@ class AuthenticationViewModel @Inject constructor(
     private val sharedPrefs: Preferences
 ) : BaseViewModel(), AuthenticateView {
 
-    private val uiState =
+    private var uiState =
         MutableLiveData<AuthenticationState>().default(
             AuthenticationState.Idle()
         )
@@ -28,13 +28,13 @@ class AuthenticationViewModel @Inject constructor(
         if (uiState.value!!.authenticationMode == AuthenticateMode.SignIn) {
             uiState.postValue(
                 uiState.value!!.build {
-                    authenticateMode = AuthenticateMode.SignUp
+                    mode = AuthenticateMode.SignUp
                 }
             )
         } else {
             uiState.postValue(
                 uiState.value!!.build {
-                    authenticateMode = AuthenticateMode.SignIn
+                    mode = AuthenticateMode.SignIn
                 }
             )
         }
@@ -43,7 +43,7 @@ class AuthenticationViewModel @Inject constructor(
     override fun setEmailAddress(emailAddress: String) {
         uiState.postValue(
             uiState.value!!.build {
-                this.emailAddress = emailAddress
+                this.userEmail = emailAddress
             }
         )
     }
@@ -51,7 +51,7 @@ class AuthenticationViewModel @Inject constructor(
     override fun setPassword(password: String) {
         uiState.postValue(
             uiState.value!!.build {
-                this.password = password
+                this.userPassword = password
             }
         )
     }
@@ -65,10 +65,11 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     override fun signUp() {
-        uiState.value!!.build {
-            errorMessage = null
-            isLoading = true
-        }
+        uiState.postValue(
+            uiState.value!!.build {
+                state = AuthenticationState.Loading()
+            }
+        )
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignUp(
@@ -82,10 +83,11 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     override fun signIn() {
-        uiState.value!!.build {
-            errorMessage = null
-            isLoading = true
-        }
+        uiState.postValue(
+            uiState.value!!.build {
+                state = AuthenticationState.Loading()
+            }
+        )
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignIn(
@@ -101,16 +103,18 @@ class AuthenticationViewModel @Inject constructor(
     private fun handleResult(result: AuthenticationModel) {
         if (result.token != null) {
             sharedPrefs.accessToken = result.token
-            uiState.value!!.build {
-                isLoading = false
-                success = true
-            }
+            uiState.postValue(
+                uiState.value!!.build {
+                    state = AuthenticationState.Success
+                }
+            )
             navigate(AuthenticationDirections.Dashboard, finishActivity = true)
         } else {
-            uiState.value!!.build {
-                isLoading = false
-                errorMessage = result.message
-            }
+            uiState.postValue(
+                uiState.value!!.build {
+                    state = AuthenticationState.Error(message = result.message)
+                }
+            )
         }
     }
 }
