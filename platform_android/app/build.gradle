@@ -1,5 +1,6 @@
 import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -17,13 +18,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    packagingOptions {
-        exclude 'META-INF/*.kotlin_module'
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
     }
 }
 
@@ -37,10 +42,13 @@ dependencies {
     implementation project(':platform_android:onboarding')
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
+
     implementation Deps.Kotlin.stdLib
     implementation Deps.Google.material
     api Deps.AndroidX.appCompat
     api Deps.AndroidX.coreKtx
+
+    implementation Deps.Dagger.dagger
 
     kapt Deps.Dagger.compiler
     kapt Deps.Dagger.processor
