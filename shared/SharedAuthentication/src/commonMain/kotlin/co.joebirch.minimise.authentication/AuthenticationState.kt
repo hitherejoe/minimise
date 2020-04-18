@@ -19,17 +19,17 @@ sealed class AuthenticationState(
     )
 
     data class Loading(
-        val userEmail: String,
-        val userPassword: String,
-        val mode: AuthenticateMode
+        val userEmail: String = "",
+        val userPassword: String = "",
+        val mode: AuthenticateMode = AuthenticateMode.SignUp
     ) : AuthenticationState(isLoading = true, emailAddress = userEmail, password = userPassword)
 
     object Success : AuthenticationState()
 
     data class Error(
-        val userEmail: String,
-        val userPassword: String,
-        val mode: AuthenticateMode,
+        val userEmail: String = "",
+        val userPassword: String = "",
+        val mode: AuthenticateMode = AuthenticateMode.SignUp,
         val message: String? = null
     ) : AuthenticationState(
         isLoading = false, emailAddress = userEmail, password = userPassword,
@@ -39,22 +39,18 @@ sealed class AuthenticationState(
     fun build(block: Builder.() -> Unit) = Builder(this).apply(block).build()
 
     class Builder(uiModel: AuthenticationState) {
-        var emailAddress = uiModel.emailAddress
-        var password = uiModel.password
-        var authenticateMode = uiModel.authenticationMode
-        var isLoading = uiModel.isLoading
-        var success = uiModel.success
-        var errorMessage = uiModel.errorMessage
+        private val currentState = uiModel
+        var state = currentState
+        var userEmail = currentState.emailAddress
+        var userPassword = currentState.password
+        var mode: AuthenticateMode = currentState.authenticationMode
 
         fun build(): AuthenticationState {
-            return if (isLoading) {
-                Loading(emailAddress, password, authenticateMode)
-            } else if (errorMessage != null || success == false) {
-                Error(emailAddress, password, authenticateMode, errorMessage)
-            } else if (success == true) {
-                Success
-            } else {
-                Idle(emailAddress, password, authenticateMode)
+            return when (state) {
+                is Loading -> Loading(userEmail, userPassword, mode)
+                is Error -> Error(userEmail, userPassword, mode, state.errorMessage)
+                is Success -> Success
+                else -> Idle(userEmail, userPassword, mode)
             }
         }
     }
