@@ -13,6 +13,7 @@ object Deps {
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
 
     const val junit = "junit:junit:4.12"
+    const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
 
     object Kotlin {
         const val version = "1.3.70"
