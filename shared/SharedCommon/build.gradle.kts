@@ -28,7 +28,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.Coroutines.coreCommon)
+                implementation(Deps.preferences)
+
             }
         }
 

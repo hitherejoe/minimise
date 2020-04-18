@@ -2,9 +2,9 @@ package co.joebirch.minimise.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.joebirch.minimise.android.core.di.BaseViewModel
+import co.joebirch.minimise.android.core.di.Preferences
 import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AuthenticationViewModel @Inject constructor(
-    private val authenticate: Authenticate
+    private val authenticate: Authenticate,
+    private val sharedPrefs: Preferences
 ) : BaseViewModel(), AuthenticateView {
 
     private val uiState =
@@ -99,6 +100,7 @@ class AuthenticationViewModel @Inject constructor(
 
     private fun handleResult(result: AuthenticationModel) {
         if (result.token != null) {
+            sharedPrefs.accessToken = result.token
             uiState.value!!.build {
                 isLoading = false
                 success = true
