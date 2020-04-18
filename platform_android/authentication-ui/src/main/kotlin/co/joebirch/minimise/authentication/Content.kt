@@ -19,7 +19,6 @@ import androidx.ui.material.CircularProgressIndicator
 import androidx.ui.material.Surface
 import androidx.ui.material.TextButton
 import androidx.ui.res.stringResource
-import androidx.ui.text.TextFieldValue
 import androidx.ui.text.TextStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
@@ -86,7 +85,10 @@ private fun FormContent(
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
-    Column(modifier = Modifier.wrapContentHeight(align = Alignment.Center)) {
+    Column(
+        modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
+            .fillMaxWidth()
+    ) {
         Surface(
             modifier = Modifier.padding(16.dp),
             color = Color.White,
@@ -96,27 +98,41 @@ private fun FormContent(
                 Text(
                     "Email Address", modifier = Modifier.padding(
                         start = 16.dp,
-                        top = 16.dp
+                        top = 16.dp,
+                        bottom = 8.dp
                     )
                 )
-                Surface(color = Color.LightGray, modifier = Modifier.padding(16.dp)) {
+                Surface(
+                    color = Color.LightGray,
+                    modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
+                ) {
                     TextField(
                         value = TextFieldValue(text = emailAddress),
                         onValueChange = { emailChanged(it.text) },
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
-                        modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
+                        modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
                 }
-                Text("Password", modifier = Modifier.padding(start = 16.dp, top = 8.dp))
-                Surface(color = Color.LightGray, modifier = Modifier.padding(16.dp)) {
+                Text(
+                    "Password",
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        bottom = 8.dp
+                    ).fillMaxWidth()
+                )
+                Surface(
+                    color = Color.LightGray,
+                    modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
+                ) {
                     TextField(
                         value = TextFieldValue(text = password),
                         onValueChange = { passwordChanged(it.text) },
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
                         visualTransformation = PasswordVisualTransformation(),
-                        modifier = Modifier.gravity(ColumnAlign.Center).padding(16.dp)
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
                 if (authenticationMode == AuthenticateMode.SignIn) {
@@ -126,7 +142,7 @@ private fun FormContent(
                         ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                             Text(
                                 text = stringResource(R.string.forgotten_your_password),
-                                modifier = Modifier.gravity(ColumnAlign.Center)
+                                modifier = Modifier.gravity(Alignment.CenterHorizontally)
                                     .padding(top = 8.dp, bottom = 8.dp, start = 12.dp, end = 12.dp)
                             )
                         }
@@ -135,10 +151,13 @@ private fun FormContent(
             }
         }
         Spacer(Modifier.preferredHeight(32.dp))
-        Column(modifier = Modifier.gravity(ColumnAlign.Center)) {
+        Column(
+            modifier = Modifier.gravity(Alignment.CenterHorizontally)
+                .wrapContentHeight(align = Alignment.CenterVertically)
+        ) {
             Button(onClick = {
                 authenticateClicked()
-            }, modifier = Modifier.gravity(ColumnAlign.Center)) {
+            }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
                 ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                     Text(
                         text = if (authenticationMode == AuthenticateMode.SignIn) {
@@ -153,7 +172,7 @@ private fun FormContent(
             Spacer(Modifier.preferredHeight(16.dp))
             Button(onClick = {
                 authenticationModeToggled()
-            }, modifier = Modifier.gravity(ColumnAlign.Center)) {
+            }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
                 ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                     Text(
                         text = if (authenticationMode == AuthenticateMode.SignIn) {
