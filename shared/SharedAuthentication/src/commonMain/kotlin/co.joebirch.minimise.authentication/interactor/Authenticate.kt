@@ -4,10 +4,10 @@ import co.joebirch.minimise.authentication.AuthenticationRepository
 import co.joebirch.minimise.shared_common.interactor.UseCase
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.AuthenticateMode
-import co.joebirch.minimise.shared_common.ApplicationDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticate.Params>() {
 
@@ -24,16 +24,20 @@ open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticat
     }
 
     override fun run(params: Params, completion: (AuthenticationModel) -> Unit) {
-        GlobalScope.launch(ApplicationDispatcher) {
-            val result =  when (params.authenticateMode) {
-                AuthenticateMode.SignUp ->
-                    authenticationRepository.signUp(params.apiKey, params.emailAddress,
-                        params.password)
-                AuthenticateMode.SignIn ->
-                    authenticationRepository.signIn(params.apiKey, params.emailAddress,
-                        params.password)
+        GlobalScope.launch {
+            val result = withContext(Dispatchers.Default) {
+                when (params.authenticateMode) {
+                    AuthenticateMode.SignUp ->
+                        authenticationRepository.signUp(params.apiKey, params.emailAddress,
+                            params.password)
+                    AuthenticateMode.SignIn ->
+                        authenticationRepository.signIn(params.apiKey, params.emailAddress,
+                            params.password)
+                }
             }
-            completion(result)
+            withContext(Dispatchers.Main) {
+                completion(result)
+            }
         }
     }
 

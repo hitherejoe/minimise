@@ -1,5 +1,8 @@
 package co.joebirch.minimise.authentication
 
+import kotlin.native.concurrent.ThreadLocal
+
+@ThreadLocal
 sealed class AuthenticationState(
     val emailAddress: String = "",
     val password: String = "",

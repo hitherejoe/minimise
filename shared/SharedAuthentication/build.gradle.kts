@@ -76,7 +76,11 @@ kotlin {
             dependsOn(mobileMain)
             dependencies {
                 implementation(Deps.Kotlin.stdLib)
-                implementation(Deps.Coroutines.native)
+                implementation(Deps.Coroutines.native) {
+                    version {
+                        strictly("1.3.5-native-mt")
+                    }
+                }
             }
         }
     }

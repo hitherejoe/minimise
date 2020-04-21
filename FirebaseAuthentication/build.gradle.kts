@@ -33,6 +33,7 @@ kotlin {
                 implementation(Deps.Ktor.clientCore)
                 implementation(Deps.Ktor.clientJson)
                 implementation(Deps.Ktor.clientSerialization)
+                implementation(Deps.Ktor.logging)
             }
         }
 
@@ -57,16 +58,23 @@ kotlin {
                 implementation(Deps.Ktor.clientJsonJvm)
                 implementation(Deps.Ktor.clientSerializationJvm)
                 implementation(Deps.Ktor.clientOkhttp)
+                implementation(Deps.Ktor.loggingAndroid)
             }
         }
 
         val iosMain by getting {
             dependencies {
+                implementation(Deps.Coroutines.native) {
+                    version {
+                        strictly("1.3.5-native-mt")
+                    }
+                }
                 implementation(Deps.Ktor.clientIos)
                 implementation(Deps.Ktor.clientSerializationNative)
                 implementation(Deps.Kotlin.serializationRuntimeNative)
-
+                implementation(Deps.Ktor.clientCoreNative)
                 implementation(Deps.Ktor.clientJsonNative)
+                implementation(Deps.Ktor.loggingIos)
             }
         }
     }

@@ -38,13 +38,12 @@ class FirebaseAuthenticationStore(
         returnSecureToken: Boolean
     ): FirebaseCustomTokenSignInResponse {
         return try {
-            val response = httpClient.post<HttpStatement> {
+            httpClient.post {
                 url("$BASE_URL$ENDPOINT_SIGN_IN_WITH_CUSTOM_TOKEN")
                 parameter("key", apiKey)
                 parameter("token", token)
                 parameter("returnSecureToken", returnSecureToken)
-            }.execute()
-            Json.parse(FirebaseCustomTokenSignInResponse.serializer(), response.readText())
+            }
         } catch (cause: Throwable) {
             FirebaseCustomTokenSignInResponse(
                 message = cause.message ?: ""
@@ -219,14 +218,13 @@ class FirebaseAuthenticationStore(
         returnSecureToken: Boolean
     ): FirebaseAuthenticationResponse {
         return try {
-            val response = httpClient.post<HttpStatement> {
+            httpClient.post {
                 url("$BASE_URL$endpoint")
                 parameter("key", apiKey)
                 parameter("email", email)
                 parameter("password", password)
                 parameter("returnSecureToken", returnSecureToken)
-            }.execute()
-            Json.parse(FirebaseAuthenticationResponse.serializer(), response.readText())
+            }
         } catch (cause: Throwable) {
             FirebaseAuthenticationResponse(
                 message = cause.message ?: ""

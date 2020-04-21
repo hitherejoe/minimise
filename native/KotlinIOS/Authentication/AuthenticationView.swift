@@ -61,7 +61,7 @@ public struct AuthenticationView: View {
                       //  self.viewModel.state = AuthenticationState.Idle()
                     }
             ), content: {
-                Alert(title: Text("Whoops!"), message: Text("There was a problem authenticating with those credenitals. Please try again."), dismissButton: .default(Text("Got it!")))
+                Alert(title: Text("Whoops!"), message: Text(self.viewModel.state.errorMessage ?? ""), dismissButton: .default(Text("Got it!")))
             }).padding(.all, 24.0)
         }
     }
