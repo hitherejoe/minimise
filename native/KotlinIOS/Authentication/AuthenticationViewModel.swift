@@ -1,13 +1,15 @@
 import Foundation
 import SharedAuthentication
+import Backend
+import Firebase
 
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     @Published internal var state: AuthenticationState = AuthenticationState.Idle(userEmail: "", userPassword: "", mode: AuthenticateMode.SignUp.init())
-    private var authenticateUser: Authenticate!
+    private var backendService: BackendProvider
     
-    init(authenticate : Authenticate) {
-        self.authenticateUser = authenticate
+    init(backendService: BackendProvider) {
+        self.backendService = backendService
     }
     
     func setEmailAddress(emailAddress: String) {
@@ -46,35 +48,35 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
         self.state = self.state.build { (builder) in
             builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
         }
-        authenticateUser?.run(params:
-        Authenticate.ParamsCompanion().forSignIn(apiKey: "AIzaSyBFLpvP6vOjrl_5s_R45E6s33FOFg6y5wQ", emailAddress: self.state.emailAddress, password: self.state.password)) { (result) in
-                if (result.token != nil) {
-                    self.state = self.state.build { (builder) in
-                        builder.state = AuthenticationState.Success.init()
-                    }
-                } else {
-                    self.state = self.state.build { (builder) in
-                        builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: result.message)
-                    }
+        /*
+        Auth.auth().signIn(withEmail: self.state.emailAddress, password: self.state.password) { authResult, error in
+            if (authResult?.credential != nil) {
+                self.state = self.state.build { (builder) in
+                    builder.state = AuthenticationState.Success.init()
                 }
+            } else {
+                self.state = self.state.build { (builder) in
+                    builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: error?.localizedDescription)
+                }
+            }
         }
+ */
+    
     }
     
     func signUp() {
-        self.state = self.state.build { (builder) in
-            builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
-        }
-        authenticateUser?.run(params:
-            Authenticate.ParamsCompanion().forSignUp(apiKey: "AIzaSyBFLpvP6vOjrl_5s_R45E6s33FOFg6y5wQ", emailAddress: self.state.emailAddress, password: self.state.password)) { (result) in
-                if (result.token != nil) {
-                    self.state = self.state.build { (builder) in
-                        builder.state = AuthenticationState.Success.init()
-                    }
-                } else {
-                   self.state = self.state.build { (builder) in
-                       builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: result.message)
-                   }
+       /*
+        Auth.auth().createUser(withEmail: self.state.emailAddress, password: self.state.password) { authResult, error in
+            if (authResult?.user != nil) {
+                self.state = self.state.build { (builder) in
+                    builder.state = AuthenticationState.Success.init()
                 }
+            } else {
+                self.state = self.state.build { (builder) in
+                    builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: error?.localizedDescription)
+                }
+            }
         }
+ */
     }
 }

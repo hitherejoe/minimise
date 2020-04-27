@@ -14,3 +14,4 @@
 .externalNativeBuild
 .cxx
 .idea
+native/KotlinIOS/GoogleService-Info.plist
