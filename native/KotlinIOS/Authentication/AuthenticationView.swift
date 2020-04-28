@@ -3,11 +3,12 @@ import SwiftUI
 import SharedAuthentication
 import Dashboard
 import Backend
-
+import Common
 
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel: AuthenticationViewModel
+    var viewProvider: ViewProv
 
     public func authenticateButtonText() -> String {
         if (self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self)) {
@@ -63,7 +64,14 @@ public struct AuthenticationView: View {
             ), content: {
                 Alert(title: Text("Whoops!"), message: Text(self.viewModel.state.errorMessage ?? ""), dismissButton: .default(Text("Got it!")))
             }).padding(.all, 24.0)
+            
+        }.navigate(to: viewProvider.makeDashboardView(), when: Binding<Bool>(
+                get: {
+                    self.viewModel.state.isKind(of: AuthenticationState.Success.self)
+                },
+                set: { _ in
         }
+        ))
     }
 }
 

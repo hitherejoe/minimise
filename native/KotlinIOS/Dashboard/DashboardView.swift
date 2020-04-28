@@ -14,18 +14,28 @@ public struct DashboardView: View {
     @State private var selectorIndex = 0
 
     public var body: some View {
-           return ZStack {
+        return ZStack {
             Rectangle().foregroundColor(Color("primary"))
             .edgesIgnoringSafeArea(.all)
             
-            VStack (alignment: .leading){
-                Picker("Numbers", selection: $selectorIndex) {
-                    Text("Pending").tag(0)
-                    Text("Owned").tag(1)
-                }.pickerStyle(SegmentedPickerStyle())
-            }
-                
-        
+            ZStack(alignment: .bottomTrailing) {
+                VStack (alignment: .leading){
+                    NavigationView {
+                        Text("Minimise")
+                    }
+                    Picker("Numbers", selection: $selectorIndex) {
+                        Text("Pending").tag(0)
+                        Text("Owned").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle()).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                }
+                Button(action: {
+                    // your action here
+                }) {
+                    Text("Add item")
+                        .padding(.bottom, 16)
+                        .padding(.trailing, 16)
+                }
+            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 

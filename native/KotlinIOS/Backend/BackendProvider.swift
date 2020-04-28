@@ -21,6 +21,26 @@ public class BackendProvider {
         return Auth.auth().currentUser
     }
     
+    public func signUp(emailAddress: String, password: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().createUser(withEmail: emailAddress, password: password) { authResult, error in
+            if (authResult?.user != nil) {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    public func signIn(emailAddress: String, password: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().signIn(withEmail: emailAddress, password: password) { authResult, error in
+            if (authResult?.user != nil) {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
     public func getDocuments() {
         Firestore.firestore().collection("belongings")
             .whereField("userId", isEqualTo: Auth.auth().currentUser?.uid)

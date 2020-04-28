@@ -22,10 +22,10 @@ struct MinimiseView: View {
     }
 
     var body: some View {
-    //    if self.authenticated {
+        if self.authenticated {
             return viewBuilder.makeDashboardView()
-     //   } else {
-       //     return viewBuilder.makeAuthenticationView()
-       // }
+        } else {
+            return viewBuilder.makeAuthenticationView()
+        }
     }
 }

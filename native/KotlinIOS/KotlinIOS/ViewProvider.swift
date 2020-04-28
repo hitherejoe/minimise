@@ -10,8 +10,9 @@ import SwiftUI
 import Swinject
 import Dashboard
 import Authentication
+import Common
 
-class ViewBuilder: ObservableObject {
+class ViewBuilder: ObservableObject, ViewProv {
 
     private let resolver: Resolver
 

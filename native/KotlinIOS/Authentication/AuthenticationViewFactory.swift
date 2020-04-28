@@ -13,13 +13,16 @@ import Common
 public struct AuthenticationViewFactory : ViewFactory {
 
     let backendProvider: BackendProvider
+    let viewProvider: ViewProv
     
-    public init(backendProvider: BackendProvider) {
+    public init(backendProvider: BackendProvider,
+                viewProvider: ViewProv) {
         self.backendProvider = backendProvider
+        self.viewProvider = viewProvider
     }
 
     public func make() -> AnyView {
         let viewModel = AuthenticationViewModel(backendService: backendProvider)
-        return AnyView(AuthenticationView(viewModel: viewModel))
+        return AnyView(AuthenticationView(viewModel: viewModel, viewProvider: viewProvider))
     }
 }

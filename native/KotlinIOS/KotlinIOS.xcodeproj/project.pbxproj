@@ -32,6 +32,7 @@
 		426F9AF223C6437C00A8437A /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426F9AF123C6437C00A8437A /* AuthenticationTests.swift */; };
 		426F9AFF23C6438D00A8437A /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360423AE799000738FB7 /* AuthenticationViewModel.swift */; };
 		426F9B0023C6438D00A8437A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4219360623AE7B3400738FB7 /* AuthenticationView.swift */; };
+		427794BA245767E3008F00D2 /* ViewProv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427794B824576762008F00D2 /* ViewProv.swift */; };
 		427EB48524515AF900DFA4DD /* Dashboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427EB47C24515AF900DFA4DD /* Dashboard.framework */; };
 		427EB48C24515AF900DFA4DD /* DashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427EB48B24515AF900DFA4DD /* DashboardTests.swift */; };
 		427EB48E24515AF900DFA4DD /* Dashboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 427EB47E24515AF900DFA4DD /* Dashboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -249,6 +250,7 @@
 		426F9AF123C6437C00A8437A /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		426F9AF323C6437C00A8437A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		426F9B0623C6471300A8437A /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../../SharedCore/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
+		427794B824576762008F00D2 /* ViewProv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProv.swift; sourceTree = "<group>"; };
 		427EB47C24515AF900DFA4DD /* Dashboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dashboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		427EB47E24515AF900DFA4DD /* Dashboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dashboard.h; sourceTree = "<group>"; };
 		427EB47F24515AF900DFA4DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 		42367ACA24557E2700E688B6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				427794B824576762008F00D2 /* ViewProv.swift */,
 				42367ACC24557E2700E688B6 /* Info.plist */,
 				42367AD524557E3E00E688B6 /* ViewFactory.swift */,
 			);
@@ -968,7 +971,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n";
+			shellScript = "
+";
 		};
 		570AA7274DC95BD84EEE6C71 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1205,6 +1209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42367AD624557E3E00E688B6 /* ViewFactory.swift in Sources */,
+				427794BA245767E3008F00D2 /* ViewProv.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
