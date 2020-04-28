@@ -8,7 +8,6 @@ import Common
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel: AuthenticationViewModel
-    @State var pushActive = false
     var viewProvider: ViewProv
 
     public func authenticateButtonText() -> String {
@@ -70,8 +69,7 @@ public struct AuthenticationView: View {
                 get: {
                     self.viewModel.state.isKind(of: AuthenticationState.Success.self)
                 },
-                set: { success in
-                    let f = success
+                set: { _ in
         }
         ))
     }
