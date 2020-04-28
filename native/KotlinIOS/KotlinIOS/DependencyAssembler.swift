@@ -13,6 +13,7 @@ import Firebase
 import Backend
 import Dashboard
 import Swinject
+import Common
 
 class DependencyAssembler: Assembly {
     
@@ -21,6 +22,12 @@ class DependencyAssembler: Assembly {
         .inObjectScope(.container)
         .initCompleted { resolver, screen in
             (resolver.resolve(BackendProvider.self)!).configure()
+        }
+        
+        container.register(ViewProv.self) { resolver -> ViewProv in
+            ViewBuilder(
+                resolver: container
+            )
         }
     
         container.register(DashboardViewFactory.self) { resolver -> DashboardViewFactory in
@@ -31,7 +38,7 @@ class DependencyAssembler: Assembly {
                  
                  container.register(AuthenticationViewFactory.self) { resolver -> AuthenticationViewFactory in
                      AuthenticationViewFactory(
-                         backendProvider: container.resolve(BackendProvider.self)!
+                        backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ViewProv.self)!
                      )
                  }
     

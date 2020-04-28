@@ -48,23 +48,36 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
         self.state = self.state.build { (builder) in
             builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
         }
-        /*
-        Auth.auth().signIn(withEmail: self.state.emailAddress, password: self.state.password) { authResult, error in
-            if (authResult?.credential != nil) {
-                self.state = self.state.build { (builder) in
-                    builder.state = AuthenticationState.Success.init()
-                }
-            } else {
-                self.state = self.state.build { (builder) in
-                    builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: error?.localizedDescription)
-                }
-            }
+        backendService.signIn(emailAddress: self.state.emailAddress,
+                              password: self.state.password) { (success) in
+                                if (success) {
+                                    self.state = self.state.build { (builder) in
+                                        builder.state = AuthenticationState.Success.init()
+                                    }
+                                } else {
+                                    self.state = self.state.build { (builder) in
+                                        builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: "")
+                                    }
+                                }
         }
- */
-    
     }
     
     func signUp() {
+        self.state = self.state.build { (builder) in
+            builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
+        }
+        backendService.signUp(emailAddress: self.state.emailAddress,
+                              password: self.state.password) { (success) in
+                                if (success) {
+                                    self.state = self.state.build { (builder) in
+                                        builder.state = AuthenticationState.Success.init()
+                                    }
+                                } else {
+                                    self.state = self.state.build { (builder) in
+                                        builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: "")
+                                    }
+                                }
+        }
        /*
         Auth.auth().createUser(withEmail: self.state.emailAddress, password: self.state.password) { authResult, error in
             if (authResult?.user != nil) {
