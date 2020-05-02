@@ -12,7 +12,7 @@ import Dashboard
 import Authentication
 import Common
 
-class ViewBuilder: ObservableObject, ViewProv {
+class ViewProvider: ObservableObject, ScreenBuilder {
 
     private let resolver: Resolver
 

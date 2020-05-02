@@ -5,7 +5,6 @@ use_frameworks!
 
 target 'Authentication' do
   # Comment the next line if you don't want to use dynamic frameworks
-  pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
 inherit! :search_paths
   # Pods for Authentication
@@ -20,7 +19,6 @@ end
 
 target 'Backend' do
   # Comment the next line if you don't want to use dynamic frameworks
-
 inherit! :search_paths
   # Pods for Authentication
   pod 'Firebase/Firestore'
@@ -31,10 +29,10 @@ end
 
 target 'Dashboard' do
   # Comment the next line if you don't want to use dynamic frameworks
-
 inherit! :search_paths
-pod 'Firebase/Firestore'
  pod 'Firebase/Auth'
+ pod 'FirebaseFirestoreSwift'
+ pod 'MaterialComponents/Buttons+Theming'
   # Pods for Authentication
 target 'DashboardTests' do
     # Pods for testing

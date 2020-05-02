@@ -41,16 +41,22 @@ public class BackendProvider {
         }
     }
     
-    public func getDocuments() {
-        Firestore.firestore().collection("belongings")
+    public func getDocuments(completion: @escaping (Array<Belonging>) -> Void) {
+        var id = Auth.auth().currentUser?.uid
+        print(id)
+        Firestore.firestore().collection("items")
             .whereField("userId", isEqualTo: Auth.auth().currentUser?.uid)
         .addSnapshotListener { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+                if let querySnapshot = querySnapshot {
+                  let tasks = querySnapshot.documents.compactMap { document -> Belonging? in // (3)
+                    try? document.data(as: Belonging.self) // (4)
+                  }
+                    completion(tasks)
                 }
+                
             }
         }
     }

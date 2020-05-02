@@ -13,10 +13,10 @@ import Common
 public struct AuthenticationViewFactory : ViewFactory {
 
     let backendProvider: BackendProvider
-    let viewProvider: ViewProv
+    let viewProvider: ScreenBuilder
     
     public init(backendProvider: BackendProvider,
-                viewProvider: ViewProv) {
+                viewProvider: ScreenBuilder) {
         self.backendProvider = backendProvider
         self.viewProvider = viewProvider
     }

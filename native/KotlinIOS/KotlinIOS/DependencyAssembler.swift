@@ -24,23 +24,23 @@ class DependencyAssembler: Assembly {
             (resolver.resolve(BackendProvider.self)!).configure()
         }
         
-        container.register(ViewProv.self) { resolver -> ViewProv in
-            ViewBuilder(
+        container.register(ScreenBuilder.self) { resolver -> ScreenBuilder in
+            ViewProvider(
                 resolver: container
             )
         }
     
         container.register(DashboardViewFactory.self) { resolver -> DashboardViewFactory in
-                     DashboardViewFactory(
-                         backendProvider: container.resolve(BackendProvider.self)!
-                     )
-                 }
+             DashboardViewFactory(
+                 backendProvider: container.resolve(BackendProvider.self)!
+             )
+         }
                  
-                 container.register(AuthenticationViewFactory.self) { resolver -> AuthenticationViewFactory in
-                     AuthenticationViewFactory(
-                        backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ViewProv.self)!
-                     )
-                 }
-    
+         container.register(AuthenticationViewFactory.self) { resolver -> AuthenticationViewFactory in
+             AuthenticationViewFactory(
+                backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenBuilder.self)!
+             )
+         }
+
     }
 }

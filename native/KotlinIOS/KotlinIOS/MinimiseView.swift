@@ -13,19 +13,19 @@ import Authentication
 
 struct MinimiseView: View {
 
-    @EnvironmentObject
-    var viewBuilder: ViewBuilder
+    var viewProvider: ViewProvider
     var authenticated: Bool
     
-    init(authenticated: Bool) {
+    init(authenticated: Bool, viewProvider: ViewProvider) {
         self.authenticated = authenticated
+        self.viewProvider = viewProvider
     }
 
     var body: some View {
         if self.authenticated {
-            return viewBuilder.makeDashboardView()
+            return viewProvider.makeDashboardView()
         } else {
-            return viewBuilder.makeAuthenticationView()
+            return viewProvider.makeAuthenticationView()
         }
     }
 }

@@ -3,6 +3,7 @@ import SwiftUI
 import Authentication
 import Firebase
 import Backend
+import Common
 import Dashboard
 import Swinject
 
@@ -18,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        let appView = MinimiseView(authenticated: self.assembler.resolver.resolve(BackendProvider.self)?.currentUser() != nil).environmentObject(ViewBuilder(resolver: self.assembler.resolver))
+        let appView = MinimiseView(authenticated: self.assembler.resolver.resolve(BackendProvider.self)?.currentUser() != nil, viewProvider: ViewProvider(resolver: self.assembler.resolver))
         // Use a UIHostingController as window root view controller
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

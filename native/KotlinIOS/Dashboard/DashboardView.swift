@@ -7,12 +7,14 @@
 //
 import Foundation
 import SwiftUI
+import Backend
 
 public struct DashboardView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
     @State private var selectorIndex = 0
-
+    @State private var searchText : String = ""
+    
     public var body: some View {
         return ZStack {
             Rectangle().foregroundColor(Color("primary"))
@@ -20,23 +22,131 @@ public struct DashboardView: View {
             
             ZStack(alignment: .bottomTrailing) {
                 VStack (alignment: .leading){
-                    NavigationView {
-                        Text("Minimise")
-                    }
+                    SearchBar(text: $searchText)
                     Picker("Numbers", selection: $selectorIndex) {
                         Text("Pending").tag(0)
                         Text("Owned").tag(1)
-                    }.pickerStyle(SegmentedPickerStyle()).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .padding(.leading, 8)
+                    .padding(.trailing, 8)
+                    List {
+                        ForEach (self.viewModel.state) { task in // (3)
+                            ProductCard(title: task.name, description: task.name) {
+                                
+                            } // (6)
+                        }
+                    }.onAppear { UITableView.appearance().separatorStyle = .none } .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                        .padding(.top, 6)
                 }
                 Button(action: {
                     // your action here
                 }) {
-                    Text("Add item")
-                        .padding(.bottom, 16)
-                        .padding(.trailing, 16)
-                }
+                    Image(systemName: "plus")
+                    .foregroundColor(.white)
+                        .font(.system(size: 24, weight: .regular))
+                        .padding(.all, 2)
+                        
+                }.buttonStyle(BlueCircleButtonStyle())
+                .padding(.bottom, 16)
+                .padding(.trailing, 16)
             }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 
+    struct TaskCell: View { // (5)
+      var task: Belonging
+      
+      var body: some View {
+        HStack {// (12)
+          Text(task.name)
+        }
+      }
+    }
+    
+    struct BlueCircleButtonStyle: ButtonStyle {
+        func makeBody(configuration: Self.Configuration) -> some View {
+            configuration.label.padding().modifier(MakeSquareBounds()).background(Circle().fill(Color.blue))
+
+        }
+    }
+
+    struct MakeSquareBounds: ViewModifier {
+
+        @State var size: CGFloat = 1000
+        func body(content: Content) -> some View {
+            let c = ZStack {
+                content.alignmentGuide(HorizontalAlignment.center) { (vd) -> CGFloat in
+                    DispatchQueue.main.async {
+                        self.size = max(vd.height, vd.width)
+                    }
+                    return vd[HorizontalAlignment.center]
+                }
+            }
+            return c.frame(width: size, height: size)
+        }
+    }
+    
+    struct ProductCard: View {
+        
+        
+        var title:String    // Product Title
+        var description:String // Product Description
+        var buttonHandler: (()->())?
+        
+        init(title:String, description:String, buttonHandler: (()->())?) {
+            
+            self.title = title
+            self.description = description
+            self.buttonHandler = buttonHandler
+        }
+        
+        var body: some View {
+            VStack(alignment: .leading, spacing: 0) {
+                    Text(self.title)
+                        .fontWeight(Font.Weight.heavy)
+                    Text(self.description)
+                        .font(Font.custom("HelveticaNeue-Bold", size: 16))
+                        .foregroundColor(Color.gray)
+                }.padding(16).onTapGesture {
+                    self.buttonHandler?()
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+            .background(Color.white)
+            .cornerRadius(6)
+            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
+        }
+    }
+}
+
+struct SearchBar: UIViewRepresentable {
+
+    @Binding var text: String
+
+    class Coordinator: NSObject, UISearchBarDelegate {
+
+        @Binding var text: String
+
+        init(text: Binding<String>) {
+            _text = text
+        }
+
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            text = searchText
+        }
+    }
+
+    func makeCoordinator() -> SearchBar.Coordinator {
+        return Coordinator(text: $text)
+    }
+
+    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
+        let searchBar = UISearchBar(frame: .zero)
+        searchBar.delegate = context.coordinator
+        searchBar.searchBarStyle = .minimal
+        return searchBar
+    }
+
+    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
+        uiView.text = text
+    }
 }
