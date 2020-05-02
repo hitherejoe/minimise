@@ -31,7 +31,8 @@ public struct DashboardView: View {
                     .padding(.trailing, 8)
                     List {
                         ForEach (self.viewModel.state) { task in // (3)
-                            ProductCard(title: task.name, description: task.name) {
+                            ProductCard(title: task.name, description: task.storeName,
+                                date: task.pendingDate!.dateValue()) {
                                 
                             } // (6)
                         }
@@ -91,12 +92,16 @@ public struct DashboardView: View {
         
         var title:String    // Product Title
         var description:String // Product Description
+        var date:String // Product Description
         var buttonHandler: (()->())?
         
-        init(title:String, description:String, buttonHandler: (()->())?) {
+        init(title:String, description:String, date:Date, buttonHandler: (()->())?) {
+            let formatter3 = DateFormatter()
+            formatter3.dateFormat = "d MMM y"
             
             self.title = title
             self.description = description
+            self.date = "Added " + date.timeAgo(numericDates: true)
             self.buttonHandler = buttonHandler
         }
         
@@ -107,13 +112,17 @@ public struct DashboardView: View {
                     Text(self.description)
                         .font(Font.custom("HelveticaNeue-Bold", size: 16))
                         .foregroundColor(Color.gray)
+                Spacer()
+                Text(self.date)
+                .foregroundColor(Color.gray)
+                .font(Font.custom("HelveticaNeue", size: 14))
                 }.padding(16).onTapGesture {
                     self.buttonHandler?()
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 120, maxHeight: .infinity, alignment: .topLeading)
             .background(Color.white)
             .cornerRadius(6)
-            .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 2)
+            .shadow(color: Color.black.opacity(0.2), radius: 2, x: 0, y: 1)
         }
     }
 }
