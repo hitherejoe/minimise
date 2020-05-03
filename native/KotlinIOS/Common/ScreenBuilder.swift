@@ -13,4 +13,6 @@ public protocol ScreenBuilder {
     func makeDashboardView() -> AnyView
     
     func makeAuthenticationView() -> AnyView
+    
+    func makeCreationView() -> AnyView
 }

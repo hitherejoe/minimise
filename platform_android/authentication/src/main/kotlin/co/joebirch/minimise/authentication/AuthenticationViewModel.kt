@@ -58,9 +58,9 @@ class AuthenticationViewModel @Inject constructor(
 
     override fun authenticate() {
         if (uiState.value?.authenticationMode == AuthenticateMode.SignIn) {
-            signUp()
-        } else {
             signIn()
+        } else {
+            signUp()
         }
     }
 
@@ -73,7 +73,7 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignUp(
-                    "FIREBASE_API_KEY",
+                    BuildConfig.FIREBASE_API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->
@@ -91,7 +91,7 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignIn(
-                    "FIREBASE_API_KEY",
+                    BuildConfig.FIREBASE_API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->
@@ -103,12 +103,7 @@ class AuthenticationViewModel @Inject constructor(
     private fun handleResult(result: AuthenticationModel) {
         if (result.token != null) {
             sharedPrefs.accessToken = result.token
-            uiState.postValue(
-                uiState.value!!.build {
-                    state = AuthenticationState.Success
-                }
-            )
-            navigate(AuthenticationDirections.Dashboard, finishActivity = true)
+            navigate(AuthenticationDirections.Dashboard)
         } else {
             uiState.postValue(
                 uiState.value!!.build {

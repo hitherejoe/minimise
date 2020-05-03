@@ -141,7 +141,7 @@ private fun textStyleFromTextAppearance(context: Context, @StyleRes id: Int): Te
 
         with(DensityAmbient.current) {
             TextStyle(
-                color = if (color != DEFAULT_COLOR) Color(color) else null,
+                color = Color(color),
                 fontSize = textSize.toSp(),
                 lineHeight = if (lineHeight != -1) lineHeight.toSp() else TextUnit.Inherit,
                 fontFamily = when {

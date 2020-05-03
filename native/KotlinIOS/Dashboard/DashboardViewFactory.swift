@@ -14,13 +14,16 @@ import Common
 public struct DashboardViewFactory : ViewFactory {
 
     let backendProvider: BackendProvider
+    let viewProvider: ScreenBuilder
     
-    public init(backendProvider: BackendProvider) {
+    public init(backendProvider: BackendProvider,
+                viewProvider: ScreenBuilder) {
         self.backendProvider = backendProvider
+        self.viewProvider = viewProvider
     }
 
     public func make() -> AnyView {
         let viewModel = DashboardViewModel(backendService: backendProvider)
-        return AnyView(DashboardView(viewModel: viewModel))
+        return AnyView(DashboardView(viewModel: viewModel, viewProvider: viewProvider))
     }
 }

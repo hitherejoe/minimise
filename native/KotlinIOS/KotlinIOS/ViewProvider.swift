@@ -10,6 +10,7 @@ import SwiftUI
 import Swinject
 import Dashboard
 import Authentication
+import Creation
 import Common
 
 class ViewProvider: ObservableObject, ScreenBuilder {
@@ -26,5 +27,9 @@ class ViewProvider: ObservableObject, ScreenBuilder {
     
     func makeAuthenticationView() -> AnyView {
         return self.resolver.resolve(AuthenticationViewFactory.self)!.make()
+    }
+    
+    func makeCreationView() -> AnyView {
+        return self.resolver.resolve(CreationViewFactory.self)!.make()
     }
 }

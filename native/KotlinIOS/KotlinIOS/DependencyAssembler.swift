@@ -14,6 +14,7 @@ import Backend
 import Dashboard
 import Swinject
 import Common
+import Creation
 
 class DependencyAssembler: Assembly {
     
@@ -32,7 +33,7 @@ class DependencyAssembler: Assembly {
     
         container.register(DashboardViewFactory.self) { resolver -> DashboardViewFactory in
              DashboardViewFactory(
-                 backendProvider: container.resolve(BackendProvider.self)!
+                 backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenBuilder.self)!
              )
          }
                  
@@ -42,5 +43,8 @@ class DependencyAssembler: Assembly {
              )
          }
 
+        container.register(CreationViewFactory.self) { resolver -> CreationViewFactory in
+            CreationViewFactory()
+        }
     }
 }

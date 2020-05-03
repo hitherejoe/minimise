@@ -2,6 +2,8 @@ package co.joebirch.minimise.authentication
 
 import android.view.ViewGroup
 import androidx.compose.Composable
+import androidx.compose.State
+import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Alignment
@@ -28,7 +30,7 @@ import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
 fun ViewGroup.composeAuthenticationContent(
     lifecycleOwner: LifecycleOwner,
-    state: LiveData<AuthenticationState>,
+    uiState: LiveData<AuthenticationState>,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
     forgotPasswordClicked: () -> Unit,
@@ -36,7 +38,7 @@ fun ViewGroup.composeAuthenticationContent(
     passwordChanged: (String) -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
     ComposeAuthenticationContent(
-        state,
+        uiState,
         authenticationModeToggled,
         authenticateClicked,
         forgotPasswordClicked,
@@ -47,19 +49,19 @@ fun ViewGroup.composeAuthenticationContent(
 
 @Composable
 private fun ComposeAuthenticationContent(
-    state: LiveData<AuthenticationState>,
+    uiState: LiveData<AuthenticationState>,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
     forgotPasswordClicked: () -> Unit,
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
-    val viewState = observe(state)
+    val viewState = observe(uiState)
     if (viewState != null) {
         FormContent(
-            state.value!!.emailAddress,
-            state.value!!.password,
-            state.value!!.authenticationMode,
+            uiState.value!!.emailAddress,
+            uiState.value!!.password,
+            uiState.value!!.authenticationMode,
             authenticationModeToggled,
             authenticateClicked,
             forgotPasswordClicked,
@@ -76,7 +78,7 @@ private fun progress() {
 
 @Composable
 private fun FormContent(
-    emailAddress: String,
+    email: String,
     password: String,
     authenticationMode: AuthenticateMode,
     authenticationModeToggled: () -> Unit,
@@ -85,6 +87,9 @@ private fun FormContent(
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
+    val emailState = state { TextFieldValue(email) }
+    val passwordState = state { TextFieldValue(password) }
+
     Column(
         modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
             .fillMaxWidth()
@@ -107,8 +112,11 @@ private fun FormContent(
                     modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
                 ) {
                     TextField(
-                        value = TextFieldValue(text = emailAddress),
-                        onValueChange = { emailChanged(it.text) },
+                        value = emailState.value,
+                        onValueChange = {
+                            emailState.value = it
+                            emailChanged(it.text)
+                        },
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
                         modifier = Modifier.padding(16.dp).fillMaxWidth()
@@ -127,8 +135,11 @@ private fun FormContent(
                     modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
                 ) {
                     TextField(
-                        value = TextFieldValue(text = password),
-                        onValueChange = { passwordChanged(it.text) },
+                        value = passwordState.value,
+                        onValueChange = {
+                            passwordState.value = it
+                            passwordChanged(it.text)
+                        },
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
                         visualTransformation = PasswordVisualTransformation(),

@@ -3,8 +3,22 @@ platform :ios, '13.0'
 
 use_frameworks!
 
+def google_utilites
+  pod 'GoogleUtilities/AppDelegateSwizzler'
+  pod 'GoogleUtilities/Environment'
+  pod 'GoogleUtilities/ISASwizzler'
+  pod 'GoogleUtilities/Logger'
+  pod 'GoogleUtilities/MethodSwizzler'
+  pod 'GoogleUtilities/NSData+zlib'
+  pod 'GoogleUtilities/Network'
+  pod 'GoogleUtilities/Reachability'
+  pod 'GoogleUtilities/UserDefaults'
+  pod 'GTMSessionFetcher'
+end
+
 target 'Authentication' do
   # Comment the next line if you don't want to use dynamic frameworks
+  google_utilites
   pod 'Firebase/Auth'
 inherit! :search_paths
   # Pods for Authentication
@@ -18,6 +32,7 @@ target 'AuthenticationTests' do
 end
 
 target 'Backend' do
+  google_utilites
   # Comment the next line if you don't want to use dynamic frameworks
 inherit! :search_paths
   # Pods for Authentication
@@ -28,11 +43,12 @@ inherit! :search_paths
 end
 
 target 'Dashboard' do
+  google_utilites
   # Comment the next line if you don't want to use dynamic frameworks
 inherit! :search_paths
- pod 'Firebase/Auth'
- pod 'FirebaseFirestoreSwift'
- pod 'MaterialComponents/Buttons+Theming'
+pod 'Firebase/Firestore'
+pod 'Firebase/Auth'
+pod 'FirebaseFirestoreSwift'
   # Pods for Authentication
 target 'DashboardTests' do
     # Pods for testing
@@ -41,9 +57,16 @@ target 'DashboardTests' do
 
 end
 
+target 'Creation' do
+  # Comment the next line if you don't want to use dynamic frameworks
+inherit! :search_paths
+  # Pods for Authentication
+
+end
+
 target 'KotlinIOS' do
   # Comment the next line if you don't want to use dynamic frameworks
-
+google_utilites
 inherit! :search_paths
   # Pods for KotlinIOS
   pod 'Swinject'

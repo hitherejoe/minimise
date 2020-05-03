@@ -9,7 +9,7 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha05"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.1.0-alpha08"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70"
 
     const val junit = "junit:junit:4.12"
@@ -97,7 +97,7 @@ object Deps {
     }
 
     object Compose {
-        const val version = "0.1.0-dev09"
+        const val version = "0.1.0-dev10"
 
         const val android = "androidx.ui:ui-android:$version"
         const val core = "androidx.ui:ui-core:$version"

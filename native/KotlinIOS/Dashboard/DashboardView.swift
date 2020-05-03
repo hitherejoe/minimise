@@ -8,50 +8,62 @@
 import Foundation
 import SwiftUI
 import Backend
+import Common
 
 public struct DashboardView: View {
     
     @ObservedObject var viewModel: DashboardViewModel
     @State private var selectorIndex = 0
     @State private var searchText : String = ""
+    @State private var action: Int? = 0
+    var viewProvider: ScreenBuilder
     
     public var body: some View {
-        return ZStack {
-            Rectangle().foregroundColor(Color("primary"))
-            .edgesIgnoringSafeArea(.all)
-            
-            ZStack(alignment: .bottomTrailing) {
-                VStack (alignment: .leading){
-                    SearchBar(text: $searchText)
-                    Picker("Numbers", selection: $selectorIndex) {
-                        Text("Pending").tag(0)
-                        Text("Owned").tag(1)
-                    }.pickerStyle(SegmentedPickerStyle())
-                        .padding(.leading, 8)
-                    .padding(.trailing, 8)
-                    List {
-                        ForEach (self.viewModel.state) { task in // (3)
-                            ProductCard(title: task.name, description: task.storeName,
-                                date: task.pendingDate!.dateValue()) {
+        return NavigationView {
+            ZStack {
+                Rectangle().foregroundColor(Color("primary"))
+                .edgesIgnoringSafeArea(.all)
+                
+                ZStack(alignment: .bottomTrailing) {
+                    VStack (alignment: .leading){
+                        SearchBar(text: $searchText)
+                        Picker("Numbers", selection: $selectorIndex.onChange(colorChange)) {
+                            Text("Pending").tag(0)
+                            Text("Owned").tag(1)
+                        }.pickerStyle(SegmentedPickerStyle())
+                            .padding(.leading, 8)
+                        .padding(.trailing, 8)
+                        List {
+                            ForEach (self.viewModel.state) { task in // (3)
+                                ProductCard(title: task.name, description: task.storeName,
+                                    date: task.pendingDate!.dateValue()) {
+                                    
+                                } // (6)
+                            }
+                        }.onAppear { UITableView.appearance().separatorStyle = .none } .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                            .padding(.top, 6)
+                    }
+                    NavigationLink(destination: viewProvider.makeCreationView(), tag: 1, selection: $action) {
+                        Button(action: {
+                            self.action = 1
+                        }) {
+                            Image(systemName: "plus")
+                            .foregroundColor(.white)
+                                .font(.system(size: 24, weight: .regular))
+                                .padding(.all, 2)
                                 
-                            } // (6)
-                        }
-                    }.onAppear { UITableView.appearance().separatorStyle = .none } .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-                        .padding(.top, 6)
-                }
-                Button(action: {
-                    // your action here
-                }) {
-                    Image(systemName: "plus")
-                    .foregroundColor(.white)
-                        .font(.system(size: 24, weight: .regular))
-                        .padding(.all, 2)
-                        
-                }.buttonStyle(BlueCircleButtonStyle())
-                .padding(.bottom, 16)
-                .padding(.trailing, 16)
-            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                        }.buttonStyle(BlueCircleButtonStyle())
+                        .padding(.bottom, 16)
+                        .padding(.trailing, 16)
+                    }
+                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+            }.navigationBarTitle("")
+            .navigationBarHidden(true)
         }
+    }
+    
+    func colorChange(_ tag: Int) {
+        self.viewModel.setSelectedIndex(index: tag)
     }
 
     struct TaskCell: View { // (5)
@@ -157,5 +169,16 @@ struct SearchBar: UIViewRepresentable {
 
     func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
         uiView.text = text
+    }
+}
+
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        return Binding(
+            get: { self.wrappedValue },
+            set: { selection in
+                self.wrappedValue = selection
+                handler(selection)
+        })
     }
 }
