@@ -1,0 +1,67 @@
+import co.joebirch.minimise.buildsrc.Deps
+import co.joebirch.minimise.buildsrc.Versions
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
+apply plugin: 'kotlin-android-extensions'
+androidExtensions {
+    experimental = true
+}
+
+android {
+    compileSdkVersion Versions.compileSdk
+
+    defaultConfig {
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+
+    implementation project(":platform_android:core")
+    implementation project(":platform_android:navigation")
+    implementation project(':shared:SharedCommon')
+    implementation project(':platform_android:common-ui')
+
+    implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.coreKtx
+
+    implementation Deps.Dagger.dagger
+    kapt Deps.Dagger.compiler
+
+    implementation Deps.Fragment.base
+    implementation Deps.Fragment.ktx
+
+    implementation Deps.Google.material
+
+    implementation Deps.Kotlin.stdLib
+
+    implementation Deps.Lifecycle.common
+    implementation Deps.Lifecycle.viewModelKtx
+
+    testImplementation Deps.junit
+
+    androidTestImplementation Deps.AndroidX.junit
+    androidTestImplementation Deps.Espresso.core
+}

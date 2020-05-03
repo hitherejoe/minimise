@@ -5,6 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="testRunner" value="PLATFORM" />
+        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="/usr/local/Cellar/gradle/6.0.1/libexec" />
@@ -20,6 +21,7 @@
             <option value="$PROJECT_DIR$/platform_android/authentication-ui" />
             <option value="$PROJECT_DIR$/platform_android/common-ui" />
             <option value="$PROJECT_DIR$/platform_android/core" />
+            <option value="$PROJECT_DIR$/platform_android/creation" />
             <option value="$PROJECT_DIR$/platform_android/dashboard" />
             <option value="$PROJECT_DIR$/platform_android/dashboard-ui" />
             <option value="$PROJECT_DIR$/platform_android/design" />

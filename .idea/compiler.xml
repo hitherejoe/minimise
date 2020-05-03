@@ -31,6 +31,7 @@
       <module name="Minimise.platform_android.authentication-ui" target="1.8" />
       <module name="Minimise.platform_android.common-ui" target="1.8" />
       <module name="Minimise.platform_android.core" target="1.7" />
+      <module name="Minimise.platform_android.creation" target="1.8" />
       <module name="Minimise.platform_android.dashboard" target="1.8" />
       <module name="Minimise.platform_android.dashboard-ui" target="1.8" />
       <module name="Minimise.platform_android.design" target="1.7" />

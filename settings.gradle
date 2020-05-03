@@ -1,3 +1,4 @@
+include ':platform_android:creation'
 include ':platform_android:common-ui'
 include ':platform_android:authentication-ui'
 include ':platform_android:dashboard'
