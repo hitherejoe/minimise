@@ -105,6 +105,8 @@ object Deps {
         const val framework = "androidx.ui:ui-framework:$version"
         const val layout = "androidx.ui:ui-layout:$version"
         const val material = "androidx.ui:ui-material:$version"
+        const val icons = "androidx.ui:ui-material-icons-core:$version"
+        const val iconsExtended = "androidx.ui:ui-material-icons-extended:$version"
         const val runtime = "androidx.compose:compose-runtime:$version"
         const val text = "androidx.ui:ui-text:$version"
         const val tooling = "androidx.ui:ui-tooling:$version"

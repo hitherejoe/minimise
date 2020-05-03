@@ -41,6 +41,7 @@ dependencies {
     implementation project(":platform_android:core")
     api project(':platform_android:common-ui')
 
+    implementation Deps.Compose.icons
     implementation Deps.Compose.runtime
     implementation Deps.Compose.layout
     implementation Deps.Compose.framework

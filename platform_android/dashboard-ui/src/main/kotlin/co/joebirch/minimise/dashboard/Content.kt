@@ -5,10 +5,13 @@ import androidx.compose.Composable
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Modifier
+import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.graphics.Color
 import androidx.ui.layout.*
 import androidx.ui.material.*
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.Add
 import androidx.ui.unit.dp
 import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
@@ -47,6 +50,12 @@ private fun DashboardContent(
                 Text(text = "Minimise")
             }, elevation = 0.dp)
         },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}) {
+                Icon(asset = Icons.Filled.Add)
+            }
+        },
+        floatingActionButtonPosition = Scaffold.FabPosition.End,
         bodyContent = {
             Column {
                 TabRow(
