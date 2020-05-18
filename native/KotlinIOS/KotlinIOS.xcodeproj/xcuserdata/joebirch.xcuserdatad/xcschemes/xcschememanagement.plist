@@ -14,7 +14,7 @@
 		<key>Backend.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>36</integer>
+			<integer>34</integer>
 		</dict>
 		<key>BackendProvider.xcscheme_^#shared#^_</key>
 		<dict>
@@ -29,17 +29,17 @@
 		<key>Common.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>38</integer>
+			<integer>37</integer>
 		</dict>
 		<key>Creation.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>37</integer>
+			<integer>36</integer>
 		</dict>
 		<key>Dashboard.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>34</integer>
+			<integer>35</integer>
 		</dict>
 		<key>DashboardTests.xcscheme_^#shared#^_</key>
 		<dict>

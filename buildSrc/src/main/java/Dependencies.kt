@@ -97,12 +97,11 @@ object Deps {
     }
 
     object Compose {
-        const val version = "0.1.0-dev10"
+        const val version = "0.1.0-dev11"
 
         const val android = "androidx.ui:ui-android:$version"
         const val core = "androidx.ui:ui-core:$version"
         const val foundation = "androidx.ui:ui-foundation:$version"
-        const val framework = "androidx.ui:ui-framework:$version"
         const val layout = "androidx.ui:ui-layout:$version"
         const val material = "androidx.ui:ui-material:$version"
         const val icons = "androidx.ui:ui-material-icons-core:$version"
@@ -110,6 +109,7 @@ object Deps {
         const val runtime = "androidx.compose:compose-runtime:$version"
         const val text = "androidx.ui:ui-text:$version"
         const val tooling = "androidx.ui:ui-tooling:$version"
+        const val test = "androidx.ui:ui-test:$version"
     }
 
     object Ktor {

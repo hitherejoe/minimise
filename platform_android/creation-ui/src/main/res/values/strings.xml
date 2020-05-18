@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_product_name">What\'s the name of the item?</string>
+    <string name="hint_store_name">What store is this item from?</string>
+    <string name="hint_frequency">How often will you use this item?</string>
+
+    <string name="frequency_hardly">Hardly</string>
+    <string name="frequency_not_often">Not very often</string>
+    <string name="frequency_often">Often</string>
+    <string name="frequency_very_often">Very often</string>
+    <string name="frequency_all_the_time">All the time</string>
+
+    <string-array name="frequency_options">
+        <item>@string/frequency_hardly</item>
+        <item>@string/frequency_not_often</item>
+        <item>@string/frequency_often</item>
+        <item>@string/frequency_very_often</item>
+        <item>@string/frequency_all_the_time</item>
+    </string-array>
+</resources>

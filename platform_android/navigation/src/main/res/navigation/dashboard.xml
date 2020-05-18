@@ -6,5 +6,13 @@
 
     <fragment
         android:id="@+id/inventoryFragment"
-        android:name="co.joebirch.minimise.dashboard.DashboardFragment" />
+        android:name="co.joebirch.minimise.dashboard.DashboardFragment">
+        <action
+            android:id="@+id/action_inventoryFragment_to_creationFragment"
+            app:destination="@id/creationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/creationFragment"
+        android:name="co.joebirch.minimise.creation.CreationFragment" />
 </navigation>

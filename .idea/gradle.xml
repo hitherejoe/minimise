@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/platform_android/common-ui" />
             <option value="$PROJECT_DIR$/platform_android/core" />
             <option value="$PROJECT_DIR$/platform_android/creation" />
+            <option value="$PROJECT_DIR$/platform_android/creation-ui" />
             <option value="$PROJECT_DIR$/platform_android/dashboard" />
             <option value="$PROJECT_DIR$/platform_android/dashboard-ui" />
             <option value="$PROJECT_DIR$/platform_android/design" />
@@ -31,6 +32,7 @@
             <option value="$PROJECT_DIR$/shared/SharedAuthentication" />
             <option value="$PROJECT_DIR$/shared/SharedCommon" />
             <option value="$PROJECT_DIR$/shared/SharedCore" />
+            <option value="$PROJECT_DIR$/shared/SharedCreation" />
             <option value="$PROJECT_DIR$/shared/SharedDashboard" />
           </set>
         </option>

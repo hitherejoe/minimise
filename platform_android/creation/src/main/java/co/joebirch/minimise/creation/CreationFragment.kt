@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import co.joebirch.creation_ui.composeDashboardContent
 import co.joebirch.minimise.android.core.di.BaseFragment
 import co.joebirch.minimise.android.core.di.ViewModelFactory
 import co.joebirch.minimise.android.core.di.coreComponent
@@ -39,6 +41,14 @@ class CreationFragment : BaseFragment() {
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            composeDashboardContent(
+                viewLifecycleOwner,
+                dashboardViewModel.observeAuthenticationState(),
+                dashboardViewModel::navigateToNextStep,
+                dashboardViewModel::navigateToPreviousStep,
+                dashboardViewModel::createBelonging
             )
         }
     }

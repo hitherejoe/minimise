@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-public protocol ScreenBuilder {
+public protocol ScreenFactory {
     func makeDashboardView() -> AnyView
     
     func makeAuthenticationView() -> AnyView

@@ -1,3 +1,4 @@
+include ':platform_android:creation-ui'
 include ':platform_android:creation'
 include ':platform_android:common-ui'
 include ':platform_android:authentication-ui'
@@ -13,6 +14,7 @@ include ':platform_android:authentication'
 include ':shared:SharedAuthentication'
 include ':shared:SharedCommon'
 include ':shared:SharedCore'
+include ':shared:SharedCreation'
 include ':shared:SharedDashboard'
 include ':FirebaseAuthentication'
 

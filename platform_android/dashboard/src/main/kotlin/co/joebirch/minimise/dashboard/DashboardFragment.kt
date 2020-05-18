@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import co.joebirch.minimise.android.core.di.BaseFragment
 import co.joebirch.minimise.android.core.di.ViewModelFactory
 import co.joebirch.minimise.dashboard.di.inject
+import co.joebirch.minimise.navigation.AuthenticationDirections
+import co.joebirch.minimise.navigation.DashboardDirections
 import javax.inject.Inject
 
 class DashboardFragment : BaseFragment() {
@@ -40,8 +42,13 @@ class DashboardFragment : BaseFragment() {
                 viewLifecycleOwner,
                 dashboardViewModel.observeAuthenticationState(),
                 listOf(Category.PendingBelongings, Category.Belongings),
-                { category -> dashboardViewModel.setSelectedCategory(category) }
+                { category -> dashboardViewModel.setSelectedCategory(category) },
+                ::navigateToCreation
             )
         }
+    }
+
+    fun navigateToCreation() {
+        viewModel.navigate(DashboardDirections.Creation)
     }
 }

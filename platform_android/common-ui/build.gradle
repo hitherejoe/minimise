@@ -34,7 +34,6 @@ dependencies {
 
     implementation Deps.Compose.material
     implementation Deps.Compose.layout
-    implementation Deps.Compose.framework
     implementation Deps.Compose.foundation
     implementation Deps.Compose.runtime
     implementation Deps.Compose.tooling

@@ -25,7 +25,7 @@ class DependencyAssembler: Assembly {
             (resolver.resolve(BackendProvider.self)!).configure()
         }
         
-        container.register(ScreenBuilder.self) { resolver -> ScreenBuilder in
+        container.register(ScreenFactory.self) { resolver -> ScreenFactory in
             ViewProvider(
                 resolver: container
             )
@@ -33,13 +33,13 @@ class DependencyAssembler: Assembly {
     
         container.register(DashboardViewFactory.self) { resolver -> DashboardViewFactory in
              DashboardViewFactory(
-                 backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenBuilder.self)!
+                 backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenFactory.self)!
              )
          }
                  
          container.register(AuthenticationViewFactory.self) { resolver -> AuthenticationViewFactory in
              AuthenticationViewFactory(
-                backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenBuilder.self)!
+                backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenFactory.self)!
              )
          }
 

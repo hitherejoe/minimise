@@ -42,7 +42,9 @@ dependencies {
     implementation project(":platform_android:core")
     implementation project(":platform_android:navigation")
     implementation project(':shared:SharedCommon')
+    implementation project(':shared:SharedCreation')
     implementation project(':platform_android:common-ui')
+    implementation project(':platform_android:creation-ui')
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx

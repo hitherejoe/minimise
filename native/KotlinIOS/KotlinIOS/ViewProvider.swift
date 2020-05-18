@@ -13,7 +13,7 @@ import Authentication
 import Creation
 import Common
 
-class ViewProvider: ObservableObject, ScreenBuilder {
+class ViewProvider: ObservableObject, ScreenFactory {
 
     private let resolver: Resolver
 

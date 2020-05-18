@@ -32,6 +32,7 @@
       <module name="Minimise.platform_android.common-ui" target="1.8" />
       <module name="Minimise.platform_android.core" target="1.7" />
       <module name="Minimise.platform_android.creation" target="1.8" />
+      <module name="Minimise.platform_android.creation-ui" target="1.8" />
       <module name="Minimise.platform_android.dashboard" target="1.8" />
       <module name="Minimise.platform_android.dashboard-ui" target="1.8" />
       <module name="Minimise.platform_android.design" target="1.7" />
@@ -41,6 +42,8 @@
       <module name="Minimise.shared.SharedCommon.androidTest" target="1.6" />
       <module name="Minimise.shared.SharedCore.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedCore.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedCreation.androidMain" target="1.6" />
+      <module name="Minimise.shared.SharedCreation.androidTest" target="1.6" />
       <module name="Minimise.shared.SharedDashboard.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedDashboard.androidTest" target="1.6" />
     </bytecodeTargetLevel>

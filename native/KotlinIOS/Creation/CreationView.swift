@@ -10,26 +10,47 @@ import Foundation
 import SwiftUI
 
 public struct CreationView: View {
-    
+    var usageCounts = ["1", "2", "3", "4", "5", "6", "7+"]
+    var usageTime = ["day", "week", "month", "year"]
     @State var name: String = ""
+    @State var store: String = ""
+    @State var step: Int = 0
+    @State private var selectedFrequencyCount = 2.0
     
     public var body: some View {
+
+        let empty = (step == 0) ? name.isEmpty : store.isEmpty
         return ZStack {
             Rectangle().foregroundColor(Color.blue)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .trailing) {
-                MultilineTextField(placeholder: "What's the name of the item?", text: $name) {
-                    
+                if (step == 0) {
+                    MultilineTextField(placeholder: "What's the name of the item?", text: $name) {
+                        
+                    }
+                    .frame(maxHeight: .greatestFiniteMagnitude)
+                    .multilineTextAlignment(.center)
+                } else if (step == 1) {
+                    MultilineTextField(placeholder: "What store are you buying the item from?", text: $store) {
+                        
+                    }
+                    .frame(maxHeight: .greatestFiniteMagnitude)
+                    .multilineTextAlignment(.center)
+                } else if (step == 2) {
+                        Slider(value: $selectedFrequencyCount, in: 1...5, step: 3)
+                        Text("times per")
+                            .foregroundColor(Color.white)
+                            .padding()
                 }
-                .frame(maxHeight: .greatestFiniteMagnitude)
-                .multilineTextAlignment(.center)
             Text("Next")
                 .fontWeight(.bold)
-                .foregroundColor(Color.white)
+                .foregroundColor(empty ? Color.gray : Color.white)
                 .padding()
-            }.onTapGesture {
-                
+                .disabled(name.isEmpty)
+                .onTapGesture {
+                    self.step = self.step + 1
+                }
             }
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: Alignment.topLeading)
     }

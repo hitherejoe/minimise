@@ -8,7 +8,7 @@ import Common
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel: AuthenticationViewModel
-    var viewProvider: ScreenBuilder
+    var viewProvider: ScreenFactory
 
     public func authenticateButtonText() -> String {
         if (self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self)) {

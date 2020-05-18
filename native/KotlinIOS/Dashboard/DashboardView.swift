@@ -16,7 +16,7 @@ public struct DashboardView: View {
     @State private var selectorIndex = 0
     @State private var searchText : String = ""
     @State private var action: Int? = 0
-    var viewProvider: ScreenBuilder
+    var viewProvider: ScreenFactory
     
     public var body: some View {
         return NavigationView {

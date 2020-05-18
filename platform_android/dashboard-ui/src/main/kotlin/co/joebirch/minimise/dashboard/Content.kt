@@ -20,20 +20,23 @@ fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
     state: LiveData<DashboardState>,
     categories: List<Category>,
-    updateSelectedCategory: (Category) -> Unit
+    updateSelectedCategory: (Category) -> Unit,
+    navigateToCreation: () -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
-    ComposeInventoryContent(state, categories, updateSelectedCategory)
+    ComposeInventoryContent(state, categories, updateSelectedCategory, navigateToCreation)
 }
 
 @Composable
 private fun ComposeInventoryContent(
     state: LiveData<DashboardState>,
     categories: List<Category>,
-    updateSelectedCategory: (Category) -> Unit
+    updateSelectedCategory: (Category) -> Unit,
+    navigateToCreation: () -> Unit
 ) {
     val viewState = observe(state)
     if (viewState != null) {
-        DashboardContent(viewState.selectedCategory, categories, updateSelectedCategory)
+        DashboardContent(viewState.selectedCategory, categories, updateSelectedCategory,
+        navigateToCreation)
     }
 }
 
@@ -41,7 +44,8 @@ private fun ComposeInventoryContent(
 private fun DashboardContent(
     currentCategory: Category,
     categories: List<Category>,
-    updateSelectedCategory: (Category) -> Unit
+    updateSelectedCategory: (Category) -> Unit,
+    navigateToCreation: () -> Unit
 ) {
     val tabTitles = categories.map { it }
     Scaffold(
@@ -51,7 +55,9 @@ private fun DashboardContent(
             }, elevation = 0.dp)
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
+            FloatingActionButton(onClick = {
+                navigateToCreation()
+            }) {
                 Icon(asset = Icons.Filled.Add)
             }
         },
