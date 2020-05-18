@@ -18,6 +18,30 @@ class CreationViewModel @Inject constructor(
 
     fun observeAuthenticationState(): LiveData<CreationState> = uiState
 
+    fun setProductName(name: String) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.name = name
+            }
+        )
+    }
+
+    fun setStoreName(name: String) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.store = name
+            }
+        )
+    }
+
+    fun setFrequency(frequency: Float) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.frequency = frequency
+            }
+        )
+    }
+
     fun createBelonging() {
         // send data to api
         uiState.postValue(

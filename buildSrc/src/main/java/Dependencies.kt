@@ -103,6 +103,7 @@ object Deps {
         const val core = "androidx.ui:ui-core:$version"
         const val foundation = "androidx.ui:ui-foundation:$version"
         const val layout = "androidx.ui:ui-layout:$version"
+        const val livedata = "androidx.ui:ui-livedata:$version"
         const val material = "androidx.ui:ui-material:$version"
         const val icons = "androidx.ui:ui-material-icons-core:$version"
         const val iconsExtended = "androidx.ui:ui-material-icons-extended:$version"

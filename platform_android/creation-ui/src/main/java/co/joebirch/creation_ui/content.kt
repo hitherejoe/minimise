@@ -11,6 +11,7 @@ import androidx.ui.core.Alignment.Companion.CenterHorizontally
 import androidx.ui.foundation.*
 import androidx.ui.graphics.Color
 import androidx.ui.layout.*
+import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowForward
@@ -25,45 +26,42 @@ import androidx.ui.text.style.TextDecoration
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.ipx
-import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
+import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
-
-class CreationData(
-    name: TextFieldValue = TextFieldValue(),
-    store: TextFieldValue = TextFieldValue(),
-    frequencyCount: Float = 2f
-) {
-    var name by mutableStateOf(name)
-    var store by mutableStateOf(store)
-    var frequencyCount by mutableStateOf(frequencyCount)
-}
-
-class CreationState(val data: CreationData = CreationData())
 
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
-    uiState: LiveData<co.joebirch.minimise.dashboard.CreationState>,
+    uiState: LiveData<CreationState>,
+    onNameChanged: (name: String) -> Unit,
+    onStoreChanged: (store: String) -> Unit,
+    onFrequencyChanged: (frequency: Float) -> Unit,
     onNextStep: () -> Unit,
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
-    ComposeInventoryContent(uiState, onNextStep, onPreviousStep, onFormCompleted)
+    ComposeInventoryContent(uiState, onNameChanged, onStoreChanged, onFrequencyChanged,
+        onNextStep, onPreviousStep, onFormCompleted)
 }
 
 @Composable
 private fun ComposeInventoryContent(
-    uiState: LiveData<co.joebirch.minimise.dashboard.CreationState>,
+    uiState: LiveData<CreationState>,
+    onNameChanged: (name: String) -> Unit,
+    onStoreChanged: (store: String) -> Unit,
+    onFrequencyChanged: (frequency: Float) -> Unit,
     onNextStep: () -> Unit,
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
 ) {
-    val viewState = observe(uiState)
+    val viewState by uiState.observeAsState()
     if (viewState != null) {
         CreationContent(
-            viewState.isLoading, selectedStep = viewState.currentStep,
+            viewState!!.isLoading, selectedStep = viewState!!.currentStep,
+            onNameChanged = onNameChanged, onStoreChanged = onStoreChanged,
+            onFrequencyChanged = onFrequencyChanged,
             onNextStep = onNextStep, onPreviousStep = onPreviousStep,
-            onFormCompleted = onFormCompleted
+            onFormCompleted = onFormCompleted, creationState = viewState!!
         )
     }
 }
@@ -73,8 +71,8 @@ private fun isValid(
     selectedStep: CreationStep
 ): Boolean {
     return when (selectedStep) {
-        CreationStep.NAME -> creationState.data.name.text.isNotEmpty()
-        CreationStep.STORE -> creationState.data.store.text.isNotEmpty()
+        CreationStep.NAME -> creationState.name.isNotEmpty()
+        CreationStep.STORE -> creationState.store.isNotEmpty()
         else -> true
     }
 }
@@ -82,8 +80,11 @@ private fun isValid(
 @Composable
 internal fun CreationContent(
     isLoading: Boolean,
-    creationState: CreationState = CreationState(),
+    creationState: CreationState,
     selectedStep: CreationStep,
+    onNameChanged: (name: String) -> Unit,
+    onStoreChanged: (store: String) -> Unit,
+    onFrequencyChanged: (frequency: Float) -> Unit,
     onNextStep: () -> Unit,
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
@@ -127,13 +128,14 @@ internal fun CreationContent(
                     Column(modifier = Modifier.gravity(Center).padding(16.dp)) {
                         when (selectedStep) {
                             CreationStep.NAME -> {
-                                nameStepComposable(creationState)
+                                nameStepComposable(creationState, onNameChanged = onNameChanged)
                             }
                             CreationStep.STORE -> {
-                                storeStepComposable(creationState)
+                                storeStepComposable(creationState, onStoreChanged = onStoreChanged)
                             }
                             CreationStep.FREQUENCY -> {
-                                frequencyStepComposable(creationState)
+                                frequencyStepComposable(creationState,
+                                onFrequencyChanged = onFrequencyChanged)
                             }
                         }
                     }
@@ -159,37 +161,42 @@ internal fun CreationContent(
 }
 
 @Composable
-private fun nameStepComposable(creationState: CreationState) {
+private fun nameStepComposable(
+    creationState: CreationState,
+    onNameChanged: (name: String) -> Unit
+) {
     HintEditText(
         stringResource(id = R.string.hint_product_name),
-        text = creationState.data.name.text,
+        text = creationState.name,
         textStyle = TextStyle(
             textAlign = TextAlign.Center,
             fontSize = TextUnit.Companion.Sp(26),
             color = Color.White
         )
     ) {
-        creationState.data.name = it
+        onNameChanged(it.text)
     }
 }
 
 @Composable
-private fun storeStepComposable(creationState: CreationState) {
+private fun storeStepComposable(creationState: CreationState,
+                                onStoreChanged: (name: String) -> Unit) {
     HintEditText(
         stringResource(id = R.string.hint_store_name),
-        text = creationState.data.store.text,
+        text = creationState.store,
         textStyle = TextStyle(
             textAlign = TextAlign.Center,
             fontSize = TextUnit.Companion.Sp(26),
             color = Color.White
         )
     ) {
-        creationState.data.store = it
+        onStoreChanged(it.text)
     }
 }
 
 @Composable
-private fun frequencyStepComposable(creationState: CreationState) {
+private fun frequencyStepComposable(creationState: CreationState,
+                                    onFrequencyChanged: (frequency: Float) -> Unit) {
     Column(horizontalGravity = CenterHorizontally) {
         Text(
             text = stringResource(id = R.string.hint_frequency),
@@ -203,9 +210,9 @@ private fun frequencyStepComposable(creationState: CreationState) {
 
         TestTag(tag = "FrequencySlider") {
             Slider(
-                value = creationState.data.frequencyCount,
+                value = creationState.frequencyCount,
                 onValueChange = {
-                    creationState.data.frequencyCount = it
+                    onFrequencyChanged(it)
                 },
                 color = Color.White,
                 valueRange = 0f..4f,
@@ -215,7 +222,7 @@ private fun frequencyStepComposable(creationState: CreationState) {
         }
 
         Text(
-            text = stringArrayResource(id = R.array.frequency_options)[creationState.data.frequencyCount.toInt()],
+            text = stringArrayResource(id = R.array.frequency_options)[creationState.frequencyCount.toInt()],
             style = TextStyle(color = Color.White),
             modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
                 .padding(16.dp)

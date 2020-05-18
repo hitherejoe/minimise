@@ -46,6 +46,9 @@ class CreationFragment : BaseFragment() {
             composeDashboardContent(
                 viewLifecycleOwner,
                 dashboardViewModel.observeAuthenticationState(),
+                dashboardViewModel::setProductName,
+                dashboardViewModel::setStoreName,
+                dashboardViewModel::setFrequency,
                 dashboardViewModel::navigateToNextStep,
                 dashboardViewModel::navigateToPreviousStep,
                 dashboardViewModel::createBelonging
