@@ -52,13 +52,20 @@ class CreationViewModel @Inject constructor(
     }
 
     fun navigateToNextStep() {
-        val nextStep = uiState.value?.currentStep?.position!! + 1
-        val c = CreationState(CreationStep.fromPosition(nextStep))
-        uiState.postValue(c)
+        uiState.postValue(
+            uiState.value!!.build {
+                creationStep = CreationStep.fromPosition(
+                    uiState.value?.currentStep?.position!! + 1)
+            }
+        )
     }
 
     fun navigateToPreviousStep() {
-        uiState.postValue(CreationState(CreationStep.fromPosition(
-            uiState.value?.currentStep?.position!! - 1)))
+        uiState.postValue(
+            uiState.value!!.build {
+                creationStep = CreationStep.fromPosition(
+                    uiState.value?.currentStep?.position!! - 1)
+            }
+        )
     }
 }
