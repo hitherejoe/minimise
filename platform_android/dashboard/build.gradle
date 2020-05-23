@@ -61,6 +61,8 @@ dependencies {
     implementation Deps.Lifecycle.common
     implementation Deps.Lifecycle.viewModelKtx
 
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
+
     testImplementation Deps.junit
 
     androidTestImplementation Deps.AndroidX.junit

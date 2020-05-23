@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    implementation project(":platform_android:design")
     implementation Deps.AndroidX.coreKtx
 
     implementation Deps.Compose.material

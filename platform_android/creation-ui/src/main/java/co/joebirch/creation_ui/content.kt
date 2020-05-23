@@ -26,6 +26,7 @@ import androidx.ui.text.style.TextDecoration
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import androidx.ui.unit.ipx
+import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
@@ -40,8 +41,10 @@ fun ViewGroup.composeDashboardContent(
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
-    ComposeInventoryContent(uiState, onNameChanged, onStoreChanged, onFrequencyChanged,
-        onNextStep, onPreviousStep, onFormCompleted)
+    ComposeInventoryContent(
+        uiState, onNameChanged, onStoreChanged, onFrequencyChanged,
+        onNextStep, onPreviousStep, onFormCompleted
+    )
 }
 
 @Composable
@@ -89,75 +92,82 @@ internal fun CreationContent(
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
 ) {
-    Scaffold(
-        floatingActionButton = {
-            if (!isLoading) {
-                TestTag(tag = "NextButton") {
-                    FloatingActionButton(
-                        modifier = Modifier.ripple(enabled = false, radius = 0.dp),
-                        onClick = {
+    MinimiseTheme {
+        Scaffold(
+            floatingActionButton = {
+                if (!isLoading) {
+                    TestTag(tag = "NextButton") {
+                        FloatingActionButton(
+                            modifier = Modifier.ripple(enabled = false, radius = 0.dp),
+                            onClick = {
+                                if (selectedStep == CreationStep.FREQUENCY) {
+                                    onFormCompleted()
+                                } else if (isValid(creationState, selectedStep)) {
+                                    onNextStep()
+                                }
+                            }, backgroundColor = if (isValid(creationState, selectedStep)) {
+                                MaterialTheme.colors.secondary
+                            } else Color.LightGray
+                        ) {
                             if (selectedStep == CreationStep.FREQUENCY) {
-                                onFormCompleted()
-                            } else if (isValid(creationState, selectedStep)) {
-                                onNextStep()
-                            }
-                        }, backgroundColor = if (isValid(creationState, selectedStep)) {
-                            MaterialTheme.colors.secondary
-                        } else Color.LightGray
-                    ) {
-                        if (selectedStep == CreationStep.FREQUENCY) {
-                            Icon(asset = Icons.Filled.Done)
-                        } else Icon(asset = Icons.Filled.ArrowForward)
+                                Icon(asset = Icons.Filled.Done)
+                            } else Icon(asset = Icons.Filled.ArrowForward)
+                        }
                     }
                 }
-            }
-        },
-        floatingActionButtonPosition = Scaffold.FabPosition.End,
-        bodyContent = {
-            Stack(modifier = Modifier.fillMaxSize()) {
-                Box(
-                    backgroundColor = MaterialTheme.colors.primary,
-                    modifier = Modifier.fillMaxSize()
-                )
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colors.secondary,
-                        modifier = Modifier.gravity(Center)
+            },
+            floatingActionButtonPosition = Scaffold.FabPosition.End,
+            bodyContent = {
+                Stack(modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        modifier = Modifier.fillMaxSize()
                     )
-                } else {
-                    Column(modifier = Modifier.gravity(Center).padding(16.dp)) {
-                        when (selectedStep) {
-                            CreationStep.NAME -> {
-                                nameStepComposable(creationState, onNameChanged = onNameChanged)
-                            }
-                            CreationStep.STORE -> {
-                                storeStepComposable(creationState, onStoreChanged = onStoreChanged)
-                            }
-                            CreationStep.FREQUENCY -> {
-                                frequencyStepComposable(creationState,
-                                onFrequencyChanged = onFrequencyChanged)
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colors.secondary,
+                            modifier = Modifier.gravity(Center)
+                        )
+                    } else {
+                        Column(modifier = Modifier.gravity(Center).padding(16.dp)) {
+                            when (selectedStep) {
+                                CreationStep.NAME -> {
+                                    nameStepComposable(creationState, onNameChanged = onNameChanged)
+                                }
+                                CreationStep.STORE -> {
+                                    storeStepComposable(
+                                        creationState,
+                                        onStoreChanged = onStoreChanged
+                                    )
+                                }
+                                CreationStep.FREQUENCY -> {
+                                    frequencyStepComposable(
+                                        creationState,
+                                        onFrequencyChanged = onFrequencyChanged
+                                    )
+                                }
                             }
                         }
-                    }
-                    if (selectedStep != CreationStep.NAME) {
-                        TestTag(tag = "PreviousStep") {
-                            Clickable(
-                                onClick = {
-                                    onPreviousStep()
-                                }, modifier = Modifier.gravity(BottomStart).padding(
-                                    start = 24.dp, bottom = 28.dp
-                                ).ripple(bounded = false)
-                            ) {
-                                Icon(
-                                    asset = vectorResource(id = R.drawable.ic_baseline_arrow_back_24),
-                                    tint = Color.White
-                                )
+                        if (selectedStep != CreationStep.NAME) {
+                            TestTag(tag = "PreviousStep") {
+                                Clickable(
+                                    onClick = {
+                                        onPreviousStep()
+                                    }, modifier = Modifier.gravity(BottomStart).padding(
+                                        start = 24.dp, bottom = 28.dp
+                                    ).ripple(bounded = false)
+                                ) {
+                                    Icon(
+                                        asset = vectorResource(id = R.drawable.ic_baseline_arrow_back_24),
+                                        tint = Color.White
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }
-        })
+            })
+    }
 }
 
 @Composable
@@ -179,8 +189,10 @@ private fun nameStepComposable(
 }
 
 @Composable
-private fun storeStepComposable(creationState: CreationState,
-                                onStoreChanged: (name: String) -> Unit) {
+private fun storeStepComposable(
+    creationState: CreationState,
+    onStoreChanged: (name: String) -> Unit
+) {
     HintEditText(
         stringResource(id = R.string.hint_store_name),
         text = creationState.store,
@@ -195,8 +207,10 @@ private fun storeStepComposable(creationState: CreationState,
 }
 
 @Composable
-private fun frequencyStepComposable(creationState: CreationState,
-                                    onFrequencyChanged: (frequency: Float) -> Unit) {
+private fun frequencyStepComposable(
+    creationState: CreationState,
+    onFrequencyChanged: (frequency: Float) -> Unit
+) {
     Column(horizontalGravity = CenterHorizontally) {
         Text(
             text = stringResource(id = R.string.hint_frequency),
@@ -251,6 +265,7 @@ fun HintEditText(
                 state.value = it
                 onTextChange(it)
             },
+            cursorColor = Color.White,
             textStyle = textStyle.merge(TextStyle(textDecoration = TextDecoration.None))
         )
     }
