@@ -2,17 +2,12 @@ package co.joebirch.minimise.authentication
 
 import android.view.ViewGroup
 import androidx.compose.Composable
-import androidx.compose.State
 import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
-import androidx.ui.core.WithConstraints
-import androidx.ui.core.tag
 import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.CornerSize
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.input.ImeAction
 import androidx.ui.input.KeyboardType
@@ -28,7 +23,6 @@ import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import co.joebirch.minimise.authentication.ui.R
-import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
 fun ViewGroup.composeAuthenticationContent(
