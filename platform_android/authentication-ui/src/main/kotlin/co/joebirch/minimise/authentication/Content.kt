@@ -8,6 +8,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
+import androidx.ui.core.WithConstraints
+import androidx.ui.core.tag
 import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.CornerSize
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
@@ -16,14 +18,15 @@ import androidx.ui.input.ImeAction
 import androidx.ui.input.KeyboardType
 import androidx.ui.input.PasswordVisualTransformation
 import androidx.ui.layout.*
-import androidx.ui.material.Button
-import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.Surface
-import androidx.ui.material.TextButton
+import androidx.ui.layout.ColumnScope.weight
+import androidx.ui.livedata.observeAsState
+import androidx.ui.material.*
 import androidx.ui.res.stringResource
 import androidx.ui.text.TextStyle
+import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
+import androidx.ui.unit.sp
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
@@ -56,19 +59,17 @@ private fun ComposeAuthenticationContent(
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
-    val viewState = observe(uiState)
-    if (viewState != null) {
-        FormContent(
-            uiState.value!!.emailAddress,
-            uiState.value!!.password,
-            uiState.value!!.authenticationMode,
-            authenticationModeToggled,
-            authenticateClicked,
-            forgotPasswordClicked,
-            emailChanged,
-            passwordChanged
-        )
-    }
+    val viewState = uiState.observeAsState()
+    FormContent(
+        viewState.value!!.emailAddress,
+        viewState.value!!.password,
+        viewState.value!!.authenticationMode,
+        authenticationModeToggled,
+        authenticateClicked,
+        forgotPasswordClicked,
+        emailChanged,
+        passwordChanged
+    )
 }
 
 @Composable
@@ -90,110 +91,107 @@ private fun FormContent(
     val emailState = state { TextFieldValue(email) }
     val passwordState = state { TextFieldValue(password) }
 
-    Column(
-        modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
-            .fillMaxWidth()
-    ) {
-        Surface(
-            modifier = Modifier.padding(16.dp),
-            color = Color.White,
-            shape = RoundedCornerShape(CornerSize(4.dp))
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+    Stack(modifier = Modifier.fillMaxSize()) {
+        Box(backgroundColor = Color.White, modifier = Modifier.fillMaxSize())
+        VerticalScroller(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Spacer(modifier = Modifier.preferredHeight(20.dp))
                 Text(
-                    "Email Address", modifier = Modifier.padding(
-                        start = 16.dp,
-                        top = 16.dp,
-                        bottom = 8.dp
-                    )
+                    modifier = Modifier.preferredWidth(240.dp)
+                        .gravity(Alignment.CenterHorizontally),
+                    text = if (authenticationMode == AuthenticateMode.SignUp) {
+                        "Sign up for a Minimise account"
+                    } else "Sign in to your Minimise account",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 )
-                Surface(
-                    color = Color.LightGray,
-                    modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
-                ) {
-                    TextField(
+                Spacer(modifier = Modifier.preferredHeight(36.dp))
+                Column(modifier = Modifier.padding(8.dp)) {
+
+                    FilledTextField(
                         value = emailState.value,
                         onValueChange = {
                             emailState.value = it
                             emailChanged(it.text)
                         },
+                        label = {
+                            Text(text = "Email Address")
+                        },
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
                         modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
-                }
-                Text(
-                    "Password",
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        top = 16.dp,
-                        bottom = 8.dp
-                    ).fillMaxWidth()
-                )
-                Surface(
-                    color = Color.LightGray,
-                    modifier = Modifier.fillMaxWidth().preferredHeight(50.dp)
-                ) {
-                    TextField(
+                    FilledTextField(
                         value = passwordState.value,
                         onValueChange = {
                             passwordState.value = it
                             passwordChanged(it.text)
                         },
+                        label = {
+                            Text(text = "Password")
+                        },
+                        visualTransformation = PasswordVisualTransformation(),
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
-                        visualTransformation = PasswordVisualTransformation(),
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
-                }
-                if (authenticationMode == AuthenticateMode.SignIn) {
-                    TextButton(onClick = {
-                        forgotPasswordClicked()
-                    }, modifier = Modifier.gravity(ColumnAlign.Center)) {
-                        ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                            Text(
-                                text = stringResource(R.string.forgotten_your_password),
-                                modifier = Modifier.gravity(Alignment.CenterHorizontally)
-                                    .padding(top = 8.dp, bottom = 8.dp, start = 12.dp, end = 12.dp)
-                            )
+                    if (authenticationMode == AuthenticateMode.SignIn) {
+                        TextButton(onClick = {
+                            forgotPasswordClicked()
+                        }, modifier = Modifier.gravity(ColumnAlign.Center)) {
+                            ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
+                                Text(
+                                    text = stringResource(R.string.forgotten_your_password),
+                                    modifier = Modifier.gravity(Alignment.CenterHorizontally)
+                                        .padding(
+                                            top = 8.dp,
+                                            bottom = 8.dp,
+                                            start = 12.dp,
+                                            end = 12.dp
+                                        )
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
-        Spacer(Modifier.preferredHeight(32.dp))
-        Column(
-            modifier = Modifier.gravity(Alignment.CenterHorizontally)
-                .wrapContentHeight(align = Alignment.CenterVertically)
-        ) {
-            Button(onClick = {
-                authenticateClicked()
-            }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
-                ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                    Text(
-                        text = if (authenticationMode == AuthenticateMode.SignIn) {
-                            stringResource(R.string.sign_in)
-                        } else {
-                            stringResource(R.string.sign_up)
-                        },
-                        modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
-                    )
+            Column(
+                modifier = Modifier.fillMaxSize().weight(1f, fill = true),
+                horizontalGravity = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                Button(onClick = {
+                    authenticateClicked()
+                }) {
+                    ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
+                        Text(
+                            text = if (authenticationMode == AuthenticateMode.SignIn) {
+                                stringResource(R.string.sign_in)
+                            } else {
+                                stringResource(R.string.sign_up)
+                            },
+                            modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
+                        )
+                    }
                 }
-            }
-            Spacer(Modifier.preferredHeight(16.dp))
-            Button(onClick = {
-                authenticationModeToggled()
-            }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
-                ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                    Text(
-                        text = if (authenticationMode == AuthenticateMode.SignIn) {
-                            stringResource(R.string.no_account)
-                        } else {
-                            stringResource(R.string.existing_account)
-                        },
-                        modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
-                    )
+                Spacer(Modifier.preferredHeight(16.dp))
+                TextButton(onClick = {
+                    authenticationModeToggled()
+                }) {
+                    ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
+                        Text(
+                            text = if (authenticationMode == AuthenticateMode.SignIn) {
+                                stringResource(R.string.no_account)
+                            } else {
+                                stringResource(R.string.existing_account)
+                            },
+                            modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
+                        )
+                    }
                 }
+                Spacer(Modifier.preferredHeight(26.dp))
             }
         }
     }
