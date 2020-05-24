@@ -22,6 +22,7 @@ fun MinimiseTheme(
             onSecondary = Color.White,
             error = colorResource(id = R.color.color_error)
         ),
-        content = content
+        content = content,
+        typography = themeTypography
     )
 }

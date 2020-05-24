@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -42,6 +43,8 @@ dependencies {
     implementation project(':platform_android:onboarding')
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
+
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.Google.material

@@ -21,6 +21,7 @@ import androidx.ui.res.stringArrayResource
 import androidx.ui.res.stringResource
 import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
+import androidx.ui.text.font.FontFamily
 import androidx.ui.text.style.TextAlign
 import androidx.ui.text.style.TextDecoration
 import androidx.ui.unit.TextUnit
@@ -178,10 +179,12 @@ private fun nameStepComposable(
     HintEditText(
         stringResource(id = R.string.hint_product_name),
         text = creationState.name,
-        textStyle = TextStyle(
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            color = Color.White
+        textStyle = currentTextStyle().merge(
+            TextStyle(
+                textAlign = TextAlign.Center,
+                fontSize = TextUnit.Companion.Sp(26),
+                color = Color.White
+            )
         )
     ) {
         onNameChanged(it.text)
@@ -196,10 +199,12 @@ private fun storeStepComposable(
     HintEditText(
         stringResource(id = R.string.hint_store_name),
         text = creationState.store,
-        textStyle = TextStyle(
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            color = Color.White
+        textStyle = currentTextStyle().merge(
+            TextStyle(
+                textAlign = TextAlign.Center,
+                fontSize = TextUnit.Companion.Sp(26),
+                color = Color.White
+            )
         )
     ) {
         onStoreChanged(it.text)
@@ -214,10 +219,12 @@ private fun frequencyStepComposable(
     Column(horizontalGravity = CenterHorizontally) {
         Text(
             text = stringResource(id = R.string.hint_frequency),
-            style = TextStyle(
-                textAlign = TextAlign.Center,
-                fontSize = TextUnit.Companion.Sp(26),
-                color = Color.White
+            style = currentTextStyle().merge(
+                TextStyle(
+                    textAlign = TextAlign.Center,
+                    fontSize = TextUnit.Companion.Sp(26),
+                    color = Color.White
+                )
             ),
             modifier = Modifier.padding(16.dp).fillMaxWidth()
         )
@@ -237,7 +244,7 @@ private fun frequencyStepComposable(
 
         Text(
             text = stringArrayResource(id = R.array.frequency_options)[creationState.frequencyCount.toInt()],
-            style = TextStyle(color = Color.White),
+            style = currentTextStyle().merge(TextStyle(color = Color.White)),
             modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
                 .padding(16.dp)
         )
@@ -248,7 +255,6 @@ private fun frequencyStepComposable(
 fun HintEditText(
     hintText: String = "",
     text: String = "",
-    modifier: Modifier = Modifier.None,
     textStyle: TextStyle = currentTextStyle(),
     onTextChange: (text: TextFieldValue) -> Unit
 ) {
@@ -260,7 +266,7 @@ fun HintEditText(
             onFocusChange = {
                 selected.value = it
             },
-            modifier = modifier.plus(Modifier.fillMaxWidth()),
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = {
                 state.value = it
                 onTextChange(it)
@@ -275,7 +281,6 @@ fun HintEditText(
             inputField()
             Text(
                 text = hintText,
-                modifier = modifier,
                 style = textStyle.merge(TextStyle(color = Color.White))
             )
         },

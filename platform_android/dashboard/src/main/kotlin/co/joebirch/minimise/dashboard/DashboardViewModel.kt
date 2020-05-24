@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
@@ -11,29 +12,35 @@ import javax.inject.Inject
 class DashboardViewModel @Inject constructor(
 ) : BaseViewModel(), DashboardView {
 
-    private val uiState =
+    private val _uiState =
         MutableLiveData<DashboardState>().default(
-            DashboardState.Idle()
+            DashboardState()
         )
+    val uiState: LiveData<DashboardState> = _uiState
 
-    fun observeAuthenticationState(): LiveData<DashboardState> = uiState
-
-    fun getBelongings() {
-        Firebase.firestore.collection("users").whereEqualTo("", "")
+    fun getBelongings(userId: String) {
+        Firebase.firestore.collection("items")
+            .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->
+                val documents = mutableListOf<Belonging>()
                 for (document in result) {
 
                 }
+                _uiState.postValue(
+                    _uiState.value!!.build {
+                        this.pendingBelongings = documents
+                    }
+                )
             }
             .addOnFailureListener { exception ->
-
+                val e = ""
             }
     }
 
     override fun setSelectedCategory(category: Category) {
-        uiState.postValue(
-            uiState.value!!.build {
+        _uiState.postValue(
+            _uiState.value!!.build {
                 this.category = category
             }
         )

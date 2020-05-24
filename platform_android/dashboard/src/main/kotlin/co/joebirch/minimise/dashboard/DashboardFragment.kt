@@ -40,12 +40,17 @@ class DashboardFragment : BaseFragment() {
 
             composeDashboardContent(
                 viewLifecycleOwner,
-                dashboardViewModel.observeAuthenticationState(),
+                dashboardViewModel.uiState,
                 listOf(Category.PendingBelongings, Category.Belongings),
                 { category -> dashboardViewModel.setSelectedCategory(category) },
                 ::navigateToCreation
             )
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dashboardViewModel.getBelongings("fj")
     }
 
     fun navigateToCreation() {

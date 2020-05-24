@@ -44,6 +44,7 @@ dependencies {
     implementation Deps.Compose.icons
     implementation Deps.Compose.runtime
     implementation Deps.Compose.layout
+    implementation Deps.Compose.livedata
     implementation Deps.Compose.material
     implementation Deps.Compose.tooling
     implementation Deps.Compose.foundation
