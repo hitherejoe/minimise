@@ -19,7 +19,7 @@ class AuthenticationViewModel @Inject constructor(
 
     private var uiState =
         MutableLiveData<AuthenticationState>().default(
-            AuthenticationState.Idle()
+            AuthenticationState()
         )
 
     fun observeAuthenticationState(): LiveData<AuthenticationState> = uiState
@@ -67,7 +67,8 @@ class AuthenticationViewModel @Inject constructor(
     override fun signUp() {
         uiState.postValue(
             uiState.value!!.build {
-                state = AuthenticationState.Loading()
+                loading = true
+                error = null
             }
         )
         viewModelScope.launch {
@@ -85,7 +86,8 @@ class AuthenticationViewModel @Inject constructor(
     override fun signIn() {
         uiState.postValue(
             uiState.value!!.build {
-                state = AuthenticationState.Loading()
+                loading = true
+                error = null
             }
         )
         viewModelScope.launch {
@@ -107,7 +109,8 @@ class AuthenticationViewModel @Inject constructor(
         } else {
             uiState.postValue(
                 uiState.value!!.build {
-                    state = AuthenticationState.Error(message = result.message)
+                    loading = false
+                    error = result.message
                 }
             )
         }
