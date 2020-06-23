@@ -13,7 +13,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/FirebaseAuthentication" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/platform_android" />
             <option value="$PROJECT_DIR$/platform_android/app" />

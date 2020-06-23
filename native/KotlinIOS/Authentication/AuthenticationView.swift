@@ -67,7 +67,7 @@ public struct AuthenticationView: View {
             
         }.navigate(to: viewProvider.makeDashboardView(), when: Binding<Bool>(
                 get: {
-                    self.viewModel.state.isKind(of: AuthenticationState.Success.self)
+                    self.viewModel.state.success == true
                 },
                 set: { _ in
         }

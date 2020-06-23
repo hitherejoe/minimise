@@ -13,6 +13,7 @@ import androidx.ui.input.ImeAction
 import androidx.ui.input.KeyboardType
 import androidx.ui.input.PasswordVisualTransformation
 import androidx.ui.layout.*
+import androidx.ui.layout.ColumnScope.gravity
 import androidx.ui.layout.ColumnScope.weight
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
@@ -20,55 +21,41 @@ import androidx.ui.material.ripple.ripple
 import androidx.ui.res.stringResource
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontFamily
-import androidx.ui.text.font.FontStyle
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
+import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
-fun ViewGroup.composeAuthenticationContent(
+fun ViewGroup.composeForgotPasswordContent(
     lifecycleOwner: LifecycleOwner,
-    uiState: LiveData<AuthenticationState>,
-    authenticationModeToggled: () -> Unit,
+    uiState: LiveData<ForgotPasswordState>,
     authenticateClicked: () -> Unit,
-    forgotPasswordClicked: () -> Unit,
-    emailChanged: (String) -> Unit,
-    passwordChanged: (String) -> Unit
+    emailChanged: (String) -> Unit
 ): Any = setContentWithLifecycle(lifecycleOwner) {
-    ComposeAuthenticationContent(
+    ComposeForgotPasswordContent(
         uiState,
-        authenticationModeToggled,
         authenticateClicked,
-        forgotPasswordClicked,
-        emailChanged,
-        passwordChanged
+        emailChanged
     )
 }
 
 @Composable
-private fun ComposeAuthenticationContent(
-    uiState: LiveData<AuthenticationState>,
-    authenticationModeToggled: () -> Unit,
+private fun ComposeForgotPasswordContent(
+    uiState: LiveData<ForgotPasswordState>,
     authenticateClicked: () -> Unit,
-    forgotPasswordClicked: () -> Unit,
-    emailChanged: (String) -> Unit,
-    passwordChanged: (String) -> Unit
+    emailChanged: (String) -> Unit
 ) {
     val viewState = uiState.observeAsState()
     FormContent(
         viewState.value!!.isLoading,
         viewState.value!!.emailAddress,
-        viewState.value!!.password,
-        viewState.value!!.authenticationMode,
         viewState.value!!.errorMessage,
-        authenticationModeToggled,
         authenticateClicked,
-        forgotPasswordClicked,
-        emailChanged,
-        passwordChanged
+        emailChanged
     )
 }
 
@@ -76,18 +63,11 @@ private fun ComposeAuthenticationContent(
 private fun FormContent(
     isLoading: Boolean,
     email: String,
-    password: String,
-    authenticationMode: AuthenticateMode,
     errorMessage: String?,
-    authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
-    forgotPasswordClicked: () -> Unit,
-    emailChanged: (String) -> Unit,
-    passwordChanged: (String) -> Unit
+    emailChanged: (String) -> Unit
 ) {
     val emailState = state { TextFieldValue(email) }
-    val passwordState = state { TextFieldValue(password) }
-
     MinimiseTheme {
         Stack(modifier = Modifier.fillMaxSize()) {
             Box(backgroundColor = Color.White, modifier = Modifier.fillMaxSize())
@@ -102,9 +82,7 @@ private fun FormContent(
                         Text(
                             modifier = Modifier.preferredWidth(240.dp)
                                 .gravity(Alignment.CenterHorizontally),
-                            text = if (authenticationMode == AuthenticateMode.SignUp) {
-                                "Sign up for a Minimise account"
-                            } else "Sign in to your Minimise account",
+                            text = "Reset password",
                             textAlign = TextAlign.Center,
                             fontFamily = FontFamily.Monospace,
                             style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
@@ -124,38 +102,6 @@ private fun FormContent(
                                 imeAction = ImeAction.Next,
                                 modifier = Modifier.padding(16.dp).fillMaxWidth()
                             )
-                            FilledTextField(
-                                value = passwordState.value,
-                                onValueChange = {
-                                    passwordState.value = it
-                                    passwordChanged(it.text)
-                                },
-                                label = {
-                                    Text(text = "Password", fontSize = 12.sp)
-                                },
-                                visualTransformation = PasswordVisualTransformation(),
-                                keyboardType = KeyboardType.Password,
-                                imeAction = ImeAction.Done,
-                                modifier = Modifier.padding(16.dp).fillMaxWidth()
-                            )
-                            if (authenticationMode == AuthenticateMode.SignIn) {
-                                TextButton(onClick = {
-                                    forgotPasswordClicked()
-                                }) {
-                                    ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                                        Text(
-                                            text = stringResource(R.string.forgotten_your_password),
-                                            modifier = Modifier.gravity(Alignment.CenterHorizontally)
-                                                .padding(
-                                                    top = 8.dp,
-                                                    bottom = 8.dp,
-                                                    start = 12.dp,
-                                                    end = 12.dp
-                                                )
-                                        )
-                                    }
-                                }
-                            }
                         }
                     }
                     Column(
@@ -168,31 +114,12 @@ private fun FormContent(
                         }) {
                             ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                                 Text(
-                                    text = if (authenticationMode == AuthenticateMode.SignIn) {
-                                        stringResource(R.string.sign_in)
-                                    } else {
-                                        stringResource(R.string.sign_up)
-                                    },
+                                    text = stringResource(R.string.sign_in),
                                     modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
                                 )
                             }
                         }
                         Spacer(Modifier.preferredHeight(16.dp))
-                        TextButton(onClick = {
-                            authenticationModeToggled()
-                        }) {
-                            ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                                Text(
-                                    text = if (authenticationMode == AuthenticateMode.SignIn) {
-                                        stringResource(R.string.no_account)
-                                    } else {
-                                        stringResource(R.string.existing_account)
-                                    },
-                                    modifier = Modifier.preferredSizeIn(minWidth = 220.dp)
-                                )
-                            }
-                        }
-                        Spacer(Modifier.preferredHeight(26.dp))
                     }
                 }
                 val showingDialog = state { errorMessage }

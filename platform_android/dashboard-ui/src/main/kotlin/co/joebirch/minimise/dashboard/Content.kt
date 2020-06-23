@@ -1,28 +1,28 @@
 package co.joebirch.minimise.dashboard
 
-import android.graphics.fonts.FontFamily
 import android.view.ViewGroup
+import androidx.animation.FloatPropKey
+import androidx.animation.transitionDefinition
 import androidx.compose.Composable
+import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
+import androidx.ui.animation.*
+import androidx.ui.core.*
+import androidx.ui.foundation.*
+import androidx.ui.geometry.Offset
+import androidx.ui.graphics.Color
+import androidx.ui.graphics.imageFromResource
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Add
-import androidx.ui.text.font.Font
-import androidx.ui.text.font.ResourceFont
-import androidx.ui.text.font.fontFamily
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
-import co.joebirch.minimise.common_ui.observe
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
+import java.util.*
+import kotlin.concurrent.schedule
 
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
@@ -50,6 +50,32 @@ private fun ComposeInventoryContent(
     )
 }
 
+val sizeState = FloatPropKey()
+val alphaState = FloatPropKey()
+val colorState = ColorPropKey()
+
+private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transitionDefinition {
+    state("A") {
+        this[alphaState] = 1f
+        this[sizeState] = 75f
+        this[colorState] = colorOne
+    }
+    state("B") {
+        this[alphaState] = 0f
+        this[sizeState] = 4000f
+        this[colorState] = colorTwo
+    }
+    transition(fromState = "A", toState = "B") {
+        sizeState using keyframes<Float> {
+            duration = 700
+            75f at 0
+            35f at 120
+            4000f at 700
+        }
+    }
+
+}
+
 @Composable
 private fun DashboardContent(
     currentCategory: Category,
@@ -60,6 +86,7 @@ private fun DashboardContent(
 ) {
     MinimiseTheme {
         val tabTitles = categories.map { it }
+        val animatingFab = state { false }
         Scaffold(
             topAppBar = {
                 TopAppBar(title = {
@@ -67,17 +94,68 @@ private fun DashboardContent(
                         text = "M",
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
+                            .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
                     )
                 }, elevation = 0.dp)
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = {
-                    navigateToCreation()
-                }) {
-                    Icon(asset = Icons.Filled.Add)
+                val resources = ContextAmbient.current.resources
+
+                Transition(
+                    definition = sizeTransitionDefinition(
+                        MaterialTheme.colors.secondary,
+                        MaterialTheme.colors.primary
+                    ),
+                    initState = "A",
+                    toState = if (!animatingFab.value) "A" else "B"
+                ) { state ->
+                    Box(modifier = Modifier.wrapContentSize().clickable(onClick = {
+                        animatingFab.value = true
+                        Timer().schedule(500) {
+                            navigateToCreation()
+                        }
+                    }), gravity = ContentGravity.BottomEnd, children = {
+                        Canvas(
+                            modifier = Modifier
+                                .wrapContentSize(align = Alignment.Center)
+                                .padding(20.dp)
+                        ) {
+                            drawCircle(state[colorState], state[sizeState])
+                            drawImage(
+                                imageFromResource(resources, R.drawable.plus),
+                                topLeft = Offset(-33.5f, -33.5f),
+                                alpha = state[alphaState]
+                            )
+                        }
+                    })
                 }
+                /*
+
+Transition(
+definition = sizeTransitionDefinition,
+toState = if(!animatingFab.value) "A" else "B",
+onStateChangeFinished = {
+    navigateToCreation()
+}
+) { state ->
+
+FloatingActionButton(
+    onClick = {
+        animatingFab.value = true
+    },
+    backgroundColor = animate(if (animatingFab.value) MaterialTheme.colors.primary else MaterialTheme.colors.secondary),
+    modifier = Modifier.width(state[sizeState].dp).height(state[sizeState].dp)
+        .offset((-16).dp, (-16).dp)
+) {
+    Icon(
+        asset = Icons.Filled.Add,
+        modifier = Modifier.drawOpacity(animate(if (animatingFab.value) 0f else 1f))
+    )
+}
+
+                } */
+
             },
-            floatingActionButtonPosition = Scaffold.FabPosition.End,
             bodyContent = {
                 Column {
                     TabRow(

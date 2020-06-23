@@ -1,9 +1,11 @@
 package co.joebirch.creation_ui
 
 import android.view.ViewGroup
+import androidx.animation.FastOutLinearInEasing
+import androidx.animation.FloatPropKey
+import androidx.animation.transitionDefinition
+import androidx.animation.*
 import androidx.compose.*
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.ui.core.*
 import androidx.ui.core.Alignment.Companion.BottomStart
 import androidx.ui.core.Alignment.Companion.Center
@@ -31,6 +33,16 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
+import androidx.animation.transitionDefinition
+import androidx.compose.Composable
+import androidx.compose.state
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.ui.animation.ColorPropKey
+import androidx.ui.animation.Transition
+import androidx.ui.animation.animate
+import androidx.ui.geometry.Offset
+import androidx.ui.graphics.imageFromResource
 
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
@@ -70,6 +82,41 @@ private fun ComposeInventoryContent(
     }
 }
 
+val sizeState = FloatPropKey()
+val alphaState = FloatPropKey()
+val contentAlphaState = FloatPropKey()
+
+private val sizeTransitionDefinition = transitionDefinition {
+    state("A") {
+        this[sizeState] = 0f
+        this[alphaState] = 0f
+        this[contentAlphaState] = 0f
+    }
+    state("B") {
+        this[sizeState] = 75f
+        this[alphaState] = 1f
+        this[contentAlphaState] = 1f
+    }
+
+    transition(fromState = "A", toState = "B") {
+        sizeState using tween<Float> {
+            duration = 200
+            easing = FastOutLinearInEasing
+        }
+        contentAlphaState using tween<Float> {
+            duration = 200
+            easing = FastOutLinearInEasing
+        }
+        alphaState using keyframes<Float> {
+            duration = 400
+            0f at 0
+            0.1f at 225
+            1f at 400
+        }
+    }
+}
+
+
 private fun isValid(
     creationState: CreationState,
     selectedStep: CreationStep
@@ -93,26 +140,39 @@ internal fun CreationContent(
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
 ) {
+    val animatingFab = state { true }
+    val animatingContent = state { true }
     MinimiseTheme {
         Scaffold(
             floatingActionButton = {
                 if (!isLoading) {
                     TestTag(tag = "NextButton") {
-                        FloatingActionButton(
-                            modifier = Modifier.ripple(enabled = false, radius = 0.dp),
-                            onClick = {
-                                if (selectedStep == CreationStep.FREQUENCY) {
-                                    onFormCompleted()
-                                } else if (isValid(creationState, selectedStep)) {
-                                    onNextStep()
+                        val resources = ContextAmbient.current.resources
+                        val buttonColor = MaterialTheme.colors.secondary
+                        Transition(
+                            definition = sizeTransitionDefinition,
+                            initState = "A",
+                            toState = "B",
+                            onStateChangeFinished = {
+                                animatingFab.value = false
+                            }
+                        ) { state ->
+                            Box(modifier = Modifier.wrapContentSize().clickable(onClick = {
+                                animatingFab.value = true
+                            }), gravity = ContentGravity.BottomEnd, children = {
+                                Canvas(
+                                    modifier = Modifier
+                                        .wrapContentSize(align = Alignment.Center)
+                                        .padding(20.dp)
+                                ) {
+                                    drawCircle(buttonColor, state[sizeState])
+                                    drawImage(
+                                        imageFromResource(resources, R.drawable.arrow_right),
+                                        topLeft = Offset(-33.5f, -33.5f),
+                                        alpha = state[alphaState]
+                                    )
                                 }
-                            }, backgroundColor = if (isValid(creationState, selectedStep)) {
-                                MaterialTheme.colors.secondary
-                            } else Color.LightGray
-                        ) {
-                            if (selectedStep == CreationStep.FREQUENCY) {
-                                Icon(asset = Icons.Filled.Done)
-                            } else Icon(asset = Icons.Filled.ArrowForward)
+                            })
                         }
                     }
                 }
@@ -130,22 +190,38 @@ internal fun CreationContent(
                             modifier = Modifier.gravity(Center)
                         )
                     } else {
-                        Column(modifier = Modifier.gravity(Center).padding(16.dp)) {
-                            when (selectedStep) {
-                                CreationStep.NAME -> {
-                                    nameStepComposable(creationState, onNameChanged = onNameChanged)
-                                }
-                                CreationStep.STORE -> {
-                                    storeStepComposable(
-                                        creationState,
-                                        onStoreChanged = onStoreChanged
-                                    )
-                                }
-                                CreationStep.FREQUENCY -> {
-                                    frequencyStepComposable(
-                                        creationState,
-                                        onFrequencyChanged = onFrequencyChanged
-                                    )
+                        Transition(
+                            definition = sizeTransitionDefinition,
+                            initState = "A",
+                            toState = "B"
+                        ) { state ->
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.gravity(Center).padding(16.dp)
+                                    .fillMaxHeight()
+                                    .drawOpacity(state[contentAlphaState])
+                            ) {
+                                when (selectedStep) {
+                                    CreationStep.NAME -> {
+                                        nameStepComposable(
+                                            creationState,
+                                            onNameChanged = onNameChanged,
+                                            modifier = Modifier.wrapContentHeight()
+                                        )
+                                    }
+                                    CreationStep.STORE -> {
+                                        storeStepComposable(
+                                            creationState,
+                                            onStoreChanged = onStoreChanged,
+                                            modifier = Modifier.wrapContentHeight()
+                                        )
+                                    }
+                                    CreationStep.FREQUENCY -> {
+                                        frequencyStepComposable(
+                                            creationState,
+                                            onFrequencyChanged = onFrequencyChanged
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -174,10 +250,12 @@ internal fun CreationContent(
 @Composable
 private fun nameStepComposable(
     creationState: CreationState,
+    modifier: Modifier,
     onNameChanged: (name: String) -> Unit
 ) {
     HintEditText(
         stringResource(id = R.string.hint_product_name),
+        modifier = modifier,
         text = creationState.name,
         textStyle = currentTextStyle().merge(
             TextStyle(
@@ -194,10 +272,12 @@ private fun nameStepComposable(
 @Composable
 private fun storeStepComposable(
     creationState: CreationState,
+    modifier: Modifier,
     onStoreChanged: (name: String) -> Unit
 ) {
     HintEditText(
         stringResource(id = R.string.hint_store_name),
+        modifier = modifier,
         text = creationState.store,
         textStyle = currentTextStyle().merge(
             TextStyle(
@@ -255,6 +335,7 @@ private fun frequencyStepComposable(
 fun HintEditText(
     hintText: String = "",
     text: String = "",
+    modifier: Modifier,
     textStyle: TextStyle = currentTextStyle(),
     onTextChange: (text: TextFieldValue) -> Unit
 ) {
@@ -266,7 +347,7 @@ fun HintEditText(
             onFocusChange = {
                 selected.value = it
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().plus(modifier),
             onValueChange = {
                 state.value = it
                 onTextChange(it)

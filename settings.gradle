@@ -16,7 +16,6 @@ include ':shared:SharedCommon'
 include ':shared:SharedCore'
 include ':shared:SharedCreation'
 include ':shared:SharedDashboard'
-include ':FirebaseAuthentication'
 
 enableFeaturePreview('GRADLE_METADATA')
 

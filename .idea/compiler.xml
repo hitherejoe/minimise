@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidMain" target="1.6" />
-      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidTest" target="1.6" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidMain" target="1.8" />
+      <module name="co.joebirch.minimise.authentication.SharedAuthentication.androidTest" target="1.8" />
       <module name="Minimise-mpp.buildSrc" target="1.8" />
       <module name="Minimise-mpp.FirebaseAuthentication.androidMain" target="1.6" />
       <module name="Minimise-mpp.FirebaseAuthentication.androidTest" target="1.6" />
@@ -23,21 +23,8 @@
       <module name="Minimise-mpp.shared.SharedCore.androidTest" target="1.6" />
       <module name="Minimise-mpp.shared.SharedDashboard.androidMain" target="1.6" />
       <module name="Minimise-mpp.shared.SharedDashboard.androidTest" target="1.6" />
-      <module name="Minimise.buildSrc" target="1.8" />
       <module name="Minimise.FirebaseAuthentication.androidMain" target="1.6" />
       <module name="Minimise.FirebaseAuthentication.androidTest" target="1.6" />
-      <module name="Minimise.platform_android.app" target="1.8" />
-      <module name="Minimise.platform_android.authentication" target="1.8" />
-      <module name="Minimise.platform_android.authentication-ui" target="1.8" />
-      <module name="Minimise.platform_android.common-ui" target="1.8" />
-      <module name="Minimise.platform_android.core" target="1.7" />
-      <module name="Minimise.platform_android.creation" target="1.8" />
-      <module name="Minimise.platform_android.creation-ui" target="1.8" />
-      <module name="Minimise.platform_android.dashboard" target="1.8" />
-      <module name="Minimise.platform_android.dashboard-ui" target="1.8" />
-      <module name="Minimise.platform_android.design" target="1.7" />
-      <module name="Minimise.platform_android.navigation" target="1.7" />
-      <module name="Minimise.platform_android.onboarding" target="1.8" />
       <module name="Minimise.shared.SharedCommon.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedCommon.androidTest" target="1.6" />
       <module name="Minimise.shared.SharedCore.androidMain" target="1.6" />

@@ -8,6 +8,7 @@ import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.interactor.ResetPassword
 import co.joebirch.minimise.authentication.AuthenticationState
 import co.joebirch.minimise.authentication.ResetPasswordView
+import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,9 +17,9 @@ class ResetPasswordViewModel @Inject constructor(
 ) : ViewModel(), ResetPasswordView {
 
     private val uiState =
-        MutableLiveData<AuthenticationState>().default(
-            AuthenticationState())
-    fun observeAuthenticationState(): LiveData<AuthenticationState> = uiState
+        MutableLiveData<ForgotPasswordState>().default(
+            ForgotPasswordState())
+    fun observeAuthenticationState(): LiveData<ForgotPasswordState> = uiState
 
     override fun resetPassword(emailAddress: String) {
       //  uiState.postValue(AuthenticationState.Loading)

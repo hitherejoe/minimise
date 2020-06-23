@@ -29,7 +29,7 @@
 		<key>Common.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>37</integer>
+			<integer>35</integer>
 		</dict>
 		<key>Creation.xcscheme_^#shared#^_</key>
 		<dict>
@@ -39,7 +39,7 @@
 		<key>Dashboard.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>35</integer>
+			<integer>37</integer>
 		</dict>
 		<key>DashboardTests.xcscheme_^#shared#^_</key>
 		<dict>

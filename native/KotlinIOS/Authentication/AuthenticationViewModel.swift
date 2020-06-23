@@ -5,7 +5,7 @@ import Firebase
 
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
-    @Published internal var state: AuthenticationState = AuthenticationState.Idle(userEmail: "", userPassword: "", mode: AuthenticateMode.SignUp.init())
+    @Published internal var state: AuthenticationState = AuthenticationState.Companion.init().initialise()
     private var backendService: BackendProvider
     
     init(backendService: BackendProvider) {
@@ -46,17 +46,18 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     func signIn() {
         self.state = self.state.build { (builder) in
-            builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
+            builder.loading = true
+            builder.error = nil
         }
         backendService.signIn(emailAddress: self.state.emailAddress,
                               password: self.state.password) { (success) in
                                 if (success) {
                                     self.state = self.state.build { (builder) in
-                                        builder.state = AuthenticationState.Success.init()
+                                        builder.success = true
                                     }
                                 } else {
                                     self.state = self.state.build { (builder) in
-                                        builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: "")
+                                        builder.error = "Error"
                                     }
                                 }
         }
@@ -64,17 +65,18 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     func signUp() {
         self.state = self.state.build { (builder) in
-            builder.state = AuthenticationState.Loading.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode)
+            builder.loading = true
+            builder.error = nil
         }
         backendService.signUp(emailAddress: self.state.emailAddress,
                               password: self.state.password) { (success) in
                                 if (success) {
                                     self.state = self.state.build { (builder) in
-                                        builder.state = AuthenticationState.Success.init()
+                                        builder.success = true
                                     }
                                 } else {
                                     self.state = self.state.build { (builder) in
-                                        builder.state = AuthenticationState.Error.init(userEmail: "", userPassword: "", mode: self.state.authenticationMode, message: "")
+                                         builder.error = "Error"
                                     }
                                 }
         }
