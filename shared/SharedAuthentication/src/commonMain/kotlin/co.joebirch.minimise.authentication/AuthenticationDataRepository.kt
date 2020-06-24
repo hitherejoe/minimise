@@ -1,13 +1,13 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.firebase_auth_multiplatform.AuthenticationStore
 import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
+import co.joebirch.minimise.authentication.remote.AuthenticationRemote
 
 class AuthenticationDataRepository constructor(
-    private val authenticationStore: AuthenticationStore,
+    private val authenticationStore: AuthenticationRemote,
     private val authenticationResponseMapper: AuthenticationResponseMapper,
     private val resetPasswordResponseMapper: ResetPasswordResponseMapper
 ) : AuthenticationRepository {
@@ -18,7 +18,7 @@ class AuthenticationDataRepository constructor(
         password: String
     ): AuthenticationModel {
         return authenticationResponseMapper.mapFromAuthenticationResponse(
-            authenticationStore.signUp(apiKey, emailAddress, password, true)
+            //authenticationStore.signUp(apiKey, emailAddress, password)
         )
     }
 
@@ -28,7 +28,7 @@ class AuthenticationDataRepository constructor(
         password: String
     ): AuthenticationModel {
         return authenticationResponseMapper.mapFromAuthenticationResponse(
-            authenticationStore.signIn(apiKey, emailAddress, password, true)
+            //authenticationStore.signIn(apiKey, emailAddress, password)
         )
     }
 
@@ -37,7 +37,7 @@ class AuthenticationDataRepository constructor(
         emailAddress: String
     ): ResetPasswordResponse {
         return resetPasswordResponseMapper.mapFromResetPasswordResponse(
-            authenticationStore.resetPassword(apiKey, emailAddress)
+            //authenticationStore.resetPassword(apiKey, emailAddress)
         )
     }
 }

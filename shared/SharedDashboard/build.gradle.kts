@@ -34,13 +34,12 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation(Deps.Kotlin.common)
         implementation(Deps.Coroutines.core)
-        implementation(Deps.Coroutines.coreCommon)
         implementation(project(":shared:SharedCommon"))
-        implementation(project(":FirebaseAuthentication"))
+//        implementation(project(":FirebaseAuthentication"))
     }
 
     sourceSets["commonTest"].dependencies {
-        implementation(project(":FirebaseAuthentication"))
+      //  implementation(project(":FirebaseAuthentication"))
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
         implementation(Deps.junit)

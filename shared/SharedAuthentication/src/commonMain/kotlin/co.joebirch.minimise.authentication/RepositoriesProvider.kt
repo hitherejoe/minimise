@@ -1,12 +1,12 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.firebase_auth_multiplatform.AuthenticationStore
 import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
+import co.joebirch.minimise.authentication.remote.AuthenticationRemote
 
 object RepositoriesProvider {
      fun getAuthenticationDataRepository(
-         remote: AuthenticationStore,
+         remote: AuthenticationRemote,
          mapper: AuthenticationResponseMapper,
          passwordResponseMapper: ResetPasswordResponseMapper
      ): AuthenticationRepository =

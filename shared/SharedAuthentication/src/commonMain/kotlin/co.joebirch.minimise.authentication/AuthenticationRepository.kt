@@ -1,10 +1,10 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.firebase_auth_multiplatform.FirebaseAuthenticationProvider
 import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
+import co.joebirch.minimise.authentication.remote.AuthenticationRemote
 
 interface AuthenticationRepository {
 
@@ -28,7 +28,7 @@ interface AuthenticationRepository {
     companion object {
         fun create(): AuthenticationRepository =
             RepositoriesProvider.getAuthenticationDataRepository(
-                FirebaseAuthenticationProvider.createAuthenticationRemote(),
+                AuthenticationRemote(),
                 AuthenticationResponseMapper(),
                 ResetPasswordResponseMapper()
             )

@@ -1,15 +1,15 @@
 package co.joebirch.minimise.authentication.mapper
 
-import co.joebirch.firebase_auth_multiplatform.model.FirebaseAuthenticationResponse
 import co.joebirch.minimise.authentication.model.AuthenticationModel
+import co.joebirch.minimise.authentication.model.AuthenticationResponseModel
 
 open class AuthenticationResponseMapper {
 
     fun mapFromAuthenticationResponse(
-        authenticationResponse: FirebaseAuthenticationResponse
+        authenticationResponse: AuthenticationResponseModel? = null
     ) = AuthenticationModel(
-        authenticationResponse.idToken,
-        authenticationResponse.message,
-        authenticationResponse.code
+       // authenticationResponse.idToken,
+       // authenticationResponse.message,
+       // authenticationResponse.code
     )
 }

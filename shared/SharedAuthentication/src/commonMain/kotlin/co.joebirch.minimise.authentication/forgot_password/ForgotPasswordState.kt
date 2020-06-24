@@ -1,33 +1,27 @@
-package co.joebirch.minimise.authentication
+package co.joebirch.minimise.authentication.forgot_password
 
-class AuthenticationState(
+class ForgotPasswordState(
     val emailAddress: String = "",
-    val password: String = "",
-    val authenticationMode: AuthenticateMode = AuthenticateMode.SignUp,
     val isLoading: Boolean = false,
     val success: Boolean? = null,
     val errorMessage: String? = null
 ) {
 
     companion object {
-        fun initialise(): AuthenticationState = AuthenticationState()
+        fun initialise(): ForgotPasswordState = ForgotPasswordState()
     }
 
     fun build(block: Builder.() -> Unit) = Builder(this).apply(block).build()
 
-    class Builder(state: AuthenticationState) {
+    class Builder(state: ForgotPasswordState) {
         var userEmail = state.emailAddress
-        var userPassword = state.password
-        var mode: AuthenticateMode = state.authenticationMode
         var loading = state.isLoading
         var success = state.success
         var error = state.errorMessage
 
-        fun build(): AuthenticationState {
-            return AuthenticationState(
+        fun build(): ForgotPasswordState {
+            return ForgotPasswordState(
                 userEmail,
-                userPassword,
-                mode,
                 loading,
                 success,
                 error

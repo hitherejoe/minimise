@@ -1,13 +1,15 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.kotlin.native.cocoapods")
+    id("com.apollographql.apollo")
 }
 
 repositories {
+    gradlePluginPortal()
     google()
     jcenter()
     mavenCentral()
@@ -33,24 +35,18 @@ kotlin {
         }
     }
 
-    cocoapods {
-        summary = "Shared Authentication"
-        homepage = "https://github.com/hitherejoe/minimise"
-    }
-
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.Coroutines.coreCommon)
+                implementation(Deps.Coroutines.core)
+                implementation(Deps.Apollo.runtime)
                 implementation(project(":shared:SharedCommon"))
-                implementation(project(":FirebaseAuthentication"))
             }
         }
 
         val commonTest by getting {
             dependencies {
-                implementation(project(":FirebaseAuthentication"))
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation(Deps.junit)
@@ -59,13 +55,9 @@ kotlin {
             }
         }
 
-        val mobileMain by creating {
-            dependsOn(commonMain)
-        }
-
         val androidMain by getting {
-            dependsOn(mobileMain)
             dependencies {
+                implementation(Deps.Apollo.api)
                 implementation(Deps.Kotlin.stdLib)
                 implementation(Deps.Coroutines.android)
                 implementation(Deps.Coroutines.core)
@@ -73,8 +65,8 @@ kotlin {
         }
 
         val iosMain by getting {
-            dependsOn(mobileMain)
             dependencies {
+                implementation(Deps.Apollo.api)
                 implementation(Deps.Kotlin.stdLib)
                 implementation(Deps.Coroutines.native) {
                     version {
@@ -84,4 +76,8 @@ kotlin {
             }
         }
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
 }

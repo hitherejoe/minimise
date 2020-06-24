@@ -25,14 +25,33 @@
       <module name="Minimise-mpp.shared.SharedDashboard.androidTest" target="1.6" />
       <module name="Minimise.FirebaseAuthentication.androidMain" target="1.6" />
       <module name="Minimise.FirebaseAuthentication.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedAuthentication.androidMain" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.androidMain~1" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.androidTest" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.androidTest~1" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.commonMain" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.commonMain~1" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.commonTest" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.commonTest~1" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.mobileMain" target="1.8" />
+      <module name="Minimise.shared.SharedAuthentication.mobileMain~1" target="1.8" />
       <module name="Minimise.shared.SharedCommon.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedCommon.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedCommon.commonMain" target="1.6" />
+      <module name="Minimise.shared.SharedCommon.commonTest" target="1.6" />
+      <module name="Minimise.shared.SharedCommon.mobileMain" target="1.6" />
       <module name="Minimise.shared.SharedCore.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedCore.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedCore.commonMain" target="1.6" />
+      <module name="Minimise.shared.SharedCore.commonTest" target="1.6" />
       <module name="Minimise.shared.SharedCreation.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedCreation.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedCreation.commonMain" target="1.6" />
+      <module name="Minimise.shared.SharedCreation.commonTest" target="1.6" />
       <module name="Minimise.shared.SharedDashboard.androidMain" target="1.6" />
       <module name="Minimise.shared.SharedDashboard.androidTest" target="1.6" />
+      <module name="Minimise.shared.SharedDashboard.commonMain" target="1.6" />
+      <module name="Minimise.shared.SharedDashboard.commonTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,15 +1,15 @@
 package co.joebirch.minimise.authentication.mapper
 
-import co.joebirch.firebase_auth_multiplatform.model.FirebasePasswordResetResponse
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
+import co.joebirch.minimise.authentication.model.ResetPasswordResponseModel
 
 open class ResetPasswordResponseMapper {
 
     fun mapFromResetPasswordResponse(
-        resetPasswordResponse: FirebasePasswordResetResponse
+        resetPasswordResponse: ResetPasswordResponseModel? = null
     ) = ResetPasswordResponse(
-        resetPasswordResponse.email != null && resetPasswordResponse.code == 200,
-        resetPasswordResponse.message,
-        resetPasswordResponse.code
+      //  resetPasswordResponse.email != null && resetPasswordResponse.code == 200,
+        //resetPasswordResponse.message,
+        //resetPasswordResponse.code
     )
 }

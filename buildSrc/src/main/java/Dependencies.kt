@@ -16,7 +16,7 @@ object Deps {
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
 
     object Apollo {
-        const val version = "2.2.0"
+        const val version = "2.2.1"
         const val plugin = "com.apollographql.apollo:apollo-gradle-plugin:$version"
         const val runtime = "com.apollographql.apollo:apollo-runtime-kotlin:$version"
         const val api = "com.apollographql.apollo:apollo-api:$version"
