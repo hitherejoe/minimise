@@ -88,7 +88,7 @@ private fun DashboardContent(
         val tabTitles = categories.map { it }
         val animatingFab = state { false }
         Scaffold(
-            topAppBar = {
+            topBar = {
                 TopAppBar(title = {
                     Text(
                         text = "M",

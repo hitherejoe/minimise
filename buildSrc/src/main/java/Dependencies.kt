@@ -104,7 +104,7 @@ object Deps {
     }
 
     object Compose {
-        const val version = "0.1.0-dev13"
+        const val version = "0.1.0-dev14"
 
         const val android = "androidx.ui:ui-android:$version"
         const val core = "androidx.ui:ui-core:$version"

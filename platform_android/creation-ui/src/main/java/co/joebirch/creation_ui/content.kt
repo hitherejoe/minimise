@@ -28,7 +28,6 @@ import androidx.ui.text.style.TextAlign
 import androidx.ui.text.style.TextDecoration
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
-import androidx.ui.unit.ipx
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 import co.joebirch.minimise.dashboard.CreationState
@@ -372,9 +371,9 @@ fun HintEditText(
                 inputFieldPlace.width,
                 inputFieldPlace.height
             ) {
-                inputFieldPlace.place(0.ipx, 0.ipx)
+                inputFieldPlace.place(0, 0)
                 if (state.value.text.isEmpty() && !selected.value)
-                    hintEditPlace.place(0.ipx, 0.ipx)
+                    hintEditPlace.place(0, 0)
             }
         })
 }

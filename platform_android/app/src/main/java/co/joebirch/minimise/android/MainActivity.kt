@@ -39,8 +39,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 is MainState.NotAuthenticated -> {
                     findNavController(R.id.hostFragment).also {  controller ->
-                        controller.graph = controller.navInflater.inflate(R.navigation.nav_graph)
+                        controller.graph = controller.navInflater.inflate(R.navigation.dashboard)
                     }
+                }
+                MainState.Loading -> {
+
                 }
             }
         })
