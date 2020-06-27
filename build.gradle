@@ -26,7 +26,6 @@ buildscript {
     }
 
     dependencies {
-        classpath Deps.Apollo.plugin
         classpath Deps.androidGradlePlugin
         classpath Deps.kotlinGradlePlugin
         classpath Deps.Kotlin.serialization
