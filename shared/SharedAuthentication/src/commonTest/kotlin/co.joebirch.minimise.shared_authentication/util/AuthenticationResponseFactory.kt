@@ -1,6 +1,5 @@
 package co.joebirch.minimise.shared_authentication.util
 
-import co.joebirch.firebase_auth_multiplatform.model.FirebaseAuthenticationResponse
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.shared_authentication.util.DataFactory.randomInt
 import co.joebirch.minimise.shared_authentication.util.DataFactory.randomString
@@ -13,7 +12,7 @@ object AuthenticationResponseFactory {
         )
 
     fun makeAuthenticationResponse(token: String = randomString()) =
-        FirebaseAuthenticationResponse(randomString(), token, randomString(), randomString())
+        AuthenticationResponseModel(token, randomString(), randomInt())
 
     fun makeAuthenticationModelForError() =
         AuthenticationModel(

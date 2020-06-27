@@ -8,11 +8,6 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import co.joebirch.minimise.android.core.di.ViewModelFactory
-import co.joebirch.minimise.authentication.AuthenticationViewModel
-import co.joebirch.minimise.authentication.composeAuthenticationContent
-import co.joebirch.minimise.authentication.composeForgotPasswordContent
-import co.joebirch.minimise.authentication.util.AuthenticationValidator
-import co.joebirch.minimise.navigation.AuthenticationDirections
 import javax.inject.Inject
 
 class ForgottenPasswordFragment : Fragment() {

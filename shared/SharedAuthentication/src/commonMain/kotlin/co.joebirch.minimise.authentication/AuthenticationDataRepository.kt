@@ -4,10 +4,11 @@ import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
-import co.joebirch.minimise.authentication.remote.AuthenticationRemote
+import co.joebirch.minimise.authentication.remote.AuthenticationRemoteI
+import co.joebirch.minimise.LoginQuery
 
 class AuthenticationDataRepository constructor(
-    private val authenticationStore: AuthenticationRemote,
+    private val authenticationStore: AuthenticationRemoteI,
     private val authenticationResponseMapper: AuthenticationResponseMapper,
     private val resetPasswordResponseMapper: ResetPasswordResponseMapper
 ) : AuthenticationRepository {
@@ -27,7 +28,8 @@ class AuthenticationDataRepository constructor(
         emailAddress: String,
         password: String
     ): AuthenticationModel {
-        return authenticationResponseMapper.mapFromAuthenticationResponse(
+        val re = authenticationStore.signIn(apiKey, emailAddress, password)
+       return authenticationResponseMapper.mapFromAuthenticationResponse(
             //authenticationStore.signIn(apiKey, emailAddress, password)
         )
     }

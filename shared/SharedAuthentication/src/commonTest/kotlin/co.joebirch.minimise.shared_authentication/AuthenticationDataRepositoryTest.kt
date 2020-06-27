@@ -29,7 +29,7 @@ class AuthenticationDataRepositoryTest {
 
             mockAuthenticationMapper.whenMapFromAuthenticationResponse =
                 { _ -> authenticationModel }
-            mockAuthenticationRemote.whenSignUp = { _, _, _ -> authenticationResponse }
+            mockAuthenticationRemote.whenSignUp = { _, _ -> authenticationResponse }
 
             val result = authenticationRepository.signUp(randomString(), randomString(),
                 randomString())
@@ -44,7 +44,7 @@ class AuthenticationDataRepositoryTest {
 
             mockAuthenticationMapper.whenMapFromAuthenticationResponse =
                 { _ -> authenticationModel }
-            mockAuthenticationRemote.whenSignIn = { _, _, _ -> authenticationResponse }
+            mockAuthenticationRemote.whenSignIn = { _, _ -> authenticationResponse }
 
             val result = authenticationRepository.signIn(randomString(), randomString(),
                 randomString())

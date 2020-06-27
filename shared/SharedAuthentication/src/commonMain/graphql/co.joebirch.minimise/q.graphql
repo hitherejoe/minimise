@@ -1,0 +1,15 @@
+query Login(
+    $emailAddress: String!
+    $password: String!
+) {
+  login(userInput: {
+      email: $emailAddress, password: $password
+  }) {
+      ... on AuthenticationError {
+          message
+      }
+      ... on AuthData {
+          token
+      }
+    }
+}

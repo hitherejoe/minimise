@@ -2,11 +2,14 @@ package co.joebirch.minimise.authentication
 
 import android.view.ViewGroup
 import androidx.compose.Composable
+import androidx.compose.Recomposer
+import androidx.compose.getValue
 import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
+import androidx.ui.core.setContent
 import androidx.ui.foundation.*
 import androidx.ui.graphics.Color
 import androidx.ui.input.ImeAction
@@ -57,13 +60,13 @@ private fun ComposeAuthenticationContent(
     emailChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit
 ) {
-    val viewState = uiState.observeAsState()
+    val viewState by uiState.observeAsState()
     FormContent(
-        viewState.value!!.isLoading,
-        viewState.value!!.emailAddress,
-        viewState.value!!.password,
-        viewState.value!!.authenticationMode,
-        viewState.value!!.errorMessage,
+        viewState!!.isLoading,
+        viewState!!.emailAddress,
+        viewState!!.password,
+        viewState!!.authenticationMode,
+        viewState!!.errorMessage,
         authenticationModeToggled,
         authenticateClicked,
         forgotPasswordClicked,

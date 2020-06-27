@@ -34,7 +34,7 @@ class AuthenticationFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         return FrameLayout(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(
@@ -42,6 +42,7 @@ class AuthenticationFragment : BaseFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
 
+            /*
             composeAuthenticationContent(
                 viewLifecycleOwner,
                 authenticationViewModel.observeAuthenticationState(),
@@ -51,6 +52,12 @@ class AuthenticationFragment : BaseFragment() {
                 authenticationViewModel::setEmailAddress,
                 authenticationViewModel::setPassword
             )
+
+             */
+
+            authenticationViewModel.setEmailAddress("")
+            authenticationViewModel.setPassword("")
+            authenticationViewModel.signIn()
         }
     }
 }

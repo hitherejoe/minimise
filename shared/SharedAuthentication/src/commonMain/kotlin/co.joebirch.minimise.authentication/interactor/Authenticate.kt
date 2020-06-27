@@ -1,7 +1,6 @@
 package co.joebirch.minimise.authentication.interactor
 
 import co.joebirch.minimise.authentication.AuthenticationRepository
-import co.joebirch.minimise.shared_common.interactor.UseCase
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.AuthenticateMode
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticate.Params>() {
+open class Authenticate constructor() {
 
     private lateinit var authenticationRepository: AuthenticationRepository
 
@@ -23,7 +22,7 @@ open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticat
         }
     }
 
-    override fun run(params: Params, completion: (AuthenticationModel) -> Unit) {
+    fun run(params: Params, completion: (AuthenticationModel) -> Unit) {
         GlobalScope.launch {
             val result = withContext(Dispatchers.Default) {
                 when (params.authenticateMode) {
@@ -41,7 +40,7 @@ open class Authenticate constructor() : UseCase<AuthenticationModel, Authenticat
         }
     }
 
-    override fun runWithoutThreading(params: Params, completion: (AuthenticationModel) -> Unit) {
+    fun runWithoutThreading(params: Params, completion: (AuthenticationModel) -> Unit) {
         GlobalScope.launch(Dispatchers.Main) {
             val result =  when (params.authenticateMode) {
                 AuthenticateMode.SignUp ->

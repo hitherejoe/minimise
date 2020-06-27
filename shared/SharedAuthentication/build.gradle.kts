@@ -4,8 +4,8 @@ import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 plugins {
-    kotlin("multiplatform")
     id("com.apollographql.apollo")
+    kotlin("multiplatform")
 }
 
 repositories {
@@ -36,10 +36,11 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
+        val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.Coroutines.core)
+                implementation(Deps.Coroutines.coreCommon)
+                implementation(Deps.Apollo.api)
                 implementation(Deps.Apollo.runtime)
                 implementation(project(":shared:SharedCommon"))
             }

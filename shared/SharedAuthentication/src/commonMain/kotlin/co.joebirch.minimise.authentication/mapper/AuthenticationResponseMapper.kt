@@ -1,12 +1,22 @@
 package co.joebirch.minimise.authentication.mapper
 
+import co.joebirch.minimise.LoginQuery
 import co.joebirch.minimise.authentication.model.AuthenticationModel
-import co.joebirch.minimise.authentication.model.AuthenticationResponseModel
+
+fun LoginQuery.Login.toAuthenticationModel(): AuthenticationModel {
+    return this.asAuthData?.let {
+        AuthenticationModel(it.token)
+    } ?: run {
+        AuthenticationModel(message = this.asAuthenticationError?.message)
+    }
+}
+
+
 
 open class AuthenticationResponseMapper {
 
     fun mapFromAuthenticationResponse(
-        authenticationResponse: AuthenticationResponseModel? = null
+        response: LoginQuery.AsAuthData? = null
     ) = AuthenticationModel(
        // authenticationResponse.idToken,
        // authenticationResponse.message,
