@@ -1,8 +1,8 @@
 package co.joebirch.minimise.shared_authentication.util
 
-import co.joebirch.minimise.authentication.remote.AuthenticationRemoteI
+import co.joebirch.minimise.authentication.remote.AuthenticationRemote
 
-internal class MockAuthenticationStore : AuthenticationRemoteI {
+internal class MockAuthenticationStore : AuthenticationRemote {
 
     lateinit var whenSignUp: (
         email: String,

@@ -1,4 +1,4 @@
-query Login(
+query SignIn(
     $emailAddress: String!
     $password: String!
 ) {

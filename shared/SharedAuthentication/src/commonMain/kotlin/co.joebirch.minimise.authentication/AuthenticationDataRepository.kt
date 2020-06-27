@@ -1,15 +1,11 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
-import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
-import co.joebirch.minimise.authentication.remote.AuthenticationRemoteI
-import co.joebirch.minimise.LoginQuery
+import co.joebirch.minimise.authentication.remote.AuthenticationRemote
 
 class AuthenticationDataRepository constructor(
-    private val authenticationStore: AuthenticationRemoteI,
-    private val authenticationResponseMapper: AuthenticationResponseMapper,
+    private val authenticationStore: AuthenticationRemote,
     private val resetPasswordResponseMapper: ResetPasswordResponseMapper
 ) : AuthenticationRepository {
 
@@ -17,22 +13,13 @@ class AuthenticationDataRepository constructor(
         apiKey: String,
         emailAddress: String,
         password: String
-    ): AuthenticationModel {
-        return authenticationResponseMapper.mapFromAuthenticationResponse(
-            //authenticationStore.signUp(apiKey, emailAddress, password)
-        )
-    }
+    ) = authenticationStore.signUp(apiKey, emailAddress, password)
 
     override suspend fun signIn(
         apiKey: String,
         emailAddress: String,
         password: String
-    ): AuthenticationModel {
-        val re = authenticationStore.signIn(apiKey, emailAddress, password)
-       return authenticationResponseMapper.mapFromAuthenticationResponse(
-            //authenticationStore.signIn(apiKey, emailAddress, password)
-        )
-    }
+    ) = authenticationStore.signIn(apiKey, emailAddress, password)
 
     override suspend fun resetPassword(
         apiKey: String,

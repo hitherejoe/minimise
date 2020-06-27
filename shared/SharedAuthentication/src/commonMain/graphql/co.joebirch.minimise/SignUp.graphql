@@ -1,0 +1,15 @@
+mutation SignUp(
+    $emailAddress: String!
+    $password: String!
+) {
+  createUser(userInput: {
+      email: $emailAddress, password: $password
+  }) {
+      ... on AuthenticationError {
+          message
+      }
+      ... on AuthData {
+          token
+      }
+    }
+}

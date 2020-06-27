@@ -1,10 +1,9 @@
 package co.joebirch.minimise.authentication
 
-import co.joebirch.minimise.authentication.mapper.AuthenticationResponseMapper
 import co.joebirch.minimise.authentication.mapper.ResetPasswordResponseMapper
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.authentication.model.ResetPasswordResponse
-import co.joebirch.minimise.authentication.remote.AuthenticationRemote
+import co.joebirch.minimise.authentication.remote.AuthenticationRemoteStore
 
 interface AuthenticationRepository {
 
@@ -28,8 +27,7 @@ interface AuthenticationRepository {
     companion object {
         fun create(): AuthenticationRepository =
             RepositoriesProvider.getAuthenticationDataRepository(
-                AuthenticationRemote(),
-                AuthenticationResponseMapper(),
+                AuthenticationRemoteStore(),
                 ResetPasswordResponseMapper()
             )
     }
