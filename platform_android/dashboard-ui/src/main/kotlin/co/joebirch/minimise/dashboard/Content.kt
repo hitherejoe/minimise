@@ -111,7 +111,7 @@ private fun DashboardContent(
                 ) { state ->
                     Box(modifier = Modifier.wrapContentSize().clickable(onClick = {
                         animatingFab.value = true
-                        Timer().schedule(500) {
+                        Timer().schedule(300) {
                             navigateToCreation()
                         }
                     }), gravity = ContentGravity.BottomEnd, children = {
