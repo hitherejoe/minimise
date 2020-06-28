@@ -92,7 +92,7 @@ private val sizeTransitionDefinition = transitionDefinition {
         this[contentAlphaState] = 0f
     }
     state("B") {
-        this[sizeState] = 75f
+        this[sizeState] = 80f
         this[alphaState] = 1f
         this[contentAlphaState] = 1f
     }

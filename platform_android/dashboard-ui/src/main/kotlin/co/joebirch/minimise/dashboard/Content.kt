@@ -16,6 +16,11 @@ import androidx.ui.graphics.imageFromResource
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.Add
+import androidx.ui.material.ripple.RippleIndication
+import androidx.ui.res.colorResource
+import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import co.joebirch.minimise.authentication.ui.R
@@ -54,21 +59,25 @@ val sizeState = FloatPropKey()
 val alphaState = FloatPropKey()
 val colorState = ColorPropKey()
 
+enum class FabState {
+    Idle, Exploded
+}
+
 private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transitionDefinition {
-    state("A") {
+    state(FabState.Idle) {
         this[alphaState] = 1f
-        this[sizeState] = 75f
+        this[sizeState] = 80f
         this[colorState] = colorOne
     }
-    state("B") {
+    state(FabState.Exploded) {
         this[alphaState] = 0f
         this[sizeState] = 4000f
         this[colorState] = colorTwo
     }
-    transition(fromState = "A", toState = "B") {
+    transition(fromState = FabState.Idle, toState = FabState.Exploded) {
         sizeState using keyframes<Float> {
             duration = 700
-            75f at 0
+            80f at 0
             35f at 120
             4000f at 700
         }
@@ -98,89 +107,82 @@ private fun DashboardContent(
                     )
                 }, elevation = 0.dp)
             },
-            floatingActionButton = {
-                val resources = ContextAmbient.current.resources
-
-                Transition(
-                    definition = sizeTransitionDefinition(
-                        MaterialTheme.colors.secondary,
-                        MaterialTheme.colors.primary
-                    ),
-                    initState = "A",
-                    toState = if (!animatingFab.value) "A" else "B"
-                ) { state ->
-                    Box(modifier = Modifier.wrapContentSize().clickable(onClick = {
-                        animatingFab.value = true
-                        Timer().schedule(300) {
-                            navigateToCreation()
-                        }
-                    }), gravity = ContentGravity.BottomEnd, children = {
-                        Canvas(
-                            modifier = Modifier
-                                .wrapContentSize(align = Alignment.Center)
-                                .padding(20.dp)
-                        ) {
-                            drawCircle(state[colorState], state[sizeState])
-                            drawImage(
-                                imageFromResource(resources, R.drawable.plus),
-                                topLeft = Offset(-33.5f, -33.5f),
-                                alpha = state[alphaState]
-                            )
-                        }
-                    })
-                }
-                /*
-
-Transition(
-definition = sizeTransitionDefinition,
-toState = if(!animatingFab.value) "A" else "B",
-onStateChangeFinished = {
-    navigateToCreation()
-}
-) { state ->
-
-FloatingActionButton(
-    onClick = {
-        animatingFab.value = true
-    },
-    backgroundColor = animate(if (animatingFab.value) MaterialTheme.colors.primary else MaterialTheme.colors.secondary),
-    modifier = Modifier.width(state[sizeState].dp).height(state[sizeState].dp)
-        .offset((-16).dp, (-16).dp)
-) {
-    Icon(
-        asset = Icons.Filled.Add,
-        modifier = Modifier.drawOpacity(animate(if (animatingFab.value) 0f else 1f))
-    )
-}
-
-                } */
-
-            },
             bodyContent = {
-                Column {
-                    TabRow(
-                        items = tabTitles,
-                        selectedIndex = categories.indexOf(currentCategory)
-                    ) { index, currentTab ->
-                        Tab(
-                            selected = categories.indexOf(currentCategory) == index,
-                            onSelected = { updateSelectedCategory(categories[index]) }
-                        )
-                        {
-                            Text(
-                                text = currentTab.title,
-                                modifier = Modifier.padding(16.dp)
+                Stack {
+                    Box(
+                        modifier = Modifier.fillMaxSize().zIndex(1f),
+                        gravity = ContentGravity.BottomEnd,
+                        children = {
+                            val resources = ContextAmbient.current.resources
+
+                            Transition(
+                                definition = sizeTransitionDefinition(
+                                    MaterialTheme.colors.secondary,
+                                    MaterialTheme.colors.primary
+                                ),
+                                initState = FabState.Idle,
+                                toState = if (!animatingFab.value) {
+                                    FabState.Idle
+                                } else FabState.Exploded
+                            ) { state ->
+                                Box(
+                                    modifier = Modifier.wrapContentSize().clickable(
+                                        onClick = {
+                                            animatingFab.value = true
+                                            Timer().schedule(300) {
+                                                navigateToCreation()
+                                            }
+                                        },
+                                        indication = RippleIndication(
+                                            radius = 26.dp,
+                                            bounded = false
+                                        )
+                                    ),
+                                    children = {
+                                        Canvas(
+                                            modifier = Modifier.size(80.dp)
+                                        ) {
+                                            drawCircle(state[colorState], state[sizeState])
+                                            val i = imageFromResource(resources, R.drawable.plus)
+                                            drawImage(
+                                                imageFromResource(resources, R.drawable.plus),
+                                                topLeft = Offset(
+                                                    (this.center.x) - (i.width / 2),
+                                                    (this.center.y) - (i.width / 2)
+                                                ),
+                                                alpha = state[alphaState]
+                                            )
+                                        }
+                                    })
+                            }
+                        })
+
+                    Column(modifier = Modifier.zIndex(0f)) {
+                        TabRow(
+                            items = tabTitles,
+                            selectedIndex = categories.indexOf(currentCategory)
+                        ) { index, currentTab ->
+                            Tab(
+                                selected = categories.indexOf(currentCategory) == index,
+                                onSelected = { updateSelectedCategory(categories[index]) }
                             )
+                            {
+                                Text(
+                                    text = currentTab.title,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            }
+                        }
+                        if ((currentCategory == Category.PendingBelongings &&
+                                    pendingBelongings.isEmpty()) ||
+                            (currentCategory == Category.Belongings &&
+                                    pendingBelongings.isEmpty())
+                        ) {
+                            emptyView(currentCategory)
                         }
                     }
-                    if ((currentCategory == Category.PendingBelongings &&
-                                pendingBelongings.isEmpty()) ||
-                        (currentCategory == Category.Belongings &&
-                                pendingBelongings.isEmpty())
-                    ) {
-                        emptyView(currentCategory)
-                    }
                 }
+
             })
     }
 }
@@ -198,6 +200,7 @@ private fun emptyView(category: Category) {
     ) {
         Text(
             text = message,
+            color = colorResource(id = co.joebirch.minimise.common_ui.R.color.text_secondary),
             textAlign = TextAlign.Center,
             modifier = Modifier.gravity(align = Alignment.CenterHorizontally)
                 .preferredWidth(260.dp)

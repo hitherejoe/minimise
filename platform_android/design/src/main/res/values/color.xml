@@ -28,7 +28,7 @@
     <color name="color_on_primary">@color/text_primary</color>
     <color name="color_on_primary_inverse">@color/white</color>
     <color name="color_on_secondary">@color/white</color>
-    <color name="color_on_background">@color/text_secondary</color>
+    <color name="color_on_background">@color/primaryDarkColor</color>
     <color name="color_on_surface">#757575</color>
     <color name="color_on_error">@color/white</color>
 

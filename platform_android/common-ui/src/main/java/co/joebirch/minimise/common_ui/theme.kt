@@ -20,7 +20,11 @@ fun MinimiseTheme(
             secondary = colorResource(id = R.color.secondaryColor),
             secondaryVariant = colorResource(id = R.color.secondaryDarkColor),
             onSecondary = Color.White,
-            error = colorResource(id = R.color.color_error)
+            error = colorResource(id = R.color.color_error),
+            surface = colorResource(id = R.color.color_surface),
+            onSurface = colorResource(id = R.color.color_on_surface),
+            background = colorResource(id = R.color.color_background),
+            onBackground = colorResource(id = R.color.color_on_background)
         ),
         content = content,
         typography = themeTypography
