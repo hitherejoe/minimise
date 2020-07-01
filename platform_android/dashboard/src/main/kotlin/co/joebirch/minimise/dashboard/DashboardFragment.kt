@@ -7,24 +7,16 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import co.joebirch.minimise.android.core.di.BaseFragment
-import co.joebirch.minimise.android.core.di.ViewModelFactory
-import co.joebirch.minimise.dashboard.di.inject
-import co.joebirch.minimise.navigation.AuthenticationDirections
 import co.joebirch.minimise.navigation.DashboardDirections
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val dashboardViewModel: DashboardViewModel by viewModels {
-        viewModelFactory
-    }
+    private val dashboardViewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        inject(this)
         viewModel = dashboardViewModel
     }
 
@@ -50,7 +42,7 @@ class DashboardFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dashboardViewModel.getBelongings("fj")
+        //dashboardViewModel.getBelongings("fj")
     }
 
     fun navigateToCreation() {

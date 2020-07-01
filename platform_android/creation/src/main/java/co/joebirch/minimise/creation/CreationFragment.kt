@@ -6,30 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import co.joebirch.creation_ui.composeDashboardContent
 import co.joebirch.minimise.android.core.di.BaseFragment
-import co.joebirch.minimise.android.core.di.ViewModelFactory
-import co.joebirch.minimise.android.core.di.coreComponent
-import co.joebirch.minimise.creation.di.component.DaggerCreationComponent
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreationFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val dashboardViewModel: CreationViewModel by viewModels {
-        viewModelFactory
-    }
+    private val dashboardViewModel: CreationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerCreationComponent
-            .builder()
-            .coreComponent(coreComponent())
-            .build()
-            .inject(this)
         viewModel = dashboardViewModel
     }
 

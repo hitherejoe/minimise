@@ -4,6 +4,7 @@ apply plugin: "com.android.library"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -38,8 +39,9 @@ dependencies {
     implementation Deps.Fragment.base
     implementation Deps.AndroidX.appCompat
 
-    implementation Deps.Dagger.dagger
-    kapt Deps.Dagger.compiler
+    implementation Deps.Google.Hilt.hilt
+    implementation Deps.Google.Hilt.viewmodel
+    kapt Deps.Google.Hilt.hiltCompiler
 
     implementation Deps.Lifecycle.viewModelKtx
 

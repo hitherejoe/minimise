@@ -151,14 +151,14 @@ object Deps {
 
     object Google {
         val material = "com.google.android.material:material:1.2.0-alpha03"
+
+        object Hilt {
+            private const val hiltVersion = "2.28-alpha"
+            val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+            val hilt = "com.google.dagger:hilt-android:$hiltVersion"
+            val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
+            val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+            val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+        }
     }
-
-    object Dagger {
-        private const val version = "2.25.4"
-
-        const val dagger = "com.google.dagger:dagger:$version"
-        const val compiler = "com.google.dagger:dagger-compiler:$version"
-        const val processor = "com.google.dagger:dagger-android-processor:$version"
-    }
-
 }

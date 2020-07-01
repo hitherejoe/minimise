@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -44,15 +44,13 @@ dependencies {
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
 
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
-
     implementation Deps.Kotlin.stdLib
     implementation Deps.Google.material
     api Deps.AndroidX.appCompat
     api Deps.AndroidX.coreKtx
 
-    implementation Deps.Dagger.dagger
-
-    kapt Deps.Dagger.compiler
-    kapt Deps.Dagger.processor
+    implementation Deps.Google.Hilt.hilt
+    implementation Deps.Google.Hilt.viewmodel
+    kapt Deps.Google.Hilt.compiler
+    kapt Deps.Google.Hilt.hiltCompiler
 }

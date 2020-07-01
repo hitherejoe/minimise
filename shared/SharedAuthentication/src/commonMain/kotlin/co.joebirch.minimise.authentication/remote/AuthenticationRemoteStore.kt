@@ -33,8 +33,8 @@ open class AuthenticationRemoteStore: AuthenticationRemote {
             emailAddress = emailAddress,
             password = password
         )
-        return apolloClient.mutate(signUp).execute().single().data?.createUser
-            ?.toAuthenticationModel() ?: AuthenticationModel()
+        return apolloClient.mutate(signUp).execute().single().data?.createUser?.toAuthenticationModel()
+            ?: AuthenticationModel()
     }
 
     override suspend fun signIn(

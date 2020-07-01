@@ -176,7 +176,6 @@ internal fun CreationContent(
                     }
                 }
             },
-            floatingActionButtonPosition = Scaffold.FabPosition.End,
             bodyContent = {
                 Stack(modifier = Modifier.fillMaxSize()) {
                     Box(

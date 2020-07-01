@@ -5,30 +5,16 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import co.joebirch.minimise.android.core.di.ViewModelFactory
-import co.joebirch.minimise.android.core.di.coreComponent
-import co.joebirch.minimise.android.di.component.DaggerMainComponent
-import co.joebirch.minimise.authentication.di.component.DaggerAuthenticationComponent
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel: MainViewModel by viewModels {
-        viewModelFactory
-    }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        DaggerMainComponent
-            .builder()
-            .coreComponent(coreComponent())
-            .build()
-            .inject(this)
 
         viewModel.observeState().observe(this, Observer {
             when (it) {

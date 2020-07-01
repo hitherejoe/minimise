@@ -82,7 +82,6 @@ private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transit
             4000f at 700
         }
     }
-
 }
 
 @Composable
@@ -97,6 +96,50 @@ private fun DashboardContent(
         val tabTitles = categories.map { it }
         val animatingFab = state { false }
         Scaffold(
+            floatingActionButton = {
+                val resources = ContextAmbient.current.resources
+
+                Box(
+                    modifier = Modifier.clickable(
+                        onClick = {
+                            animatingFab.value = true
+                            Timer().schedule(300) {
+                                navigateToCreation()
+                            }
+                        }, indication = RippleIndication(
+                            radius = 26.dp,
+                            bounded = false
+                        )
+                    ).wrapContentSize()
+                ) {
+
+                    Transition(
+                        definition = sizeTransitionDefinition(
+                            MaterialTheme.colors.secondary,
+                            MaterialTheme.colors.primary
+                        ),
+                        initState = FabState.Idle,
+                        toState = if (!animatingFab.value) {
+                            FabState.Idle
+                        } else FabState.Exploded
+                    ) { state ->
+                        Canvas(
+                            modifier = Modifier.size(40.dp)
+                        ) {
+                            drawCircle(state[colorState], state[sizeState])
+                            val i = imageFromResource(resources, R.drawable.plus)
+                            drawImage(
+                                imageFromResource(resources, R.drawable.plus),
+                                topLeft = Offset(
+                                    (this.center.x) - (i.width / 2),
+                                    (this.center.y) - (i.width / 2)
+                                ),
+                                alpha = state[alphaState]
+                            )
+                        }
+                    }
+                }
+            },
             topBar = {
                 TopAppBar(title = {
                     Text(
@@ -108,81 +151,30 @@ private fun DashboardContent(
                 }, elevation = 0.dp)
             },
             bodyContent = {
-                Stack {
-                    Box(
-                        modifier = Modifier.fillMaxSize().zIndex(1f),
-                        gravity = ContentGravity.BottomEnd,
-                        children = {
-                            val resources = ContextAmbient.current.resources
-
-                            Transition(
-                                definition = sizeTransitionDefinition(
-                                    MaterialTheme.colors.secondary,
-                                    MaterialTheme.colors.primary
-                                ),
-                                initState = FabState.Idle,
-                                toState = if (!animatingFab.value) {
-                                    FabState.Idle
-                                } else FabState.Exploded
-                            ) { state ->
-                                Box(
-                                    modifier = Modifier.wrapContentSize().clickable(
-                                        onClick = {
-                                            animatingFab.value = true
-                                            Timer().schedule(300) {
-                                                navigateToCreation()
-                                            }
-                                        },
-                                        indication = RippleIndication(
-                                            radius = 26.dp,
-                                            bounded = false
-                                        )
-                                    ),
-                                    children = {
-                                        Canvas(
-                                            modifier = Modifier.size(80.dp)
-                                        ) {
-                                            drawCircle(state[colorState], state[sizeState])
-                                            val i = imageFromResource(resources, R.drawable.plus)
-                                            drawImage(
-                                                imageFromResource(resources, R.drawable.plus),
-                                                topLeft = Offset(
-                                                    (this.center.x) - (i.width / 2),
-                                                    (this.center.y) - (i.width / 2)
-                                                ),
-                                                alpha = state[alphaState]
-                                            )
-                                        }
-                                    })
-                            }
-                        })
-
-                    Column(modifier = Modifier.zIndex(0f)) {
-                        TabRow(
-                            items = tabTitles,
-                            selectedIndex = categories.indexOf(currentCategory)
-                        ) { index, currentTab ->
-                            Tab(
-                                selected = categories.indexOf(currentCategory) == index,
-                                onSelected = { updateSelectedCategory(categories[index]) }
+                Column {
+                    TabRow(
+                        items = tabTitles,
+                        selectedIndex = categories.indexOf(currentCategory)
+                    ) { index, currentTab ->
+                        Tab(
+                            selected = categories.indexOf(currentCategory) == index,
+                            onSelected = { updateSelectedCategory(categories[index]) }
+                        )
+                        {
+                            Text(
+                                text = currentTab.title,
+                                modifier = Modifier.padding(16.dp)
                             )
-                            {
-                                Text(
-                                    text = currentTab.title,
-                                    modifier = Modifier.padding(16.dp)
-                                )
-                            }
-                        }
-                        if ((currentCategory == Category.PendingBelongings &&
-                                    pendingBelongings.isEmpty()) ||
-                            (currentCategory == Category.Belongings &&
-                                    pendingBelongings.isEmpty())
-                        ) {
-                            emptyView(currentCategory)
                         }
                     }
+                    if ((currentCategory == Category.PendingBelongings &&
+                                pendingBelongings.isEmpty()) ||
+                        (currentCategory == Category.Belongings &&
+                                pendingBelongings.isEmpty())
+                    ) {
+                        emptyView(currentCategory)
+                    }
                 }
-
             })
     }
 }

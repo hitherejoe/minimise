@@ -3,6 +3,7 @@ import co.joebirch.minimise.buildsrc.Versions
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 kapt {
     correctErrorTypes = true
@@ -48,8 +49,9 @@ dependencies {
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
 
-    implementation Deps.Dagger.dagger
-    kapt Deps.Dagger.compiler
+    implementation Deps.Google.Hilt.hilt
+    implementation Deps.Google.Hilt.viewmodel
+    kapt Deps.Google.Hilt.hiltCompiler
 
     implementation Deps.Fragment.base
     implementation Deps.Fragment.ktx

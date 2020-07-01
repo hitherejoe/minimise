@@ -22,9 +22,8 @@ dependencies {
 
     implementation Deps.AndroidX.appCompat
 
-    implementation Deps.Dagger.dagger
-    kapt Deps.Dagger.compiler
-    kapt Deps.Dagger.processor
+    implementation Deps.Google.Hilt.hilt
+    kapt Deps.Google.Hilt.hiltCompiler
 
     implementation Deps.Kotlin.stdLib
 }

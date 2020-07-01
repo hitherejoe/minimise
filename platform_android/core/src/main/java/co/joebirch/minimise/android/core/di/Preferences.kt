@@ -2,10 +2,11 @@ package co.joebirch.minimise.android.core.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class Preferences @Inject constructor(
-    private val context: Context
+    @ApplicationContext val context: Context
 ) {
 
     private var sharedPref: SharedPreferences = context.getSharedPreferences("minimise_prefs", 0)

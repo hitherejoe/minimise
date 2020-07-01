@@ -6,27 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import co.joebirch.minimise.android.core.di.BaseFragment
-import co.joebirch.minimise.android.core.di.ViewModelFactory
-import co.joebirch.minimise.authentication.di.inject
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
-import co.joebirch.minimise.navigation.AuthenticationDirections
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthenticationFragment : BaseFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    @Inject
     lateinit var authenticatonValidator: AuthenticationValidator
 
-    private val authenticationViewModel: AuthenticationViewModel by viewModels {
-        viewModelFactory
-    }
+    private val authenticationViewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        inject(this)
         viewModel = authenticationViewModel
     }
 
