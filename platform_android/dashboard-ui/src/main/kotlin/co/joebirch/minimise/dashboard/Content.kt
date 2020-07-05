@@ -10,6 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.ui.animation.*
 import androidx.ui.core.*
 import androidx.ui.foundation.*
+import androidx.ui.foundation.lazy.LazyColumnItems
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.geometry.Offset
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.imageFromResource
@@ -20,6 +22,7 @@ import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.Add
 import androidx.ui.material.ripple.RippleIndication
 import androidx.ui.res.colorResource
+import androidx.ui.res.imageResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
@@ -144,35 +147,76 @@ private fun DashboardContent(
                 TopAppBar(title = {
                     Text(
                         text = "M",
+                        color = MaterialTheme.colors.primary,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                             .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
                     )
-                }, elevation = 0.dp)
+                }, elevation = 0.dp, backgroundColor = Color.White)
             },
             bodyContent = {
                 Column {
                     TabRow(
                         items = tabTitles,
-                        selectedIndex = categories.indexOf(currentCategory)
+                        backgroundColor = Color.White,
+                        contentColor = MaterialTheme.colors.primary,
+                        indicatorContainer = { tabPositions ->
+                            TabRow.IndicatorContainer(
+                                tabPositions,
+                                categories.indexOf(currentCategory)
+                            ) {
+                                TabRow.Indicator(
+                                    modifier = Modifier.padding(horizontal = 42.dp)
+                                        .height(3.dp)
+                                )
+                            }
+                        },
+                        selectedIndex = categories.indexOf(currentCategory),
+                        divider = { }
                     ) { index, currentTab ->
                         Tab(
                             selected = categories.indexOf(currentCategory) == index,
                             onSelected = { updateSelectedCategory(categories[index]) }
                         )
                         {
+                            val textColor = if (categories.indexOf(currentCategory) == index) {
+                                1f
+                            } else {
+                                0.65f
+                            }
                             Text(
                                 text = currentTab.title,
-                                modifier = Modifier.padding(16.dp)
+                                color = MaterialTheme.colors.primary,
+                                modifier = Modifier.padding(16.dp).drawOpacity(textColor)
                             )
                         }
                     }
-                    if ((currentCategory == Category.PendingBelongings &&
-                                pendingBelongings.isEmpty()) ||
-                        (currentCategory == Category.Belongings &&
-                                pendingBelongings.isEmpty())
+                    Box(
+                        backgroundColor = Color.White
                     ) {
-                        emptyView(currentCategory)
+                        if ((currentCategory == Category.PendingBelongings &&
+                                    pendingBelongings.isEmpty()) ||
+                            (currentCategory == Category.Belongings &&
+                                    pendingBelongings.isEmpty())
+                        ) {
+                            emptyView(currentCategory)
+                        } else {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            LazyColumnItems(
+                                items = pendingBelongings
+                            ) {
+                                Box(
+                                    backgroundColor = MaterialTheme.colors.surface,
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.fillMaxWidth().height(80.dp)
+                                        .drawShadow(2.dp, RoundedCornerShape(8.dp))
+                                        .clickable(onClick = {})
+                                ) {
+                                    
+
+                                }
+                            }
+                        }
                     }
                 }
             })
@@ -186,13 +230,15 @@ private fun emptyView(category: Category) {
     } else {
         "You don't currently have any belongings that you've purchased."
     }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
+        Spacer(modifier = Modifier.height(32.dp))
         Text(
             text = message,
-            color = colorResource(id = co.joebirch.minimise.common_ui.R.color.text_secondary),
+            color = MaterialTheme.colors.primary,
             textAlign = TextAlign.Center,
             modifier = Modifier.gravity(align = Alignment.CenterHorizontally)
                 .preferredWidth(260.dp)
