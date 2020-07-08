@@ -25,6 +25,7 @@ import androidx.ui.res.colorResource
 import androidx.ui.res.imageResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
+import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
@@ -204,16 +205,56 @@ private fun DashboardContent(
                             Spacer(modifier = Modifier.height(12.dp))
                             LazyColumnItems(
                                 items = pendingBelongings
-                            ) {
+                            ) { item ->
                                 Box(
                                     backgroundColor = MaterialTheme.colors.surface,
-                                    shape = RoundedCornerShape(8.dp),
-                                    modifier = Modifier.fillMaxWidth().height(80.dp)
-                                        .drawShadow(2.dp, RoundedCornerShape(8.dp))
+                                    shape = RoundedCornerShape(3.dp),
+                                    modifier = Modifier.wrapContentHeight().fillMaxWidth()
+                                        .padding(16.dp)
+                                        .drawShadow(2.dp, RoundedCornerShape(3.dp))
                                         .clickable(onClick = {})
                                 ) {
-                                    
+                                    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+                                        val (text1, text2, text3) = createRefs()
 
+                                        Text(
+                                            text = item.name,
+                                            modifier = Modifier.constrainAs(text1) {
+                                                top.linkTo(this.parent.top, margin = 16.dp)
+                                                start.linkTo(this.parent.start, margin = 16.dp)
+                                            },
+                                            fontSize = TextUnit.Companion.Sp(14),
+                                            color = MaterialTheme.colors.onSurface
+                                        )
+
+                                        Text(
+                                            text = item.store,
+                                            modifier = Modifier.constrainAs(text2) {
+                                                start.linkTo(this.parent.start, margin = 16.dp)
+                                                top.linkTo(text1.bottom, margin = 4.dp)
+                                                bottom.linkTo(this.parent.bottom, margin = 16.dp)
+                                            },
+                                            fontSize = TextUnit.Companion.Sp(12),
+                                            color = MaterialTheme.colors.onSurface
+                                        )
+
+                                        Stack(
+                                            modifier = Modifier.wrapContentSize()
+                                                .constrainAs(text3) {
+                                                    centerVerticallyTo(this.parent)
+                                                    end.linkTo(this.parent.end, margin = 16.dp)
+                                                }) {
+                                            CircularProgressIndicator(
+                                                progress = 0.5f,
+                                                modifier = Modifier.gravity(align = Alignment.Center)
+                                            )
+                                            Text(
+                                                text = "3",
+                                                modifier = Modifier.gravity(align = Alignment.Center),
+                                                fontSize = TextUnit.Companion.Sp(14)
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
