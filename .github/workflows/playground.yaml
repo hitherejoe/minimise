@@ -6,6 +6,19 @@ on:
       - master
       
 jobs:
+  testOne:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Commit and push tracking plan changes
+      run: |
+        echo >> file.txt
+    - name: Upload tracking plan as artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: file
+        path: file.txt
   placeholder:
     runs-on: ubuntu-latest
 
@@ -21,10 +34,13 @@ jobs:
         persist-credentials: false
         repository: hitherejoe/pact_demo
         token: ${{ secrets.PTA_GITHUB }}
+    - uses: actions/download-artifact@v2
+      with:
+        name: file
+        path: file.txt
     - name: Commit and push tracking plan changes
       run: |
-        echo >> file.txt
-        cp file.txt package.json
+        cp file.txt shared/file.txt
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
         token=${{ secrets.PTA_GITHUB }}
