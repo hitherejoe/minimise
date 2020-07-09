@@ -4,7 +4,7 @@ Minimise app built using kotlin multiplatform
 
 ![CI](https://github.com/hitherejoe/minimise/workflows/CI/badge.svg?branch=master)
 
-Minimise is an app for Android & iOS. It's purposeful is to help us think more about the purchases we make and rediscover the things that we already own.
+Minimise is an app for Android & iOS. It's purpose is to help us think more about the purchases we make and rediscover the things that we already own.
 
 Minimise is currently under heavy development and is not open to outside contributions. Once things are more buil out, this will change!
 
