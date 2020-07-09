@@ -15,6 +15,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.7"
+    - name: Check out another repository
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        repository: hitherejoe/pact_demo
+        token: ${{ secrets.PTA_GITHUB }}
     - name: Commit and push tracking plan changes
       run: |
         echo >> file.txt
