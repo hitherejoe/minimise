@@ -21,11 +21,9 @@ jobs:
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
         token=${{ secrets.PTA_GITHUB }}
-        git push origin update-tracking-plan
     - name: Initialize Pull Request
       uses: peter-evans/create-pull-request@v2.8.1
       with:
-        path: hitherejoe/minimise
         token: ${{ secrets.PTA_GITHUB }}
         branch: update-tracking-plan
         base: master
