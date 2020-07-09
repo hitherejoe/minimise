@@ -13,12 +13,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: Commit and push tracking plan changes
       run: |
-        echo >> file.txt
+        echo >> pact.log
     - name: Upload tracking plan as artifact
       uses: actions/upload-artifact@v1
       with:
         name: file
-        path: file.txt
+        path: pact.log
   placeholder:
     runs-on: ubuntu-latest
 
@@ -37,10 +37,10 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: file
-        path: file.txt
+        path: pact.log
     - name: Commit and push tracking plan changes
       run: |
-        mv file.txt logs/file.txt
+        mv pact.log logs/pact.log
         
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
