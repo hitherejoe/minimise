@@ -203,67 +203,72 @@ private fun DashboardContent(
                             LazyColumnItems(
                                 items = pendingBelongings
                             ) { item ->
-                                Box(
-                                    backgroundColor = MaterialTheme.colors.surface,
-                                    shape = RoundedCornerShape(3.dp),
-                                    modifier = Modifier.wrapContentHeight().fillMaxWidth()
-                                        .padding(16.dp)
-                                        .drawShadow(2.dp, RoundedCornerShape(3.dp))
-                                        .clickable(onClick = {})
-                                ) {
-                                    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-                                        val (text1, text2, text3) = createRefs()
-
-                                        Text(
-                                            text = item.name,
-                                            modifier = Modifier.constrainAs(text1) {
-                                                top.linkTo(this.parent.top, margin = 16.dp)
-                                                start.linkTo(this.parent.start, margin = 16.dp)
-                                            },
-                                            fontSize = TextUnit.Companion.Sp(16),
-                                            color = MaterialTheme.colors.onSurface
-                                        )
-
-                                        Text(
-                                            text = item.store,
-                                            modifier = Modifier.constrainAs(text2) {
-                                                start.linkTo(this.parent.start, margin = 16.dp)
-                                                top.linkTo(text1.bottom, margin = 4.dp)
-                                                bottom.linkTo(this.parent.bottom, margin = 16.dp)
-                                            },
-                                            fontSize = TextUnit.Companion.Sp(14),
-                                            color = MaterialTheme.colors.onSurface
-                                        )
-
-                                        Stack(
-                                            modifier = Modifier.wrapContentSize()
-                                                .constrainAs(text3) {
-                                                    centerVerticallyTo(this.parent)
-                                                    end.linkTo(this.parent.end, margin = 16.dp)
-                                                }) {
-                                            CircularProgressIndicator(
-                                                progress = 1f,
-                                                modifier = Modifier.gravity(align = Alignment.Center)
-                                                    .drawOpacity(0.4f)
-                                            )
-                                            CircularProgressIndicator(
-                                                progress = 0.5f,
-                                                modifier = Modifier.gravity(align = Alignment.Center)
-                                            )
-                                            Text(
-                                                text = "1d",
-                                                modifier = Modifier.gravity(align = Alignment.Center)
-                                                    .padding(top = 2.dp),
-                                                fontSize = TextUnit.Companion.Sp(12)
-                                            )
-                                        }
-                                    }
-                                }
+                                pendingItem(item)
                             }
                         }
                     }
                 }
             })
+    }
+}
+
+@Composable
+internal fun pendingItem(item: Belonging) {
+    Box(
+        backgroundColor = MaterialTheme.colors.surface,
+        shape = RoundedCornerShape(3.dp),
+        modifier = Modifier.wrapContentHeight().fillMaxWidth()
+            .padding(16.dp)
+            .drawShadow(2.dp, RoundedCornerShape(3.dp))
+            .clickable(onClick = {})
+    ) {
+        ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+            val (text1, text2, text3) = createRefs()
+
+            Text(
+                text = item.name,
+                modifier = Modifier.constrainAs(text1) {
+                    top.linkTo(this.parent.top, margin = 16.dp)
+                    start.linkTo(this.parent.start, margin = 16.dp)
+                },
+                fontSize = TextUnit.Companion.Sp(16),
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Text(
+                text = item.store,
+                modifier = Modifier.constrainAs(text2) {
+                    start.linkTo(this.parent.start, margin = 16.dp)
+                    top.linkTo(text1.bottom, margin = 4.dp)
+                    bottom.linkTo(this.parent.bottom, margin = 16.dp)
+                },
+                fontSize = TextUnit.Companion.Sp(14),
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Stack(
+                modifier = Modifier.wrapContentSize()
+                    .constrainAs(text3) {
+                        centerVerticallyTo(this.parent)
+                        end.linkTo(this.parent.end, margin = 16.dp)
+                    }) {
+                CircularProgressIndicator(
+                    progress = 1f,
+                    modifier = Modifier.gravity(align = Alignment.Center)
+                        .drawOpacity(0.4f)
+                )
+                CircularProgressIndicator(
+                    progress = 0.5f,
+                    modifier = Modifier.gravity(align = Alignment.Center)
+                )
+                Text(
+                    text = "1d",
+                    modifier = Modifier.gravity(align = Alignment.Center)
+                        .padding(top = 2.dp),
+                    fontSize = TextUnit.Companion.Sp(12)
+                )
+            }
+        }
     }
 }
 
