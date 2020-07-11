@@ -157,17 +157,21 @@ internal fun CreationContent(
                             }
                         ) { state ->
                             Box(modifier = Modifier.wrapContentSize().clickable(onClick = {
-                                animatingFab.value = true
+                                onNextStep()
                             }), gravity = ContentGravity.BottomEnd, children = {
                                 Canvas(
                                     modifier = Modifier
                                         .wrapContentSize(align = Alignment.Center)
                                         .padding(20.dp)
                                 ) {
+                                    val image = imageFromResource(resources, R.drawable.arrow_right)
                                     drawCircle(buttonColor, state[sizeState])
                                     drawImage(
-                                        imageFromResource(resources, R.drawable.arrow_right),
-                                        topLeft = Offset(-33.5f, -33.5f),
+                                        image,
+                                        topLeft = Offset(
+                                            (this.center.x) - (image.width / 2),
+                                            (this.center.y) - (image.width / 2)
+                                        ),
                                         alpha = state[alphaState]
                                     )
                                 }

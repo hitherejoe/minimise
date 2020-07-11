@@ -102,12 +102,11 @@ private fun DashboardContent(
         Scaffold(
             floatingActionButton = {
                 val resources = ContextAmbient.current.resources
-
                 Box(
                     modifier = Modifier.clickable(
                         onClick = {
                             animatingFab.value = true
-                            Timer().schedule(300) {
+                            Timer().schedule(450) {
                                 navigateToCreation()
                             }
                         }, indication = RippleIndication(
@@ -144,19 +143,17 @@ private fun DashboardContent(
                     }
                 }
             },
-            topBar = {
-                TopAppBar(title = {
-                    Text(
-                        text = "M",
-                        color = MaterialTheme.colors.primary,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                            .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
-                    )
-                }, elevation = 0.dp, backgroundColor = Color.White)
-            },
             bodyContent = {
                 Column {
+                    TopAppBar(title = {
+                        Text(
+                            text = "M",
+                            color = MaterialTheme.colors.primary,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                                .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
+                        )
+                    }, elevation = 0.dp, backgroundColor = Color.White)
                     TabRow(
                         items = tabTitles,
                         backgroundColor = Color.White,
@@ -223,7 +220,7 @@ private fun DashboardContent(
                                                 top.linkTo(this.parent.top, margin = 16.dp)
                                                 start.linkTo(this.parent.start, margin = 16.dp)
                                             },
-                                            fontSize = TextUnit.Companion.Sp(14),
+                                            fontSize = TextUnit.Companion.Sp(16),
                                             color = MaterialTheme.colors.onSurface
                                         )
 
@@ -234,7 +231,7 @@ private fun DashboardContent(
                                                 top.linkTo(text1.bottom, margin = 4.dp)
                                                 bottom.linkTo(this.parent.bottom, margin = 16.dp)
                                             },
-                                            fontSize = TextUnit.Companion.Sp(12),
+                                            fontSize = TextUnit.Companion.Sp(14),
                                             color = MaterialTheme.colors.onSurface
                                         )
 
@@ -245,13 +242,19 @@ private fun DashboardContent(
                                                     end.linkTo(this.parent.end, margin = 16.dp)
                                                 }) {
                                             CircularProgressIndicator(
+                                                progress = 1f,
+                                                modifier = Modifier.gravity(align = Alignment.Center)
+                                                    .drawOpacity(0.4f)
+                                            )
+                                            CircularProgressIndicator(
                                                 progress = 0.5f,
                                                 modifier = Modifier.gravity(align = Alignment.Center)
                                             )
                                             Text(
-                                                text = "3",
-                                                modifier = Modifier.gravity(align = Alignment.Center),
-                                                fontSize = TextUnit.Companion.Sp(14)
+                                                text = "1d",
+                                                modifier = Modifier.gravity(align = Alignment.Center)
+                                                    .padding(top = 2.dp),
+                                                fontSize = TextUnit.Companion.Sp(12)
                                             )
                                         }
                                     }
