@@ -40,7 +40,8 @@ jobs:
         path: pact.log
     - name: Commit and push tracking plan changes
       run: |
-        mv -f pact.log logs/pact.log
+        rm logs/pact.log
+        mv pact.log logs/
         
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
