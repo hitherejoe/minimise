@@ -15,7 +15,7 @@ jobs:
       run: |
         echo >> pact.log
     - name: Upload tracking plan as artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
         name: file
         path: pact.log
