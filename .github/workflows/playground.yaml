@@ -18,7 +18,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: file
-        path: pact.log
   placeholder:
     runs-on: ubuntu-latest
 
@@ -37,10 +36,9 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: file
-        path: pact.log
     - name: Commit and push tracking plan changes
       run: |
-        ls
+        mv pact.log logs/
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
         token=${{ secrets.PTA_GITHUB }}
