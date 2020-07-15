@@ -23,6 +23,7 @@ import androidx.ui.material.icons.filled.Add
 import androidx.ui.material.ripple.RippleIndication
 import androidx.ui.res.colorResource
 import androidx.ui.res.imageResource
+import androidx.ui.res.vectorResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.TextUnit
@@ -100,6 +101,7 @@ private fun DashboardContent(
         val tabTitles = categories.map { it }
         val animatingFab = state { false }
         Scaffold(
+            backgroundColor = Color.White,
             floatingActionButton = {
                 val resources = ContextAmbient.current.resources
                 Box(
@@ -145,48 +147,68 @@ private fun DashboardContent(
             },
             bodyContent = {
                 Column {
-                    TopAppBar(title = {
-                        Text(
-                            text = "M",
-                            color = MaterialTheme.colors.primary,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
-                                .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
-                        )
-                    }, elevation = 0.dp, backgroundColor = Color.White)
-                    TabRow(
-                        items = tabTitles,
-                        backgroundColor = Color.White,
-                        contentColor = MaterialTheme.colors.primary,
-                        indicatorContainer = { tabPositions ->
-                            TabRow.IndicatorContainer(
-                                tabPositions,
-                                categories.indexOf(currentCategory)
-                            ) {
-                                TabRow.Indicator(
-                                    modifier = Modifier.padding(horizontal = 42.dp)
-                                        .height(3.dp)
+                    Box(
+                        backgroundColor = MaterialTheme.colors.primary,
+                        shape = RoundedCornerShape(0.dp, 0.dp, 18.dp, 18.dp)
+                    ) {
+                        Spacer(modifier = Modifier.preferredHeight(8.dp))
+                        TopAppBar(title = {
+                            Text(
+                                text = "Inventory",
+                                color = MaterialTheme.colors.onPrimary,
+                                textAlign = TextAlign.Start,
+                                fontSize = TextUnit.Companion.Sp(20),
+                                fontWeight = FontWeight.Normal,
+                                modifier = Modifier.fillMaxWidth()
+                                    .drawOpacity(animate(if (animatingFab.value) 0f else 1f))
+                                    .padding(top = 20.dp, bottom = 20.dp, start = 10.dp)
+                            )
+                        }, elevation = 0.dp)
+                        Spacer(modifier = Modifier.preferredHeight(16.dp))
+                        TabRow(
+                            items = tabTitles,
+                            scrollable = true,
+                            contentColor = Color.White,
+                            indicatorContainer = { tabPositions ->
+                                TabRow.IndicatorContainer(
+                                    tabPositions,
+                                    categories.indexOf(currentCategory)
+                                ) {
+                                    Box(
+                                        Modifier.fillMaxWidth().widthIn(maxWidth = 80.dp)
+                                            .preferredHeight(5.dp),
+                                        backgroundColor = Color.White,
+                                        shape = RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp)
+                                    )
+                                }
+                            },
+                            selectedIndex = categories.indexOf(currentCategory),
+                            divider = { },
+                            modifier = Modifier.wrapContentWidth().offset(x = (-36).dp)
+                        ) { index, currentTab ->
+                            Tab(
+                                selected = categories.indexOf(currentCategory) == index,
+                                onSelected = { updateSelectedCategory(categories[index]) }
+                            )
+                            {
+                                val textColor = if (categories.indexOf(currentCategory) == index) {
+                                    1f
+                                } else {
+                                    0.65f
+                                }
+                                Text(
+                                    text = currentTab.title,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Center,
+                                    color = Color.White,
+                                    modifier = Modifier.padding(
+                                        top = 16.dp,
+                                        bottom = 12.dp,
+                                        start = 16.dp,
+                                        end = 16.dp
+                                    ).drawOpacity(textColor)
                                 )
                             }
-                        },
-                        selectedIndex = categories.indexOf(currentCategory),
-                        divider = { }
-                    ) { index, currentTab ->
-                        Tab(
-                            selected = categories.indexOf(currentCategory) == index,
-                            onSelected = { updateSelectedCategory(categories[index]) }
-                        )
-                        {
-                            val textColor = if (categories.indexOf(currentCategory) == index) {
-                                1f
-                            } else {
-                                0.65f
-                            }
-                            Text(
-                                text = currentTab.title,
-                                color = MaterialTheme.colors.primary,
-                                modifier = Modifier.padding(16.dp).drawOpacity(textColor)
-                            )
                         }
                     }
                     Box(
@@ -203,7 +225,11 @@ private fun DashboardContent(
                             LazyColumnItems(
                                 items = pendingBelongings
                             ) { item ->
-                                pendingItem(item)
+                                if ((currentCategory == Category.PendingBelongings)) {
+                                    pendingItem(item)
+                                } else if ((currentCategory == Category.Belongings)) {
+                                    ownedItem(item)
+                                }
                             }
                         }
                     }
@@ -213,13 +239,13 @@ private fun DashboardContent(
 }
 
 @Composable
-internal fun pendingItem(item: Belonging) {
+internal fun ownedItem(item: Belonging) {
     Box(
         backgroundColor = MaterialTheme.colors.surface,
-        shape = RoundedCornerShape(3.dp),
+        shape = RoundedCornerShape(16.dp),
         modifier = Modifier.wrapContentHeight().fillMaxWidth()
             .padding(16.dp)
-            .drawShadow(2.dp, RoundedCornerShape(3.dp))
+            .drawShadow(2.dp, RoundedCornerShape(16.dp))
             .clickable(onClick = {})
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
@@ -229,20 +255,59 @@ internal fun pendingItem(item: Belonging) {
                 text = item.name,
                 modifier = Modifier.constrainAs(text1) {
                     top.linkTo(this.parent.top, margin = 16.dp)
-                    start.linkTo(this.parent.start, margin = 16.dp)
+                    start.linkTo(this.parent.start, margin = 20.dp)
                 },
-                fontSize = TextUnit.Companion.Sp(16),
+                fontWeight = FontWeight.W600,
+                fontSize = TextUnit.Companion.Sp(18),
                 color = MaterialTheme.colors.onSurface
             )
 
             Text(
                 text = item.store,
                 modifier = Modifier.constrainAs(text2) {
-                    start.linkTo(this.parent.start, margin = 16.dp)
+                    start.linkTo(text1.start)
                     top.linkTo(text1.bottom, margin = 4.dp)
                     bottom.linkTo(this.parent.bottom, margin = 16.dp)
                 },
-                fontSize = TextUnit.Companion.Sp(14),
+                fontSize = TextUnit.Companion.Sp(12),
+                color = MaterialTheme.colors.onSurface
+            )
+        }
+    }
+}
+
+@Composable
+internal fun pendingItem(item: Belonging) {
+    Box(
+        backgroundColor = MaterialTheme.colors.surface,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.wrapContentHeight().fillMaxWidth()
+            .padding(16.dp)
+            .drawShadow(2.dp, RoundedCornerShape(16.dp))
+            .clickable(onClick = {})
+    ) {
+        ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+            val (text1, text2, text3) = createRefs()
+
+            Text(
+                text = item.name,
+                modifier = Modifier.constrainAs(text1) {
+                    top.linkTo(this.parent.top, margin = 16.dp)
+                    start.linkTo(this.parent.start, margin = 20.dp)
+                },
+                fontWeight = FontWeight.W600,
+                fontSize = TextUnit.Companion.Sp(18),
+                color = MaterialTheme.colors.onSurface
+            )
+
+            Text(
+                text = item.store,
+                modifier = Modifier.constrainAs(text2) {
+                    start.linkTo(text1.start)
+                    top.linkTo(text1.bottom, margin = 4.dp)
+                    bottom.linkTo(this.parent.bottom, margin = 16.dp)
+                },
+                fontSize = TextUnit.Companion.Sp(12),
                 color = MaterialTheme.colors.onSurface
             )
 
@@ -253,19 +318,23 @@ internal fun pendingItem(item: Belonging) {
                         end.linkTo(this.parent.end, margin = 16.dp)
                     }) {
                 CircularProgressIndicator(
+                    color = MaterialTheme.colors.secondary,
                     progress = 1f,
                     modifier = Modifier.gravity(align = Alignment.Center)
-                        .drawOpacity(0.4f)
+                        .drawOpacity(0.4f).size(55.dp)
                 )
                 CircularProgressIndicator(
+                    color = MaterialTheme.colors.secondary,
                     progress = 0.5f,
-                    modifier = Modifier.gravity(align = Alignment.Center)
+                    modifier = Modifier.gravity(align = Alignment.Center).size(55.dp)
                 )
                 Text(
                     text = "1d",
                     modifier = Modifier.gravity(align = Alignment.Center)
                         .padding(top = 2.dp),
-                    fontSize = TextUnit.Companion.Sp(12)
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.primary,
+                    fontSize = TextUnit.Companion.Sp(14)
                 )
             }
         }

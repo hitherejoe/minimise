@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#B35736</color>
+    <color name="primaryColor">#3B577D</color>
     <color name="primaryLightColor">#ae52d4</color>
-    <color name="primaryDarkColor">#A4482D</color>
-    <color name="secondaryColor">#008585</color>
-    <color name="secondaryLightColor">#d7ffd9</color>
+    <color name="primaryDarkColor">#344E6F</color>
+    <color name="secondaryColor">#C05D73</color>
+    <color name="secondaryLightColor">#e56b6f</color>
     <color name="secondaryDarkColor">#75a478</color>
-    <color name="text_primary">#000000</color>
+    <color name="text_primary">#3D3D3D</color>
     <color name="text_secondary">#757575</color>
     <color name="white">#FFFFFF</color>
 
@@ -29,7 +29,7 @@
     <color name="color_on_primary_inverse">@color/white</color>
     <color name="color_on_secondary">@color/white</color>
     <color name="color_on_background">@color/primaryDarkColor</color>
-    <color name="color_on_surface">#757575</color>
+    <color name="color_on_surface">@color/text_primary</color>
     <color name="color_on_error">@color/white</color>
 
 </resources>
