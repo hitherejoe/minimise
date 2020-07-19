@@ -34,14 +34,27 @@ import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.animation.transitionDefinition
 import androidx.compose.Composable
+import androidx.compose.frames.modelListOf
 import androidx.compose.state
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.animation.ColorPropKey
 import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
+import androidx.ui.core.Alignment.Companion.CenterVertically
+import androidx.ui.core.Alignment.Companion.Top
+import androidx.ui.core.focus.FocusModifier
+import androidx.ui.core.focus.FocusState
+import androidx.ui.core.focus.focusState
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.geometry.Offset
 import androidx.ui.graphics.imageFromResource
+import androidx.ui.input.ImeAction
+import androidx.ui.layout.RowScope.gravity
+import androidx.ui.text.font.FontWeight
+import androidx.ui.text.style.TextOverflow
+import java.util.*
+import kotlin.concurrent.schedule
 
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
@@ -59,6 +72,7 @@ fun ViewGroup.composeDashboardContent(
     )
 }
 
+@OptIn(ExperimentalLayout::class)
 @Composable
 private fun ComposeInventoryContent(
     uiState: LiveData<CreationState>,
@@ -122,11 +136,12 @@ private fun isValid(
 ): Boolean {
     return when (selectedStep) {
         CreationStep.NAME -> creationState.name.isNotEmpty()
-        CreationStep.STORE -> creationState.store.isNotEmpty()
+        CreationStep.CATEGORY -> creationState.store.isNotEmpty()
         else -> true
     }
 }
 
+@ExperimentalLayout
 @Composable
 internal fun CreationContent(
     isLoading: Boolean,
@@ -211,7 +226,7 @@ internal fun CreationContent(
                                             modifier = Modifier.wrapContentHeight()
                                         )
                                     }
-                                    CreationStep.STORE -> {
+                                    CreationStep.CATEGORY -> {
                                         storeStepComposable(
                                             creationState,
                                             onStoreChanged = onStoreChanged,
@@ -223,6 +238,17 @@ internal fun CreationContent(
                                             creationState,
                                             onFrequencyChanged = onFrequencyChanged
                                         )
+                                    }
+                                    CreationStep.POSITIVE -> {
+                                        positiveStepComposable(
+                                            creationState
+                                        )
+                                    }
+                                    CreationStep.NEGATIVE -> {
+                                        negativeStepComposable(creationState = creationState)
+                                    }
+                                    CreationStep.FINISHED -> {
+                                        finishedComposable()
                                     }
                                 }
                             }
@@ -255,41 +281,218 @@ private fun nameStepComposable(
     modifier: Modifier,
     onNameChanged: (name: String) -> Unit
 ) {
-    HintEditText(
-        stringResource(id = R.string.hint_product_name),
-        modifier = modifier,
-        text = creationState.name,
-        textStyle = currentTextStyle().merge(
-            TextStyle(
-                textAlign = TextAlign.Center,
-                fontSize = TextUnit.Companion.Sp(26),
-                color = Color.White
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.gravity(align = Top)) {
+            Spacer(modifier = Modifier.height(48.dp))
+            Text(
+                text = stringResource(id = R.string.hint_product_name),
+                style = TextStyle(
+                    textAlign = TextAlign.Center,
+                    fontSize = TextUnit.Companion.Sp(26),
+                    color = Color.White
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
-        )
-    ) {
-        onNameChanged(it.text)
+            Spacer(modifier = Modifier.height(48.dp))
+            Box(
+                shape = RoundedCornerShape(16.dp),
+                backgroundColor = MaterialTheme.colors.secondary,
+                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 80.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+                    val state = state { androidx.ui.input.TextFieldValue(creationState.name) }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = state.value,
+                        modifier = Modifier.padding(16.dp),
+                        onValueChange = { value ->
+                            onNameChanged(value.text)
+                        },
+                        cursorColor = Color.White,
+                        textColor = Color.White
+                    )
+                    Divider(
+                        modifier = Modifier.fillMaxWidth().height(2.dp)
+                            .padding(start = 8.dp, end = 8.dp),
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+        }
     }
 }
 
+@ExperimentalLayout
 @Composable
 private fun storeStepComposable(
     creationState: CreationState,
     modifier: Modifier,
     onStoreChanged: (name: String) -> Unit
 ) {
-    HintEditText(
-        stringResource(id = R.string.hint_store_name),
-        modifier = modifier,
-        text = creationState.store,
-        textStyle = currentTextStyle().merge(
-            TextStyle(
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.gravity(align = Top)) {
+            Spacer(modifier = Modifier.height(48.dp))
+            Text(
+                text = "What categories does this item belong to?",
                 textAlign = TextAlign.Center,
                 fontSize = TextUnit.Companion.Sp(26),
+                modifier = Modifier.fillMaxWidth(),
                 color = Color.White
             )
-        )
+            Spacer(modifier = Modifier.height(48.dp))
+            val amenityList = listOf(
+                "Art",
+                "Automotive",
+                "Beauty",
+                "Books",
+                "Clothing",
+                "Electronics",
+                "Gaming",
+                "Tools",
+                "Hobbies"
+            )
+            val selectedItems by state { modelListOf<Int>() }
+            FlowRow(
+                mainAxisAlignment = MainAxisAlignment.Center,
+                crossAxisSpacing = 16.dp,
+                mainAxisSpacing = 16.dp,
+                mainAxisSize = SizeMode.Expand
+            ) {
+                amenityList.forEachIndexed { index, amenity ->
+                    Box(
+                        Modifier.clickable(onClick = {
+                            if (selectedItems.contains(index)) {
+                                selectedItems.remove(index)
+                            } else {
+                                selectedItems.add(index)
+                            }
+                        }).drawOpacity(if (selectedItems.contains(index)) 1f else 0.7f),
+                        children = {
+                            Text(
+                                text = amenity,
+                                overflow = TextOverflow.Ellipsis,
+                                color = Color.White,
+                                modifier = Modifier.padding(12.dp)
+                            )
+                        },
+                        shape = RoundedCornerShape(16.dp),
+                        backgroundColor = MaterialTheme.colors.secondary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun positiveStepComposable(
+    creationState: CreationState
+) {
+    val states = state { androidx.ui.input.TextFieldValue() }
+    val focusModifiers = listOf(FocusModifier(), FocusModifier(), FocusModifier())
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(48.dp))
+        Column(modifier = Modifier.gravity(align = Top)) {
+            Text(
+                text = "Can you list some reasons why you need this item?",
+                textAlign = TextAlign.Center,
+                fontSize = TextUnit.Companion.Sp(26),
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+
+            labelTextField(1, focusModifiers[0], focusModifiers[1])
+            Spacer(modifier = Modifier.height(36.dp))
+            labelTextField(2, focusModifiers[1], focusModifiers[2])
+            Spacer(modifier = Modifier.height(36.dp))
+            labelTextField(3, focusModifiers[2])
+        }
+    }
+}
+
+@Composable
+private fun negativeStepComposable(
+    creationState: CreationState
+) {
+    val states = state { androidx.ui.input.TextFieldValue() }
+    val focusModifiers = listOf(FocusModifier(), FocusModifier(), FocusModifier())
+
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(48.dp))
+        Column(modifier = Modifier.gravity(align = Top)) {
+            Text(
+                text = "How about why you might not need this item?",
+                textAlign = TextAlign.Center,
+                fontSize = TextUnit.Companion.Sp(26),
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+
+            labelTextField(1, focusModifiers[0], focusModifiers[1])
+            Spacer(modifier = Modifier.height(36.dp))
+            labelTextField(2, focusModifiers[1], focusModifiers[2])
+            Spacer(modifier = Modifier.height(36.dp))
+            labelTextField(3, focusModifiers[2])
+        }
+    }
+}
+
+@Composable
+private fun finishedComposable(
+) {
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(48.dp))
+        Column(modifier = Modifier.gravity(align = Top)) {
+            Text(
+                text = "All done!",
+                textAlign = TextAlign.Center,
+                fontSize = TextUnit.Companion.Sp(26),
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+
+            TextButton(onClick = {}) {
+                Text(text = "Close", color = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun labelTextField(
+    position: Int,
+    focusModifiers: FocusModifier,
+    nextModifier: FocusModifier? = null
+) {
+    val states = state { androidx.ui.input.TextFieldValue() }
+    val hasFocus = focusModifiers.focusState == FocusState.Focused
+    Box(
+        shape = RoundedCornerShape(16.dp),
+        backgroundColor = MaterialTheme.colors.secondary,
+        modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 80.dp)
+            .drawOpacity(if (hasFocus) 1f else 0.6f)
     ) {
-        onStoreChanged(it.text)
+        Row(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+            Text(text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
+            fontSize = TextUnit.Companion.Sp(16))
+            Spacer(modifier = Modifier.width(16.dp))
+            TextField(modifier = focusModifiers, value = states.value, onValueChange = {
+                states.value = it
+            }, cursorColor = Color.White, textColor = Color.White,
+            imeAction = if (position < 3) ImeAction.Next else ImeAction.Done,
+            onImeActionPerformed = {
+                if (position < 3) {
+                    focusModifiers.freeFocus()
+                    nextModifier?.requestFocus()
+                } else {
+                    // go to next
+                }
+            })
+        }
     }
 }
 
@@ -298,38 +501,41 @@ private fun frequencyStepComposable(
     creationState: CreationState,
     onFrequencyChanged: (frequency: Float) -> Unit
 ) {
-    Column(horizontalGravity = CenterHorizontally) {
-        Text(
-            text = stringResource(id = R.string.hint_frequency),
-            style = currentTextStyle().merge(
-                TextStyle(
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit.Companion.Sp(26),
-                    color = Color.White
+    VerticalScroller(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.height(48.dp))
+        Column(modifier = Modifier.gravity(align = Top), horizontalGravity = CenterHorizontally) {
+            Text(
+                text = stringResource(id = R.string.hint_frequency),
+                style = currentTextStyle().merge(
+                    TextStyle(
+                        textAlign = TextAlign.Center,
+                        fontSize = TextUnit.Companion.Sp(26),
+                        color = Color.White
+                    )
+                ),
+                modifier = Modifier.padding(16.dp).fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+            TestTag(tag = "FrequencySlider") {
+                Slider(
+                    value = creationState.frequencyCount,
+                    onValueChange = {
+                        onFrequencyChanged(it)
+                    },
+                    color = Color.White,
+                    valueRange = 0f..4f,
+                    steps = 3,
+                    modifier = Modifier.fillMaxWidth().padding(16.dp)
                 )
-            ),
-            modifier = Modifier.padding(16.dp).fillMaxWidth()
-        )
+            }
 
-        TestTag(tag = "FrequencySlider") {
-            Slider(
-                value = creationState.frequencyCount,
-                onValueChange = {
-                    onFrequencyChanged(it)
-                },
-                color = Color.White,
-                valueRange = 0f..4f,
-                steps = 3,
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
+            Text(
+                text = stringArrayResource(id = R.array.frequency_options)[creationState.frequencyCount.toInt()],
+                style = currentTextStyle().merge(TextStyle(color = Color.White)),
+                modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
+                    .padding(16.dp)
             )
         }
-
-        Text(
-            text = stringArrayResource(id = R.array.frequency_options)[creationState.frequencyCount.toInt()],
-            style = currentTextStyle().merge(TextStyle(color = Color.White)),
-            modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
-                .padding(16.dp)
-        )
     }
 }
 
