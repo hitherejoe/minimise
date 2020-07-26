@@ -14,6 +14,15 @@ Minimise is currently under heavy development and is not open to outside contrib
 
 [Shared Multiplatform code](https://github.com/hitherejoe/minimise/tree/master/shared)
 
+
+## Android App
+
+
+### Creation 
+
+![Creation flow](art/screenshots.png)
+
+
 ## Supporting blog posts
 
 [Building an App with Kotlin Multiplatform: Structuring our app
