@@ -39,7 +39,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.Coroutines.coreCommon)
+                //implementation(Deps.Coroutines.coreCommon)
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Apollo.runtime)
                 implementation(project(":shared:SharedCommon"))
