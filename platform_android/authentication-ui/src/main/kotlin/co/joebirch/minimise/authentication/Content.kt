@@ -15,6 +15,7 @@ import androidx.ui.input.KeyboardType
 import androidx.ui.input.TextFieldValue
 import androidx.ui.input.PasswordVisualTransformation
 import androidx.ui.layout.*
+import androidx.ui.layout.ColumnScope.weight
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
 import androidx.ui.res.stringResource
@@ -94,63 +95,65 @@ private fun FormContent(
                 CircularProgressIndicator(modifier = Modifier.gravity(Alignment.Center))
             } else {
                 ScrollableColumn(
-                    modifier = Modifier.padding(16.dp).fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    Spacer(modifier = Modifier.preferredHeight(20.dp))
-                    Text(
-                        modifier = Modifier.preferredWidth(240.dp)
-                            .gravity(Alignment.CenterHorizontally),
-                        text = if (authenticationMode == AuthenticateMode.SignUp) {
-                            "Sign up for a Minimise account"
-                        } else "Sign in to your Minimise account",
-                        textAlign = TextAlign.Center,
-                        fontFamily = FontFamily.Monospace,
-                        style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                    )
-                    Spacer(modifier = Modifier.preferredHeight(36.dp))
-                    Column(modifier = Modifier.padding(8.dp)) {
-                        FilledTextField(
-                            value = emailState.value,
-                            onValueChange = {
-                                emailState.value = it
-                                emailChanged(it.text)
-                            },
-                            label = {
-                                Text(text = "Email Address", fontSize = 12.sp)
-                            },
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next,
-                            modifier = Modifier.padding(16.dp).fillMaxWidth()
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Spacer(modifier = Modifier.preferredHeight(20.dp))
+                        Text(
+                            modifier = Modifier.preferredWidth(240.dp)
+                                .gravity(Alignment.CenterHorizontally),
+                            text = if (authenticationMode == AuthenticateMode.SignUp) {
+                                "Sign up for a Minimise account"
+                            } else "Sign in to your Minimise account",
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily.Monospace,
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                         )
-                        FilledTextField(
-                            value = passwordState.value,
-                            onValueChange = {
-                                passwordState.value = it
-                                passwordChanged(it.text)
-                            },
-                            label = {
-                                Text(text = "Password", fontSize = 12.sp)
-                            },
-                            visualTransformation = PasswordVisualTransformation(),
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done,
-                            modifier = Modifier.padding(16.dp).fillMaxWidth()
-                        )
-                        if (authenticationMode == AuthenticateMode.SignIn) {
-                            TextButton(onClick = {
-                                forgotPasswordClicked()
-                            }) {
-                                ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                                    Text(
-                                        text = stringResource(R.string.forgotten_your_password),
-                                        modifier = Modifier
-                                            .padding(
-                                                top = 8.dp,
-                                                bottom = 8.dp,
-                                                start = 12.dp,
-                                                end = 12.dp
-                                            )
-                                    )
+                        Spacer(modifier = Modifier.preferredHeight(36.dp))
+                        Column(modifier = Modifier.padding(8.dp)) {
+                            FilledTextField(
+                                value = emailState.value,
+                                onValueChange = {
+                                    emailState.value = it
+                                    emailChanged(it.text)
+                                },
+                                label = {
+                                    Text(text = "Email Address", fontSize = 12.sp)
+                                },
+                                keyboardType = KeyboardType.Email,
+                                imeAction = ImeAction.Next,
+                                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                            )
+                            FilledTextField(
+                                value = passwordState.value,
+                                onValueChange = {
+                                    passwordState.value = it
+                                    passwordChanged(it.text)
+                                },
+                                label = {
+                                    Text(text = "Password", fontSize = 12.sp)
+                                },
+                                visualTransformation = PasswordVisualTransformation(),
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Done,
+                                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                            )
+                            if (authenticationMode == AuthenticateMode.SignIn) {
+                                TextButton(onClick = {
+                                    forgotPasswordClicked()
+                                }) {
+                                    ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
+                                        Text(
+                                            text = stringResource(R.string.forgotten_your_password),
+                                            modifier = Modifier
+                                                .padding(
+                                                    top = 8.dp,
+                                                    bottom = 8.dp,
+                                                    start = 12.dp,
+                                                    end = 12.dp
+                                                )
+                                        )
+                                    }
                                 }
                             }
                         }
