@@ -19,53 +19,73 @@ class CreationViewModel @Inject constructor(
     fun observeAuthenticationState(): LiveData<CreationState> = uiState
 
     fun setProductName(name: String) {
-        uiState.postValue(
+        uiState.value =
             uiState.value!!.build {
                 this.name = name
             }
-        )
     }
 
-    fun setStoreName(name: String) {
-        uiState.postValue(
+    fun setStoreName(name: List<String>) {
+        uiState.value =
             uiState.value!!.build {
-                this.store = name
+                this.categories = name
             }
-        )
     }
 
     fun setFrequency(frequency: Float) {
-        uiState.postValue(
+        uiState.value =
             uiState.value!!.build {
                 this.frequency = frequency
             }
-        )
+    }
+
+    fun setRemindDays(daysToRemind: Int) {
+        uiState.value =
+            uiState.value!!.build {
+                this.daysToRemind = daysToRemind
+            }
+    }
+
+    fun setPositives(positives: List<String>) {
+        uiState.value =
+            uiState.value!!.build {
+                this.positiveReasons = positiveReasons
+            }
+    }
+
+    fun setNegatives(negatives: List<String>) {
+        uiState.value =
+            uiState.value!!.build {
+                this.negativeReasons = negativeReasons
+            }
+
     }
 
     fun createBelonging() {
         // send data to api
-        uiState.postValue(
+        uiState.value =
             uiState.value!!.build {
                 isLoading = true
             }
-        )
     }
 
     fun navigateToNextStep() {
-        uiState.postValue(
+        uiState.value =
             uiState.value!!.build {
                 creationStep = CreationStep.fromPosition(
-                    uiState.value?.currentStep?.position!! + 1)
+                    uiState.value?.currentStep?.position!! + 1
+                )
             }
-        )
     }
 
+    fun currentStep() = uiState.value?.currentStep?.position ?: 0
+
     fun navigateToPreviousStep() {
-        uiState.postValue(
+        uiState.value =
             uiState.value!!.build {
                 creationStep = CreationStep.fromPosition(
-                    uiState.value?.currentStep?.position!! - 1)
+                    uiState.value?.currentStep?.position!! - 1
+                )
             }
-        )
     }
 }

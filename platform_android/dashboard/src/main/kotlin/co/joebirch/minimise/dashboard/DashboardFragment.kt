@@ -42,7 +42,7 @@ class DashboardFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //dashboardViewModel.getBelongings("fj")
+        dashboardViewModel.getBelongings("fj")
     }
 
     fun navigateToCreation() {

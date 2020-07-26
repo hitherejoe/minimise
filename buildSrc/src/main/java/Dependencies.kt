@@ -23,7 +23,7 @@ object Deps {
     }
 
     object Kotlin {
-        const val version = "1.3.72"
+        const val version = "1.4-M3"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
@@ -104,18 +104,17 @@ object Deps {
     }
 
     object Compose {
-        const val version = "0.1.0-dev14"
+        const val version = "0.1.0-dev15"
 
-        const val android = "androidx.ui:ui-android:$version"
-        const val core = "androidx.ui:ui-core:$version"
-        const val foundation = "androidx.ui:ui-foundation:$version"
-        const val layout = "androidx.ui:ui-layout:$version"
-        const val livedata = "androidx.ui:ui-livedata:$version"
-        const val material = "androidx.ui:ui-material:$version"
-        const val icons = "androidx.ui:ui-material-icons-core:$version"
-        const val iconsExtended = "androidx.ui:ui-material-icons-extended:$version"
-        const val runtime = "androidx.compose:compose-runtime:$version"
-        const val text = "androidx.ui:ui-text:$version"
+        const val core = "androidx.compose.ui:ui:$version"
+        const val foundation = "androidx.compose.foundation:foundation:$version"
+        const val layout = "androidx.compose.foundation:foundation-layout:$version"
+        const val livedata = "androidx.compose.runtime:runtime-livedata:$version"
+        const val material = "androidx.compose.material:material:$version"
+        const val icons = "androidx.compose.material:material-icons-core:$version"
+        const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
+        const val runtime = "androidx.compose.runtime:runtime:$version"
+        const val text = "androidx.compose.foundation:foundation-text:$version"
         const val tooling = "androidx.ui:ui-tooling:$version"
         const val test = "androidx.ui:ui-test:$version"
     }

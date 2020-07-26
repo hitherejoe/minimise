@@ -17,7 +17,6 @@ import androidx.ui.input.PasswordVisualTransformation
 import androidx.ui.layout.*
 import androidx.ui.livedata.observeAsState
 import androidx.ui.material.*
-import androidx.ui.material.ripple.ripple
 import androidx.ui.res.stringResource
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontFamily
@@ -145,7 +144,7 @@ private fun FormContent(
                                     ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                                         Text(
                                             text = stringResource(R.string.forgotten_your_password),
-                                            modifier = Modifier.gravity(Alignment.CenterHorizontally)
+                                            modifier = Modifier
                                                 .padding(
                                                     top = 8.dp,
                                                     bottom = 8.dp,
@@ -205,17 +204,15 @@ private fun FormContent(
                         Text(text = errorMessage ?: "")
                     }, buttons = {
                         Stack(modifier = Modifier.fillMaxWidth()) {
-                            Clickable(
-                                onClick = { showingDialog.value = null },
-                                modifier = Modifier.padding(16.dp).ripple()
-                                    .gravity(Alignment.CenterEnd)
-                            ) {
-                                Text(
-                                    text = "OK", style = currentTextStyle().plus(
-                                        TextStyle(fontWeight = FontWeight.SemiBold)
-                                    )
-                                )
-                            }
+                            Text(
+                                text = "OK", style = currentTextStyle().plus(
+                                    TextStyle(fontWeight = FontWeight.SemiBold)
+                                ),
+                                modifier = Modifier.padding(16.dp).gravity(Alignment.CenterEnd)
+                                    .clickable(onClick = {
+                                        showingDialog.value = null
+                                    })
+                            )
                         }
                     })
                 }

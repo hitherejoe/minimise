@@ -19,6 +19,7 @@ class DashboardViewModel @Inject constructor(
     val uiState: LiveData<DashboardState> = _uiState
 
     fun getBelongings(userId: String) {
+        /*
         Firebase.firestore.collection("items")
             .whereEqualTo("userId", userId)
             .get()
@@ -36,6 +37,16 @@ class DashboardViewModel @Inject constructor(
             .addOnFailureListener { exception ->
                 val e = ""
             }
+         */
+        _uiState.postValue(
+            _uiState.value!!.build {
+                this.pendingBelongings = listOf(Belonging(
+                    "id",
+                    "Name",
+                    "Store"
+                ))
+            }
+        )
     }
 
     override fun setSelectedCategory(category: Category) {

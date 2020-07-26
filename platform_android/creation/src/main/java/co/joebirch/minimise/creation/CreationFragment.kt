@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import co.joebirch.creation_ui.composeDashboardContent
 import co.joebirch.minimise.android.core.di.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +20,19 @@ class CreationFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = dashboardViewModel
+        
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (dashboardViewModel.currentStep() > 0) {
+                        dashboardViewModel.navigateToPreviousStep()
+                    } else {
+                        NavHostFragment.findNavController(
+                            this@CreationFragment).navigateUp()
+                    }
+                }
+            })
+
     }
 
     override fun onCreateView(
@@ -36,6 +51,9 @@ class CreationFragment : BaseFragment() {
                 dashboardViewModel::setProductName,
                 dashboardViewModel::setStoreName,
                 dashboardViewModel::setFrequency,
+                dashboardViewModel::setRemindDays,
+                dashboardViewModel::setPositives,
+                dashboardViewModel::setNegatives,
                 dashboardViewModel::navigateToNextStep,
                 dashboardViewModel::navigateToPreviousStep,
                 dashboardViewModel::createBelonging
