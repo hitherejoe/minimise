@@ -400,7 +400,6 @@ private fun storeStepComposable(
 private fun positiveStepComposable(
     creationState: CreationState
 ) {
-    val states = state { androidx.ui.input.TextFieldValue() }
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
     Spacer(modifier = Modifier.height(48.dp))
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
@@ -503,10 +502,6 @@ fun labelTextField(
         backgroundColor = MaterialTheme.colors.secondary,
         modifier = Modifier.fillMaxWidth()
             .focusRequester(requester)
-            .focusObserver {
-                hasFocus.value = it.isFocused
-            }
-            .focus()
             .drawOpacity(if (hasFocus.value) 1f else 0.6f)
     ) {
         Row(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
@@ -522,16 +517,17 @@ fun labelTextField(
                 label = {
 
                 },
+                onFocusChanged = { focus ->
+                    hasFocus.value = focus
+                },
                 onImeActionPerformed = { _, _ ->
                     nextModifier?.requestFocus()
                 },
                 imeAction = if (position < 3) ImeAction.Next else ImeAction.Done,
                 activeColor = Color.White,
                 backgroundColor = Color.Transparent,
-                modifier = Modifier.padding(16.dp).fillMaxWidth().focus()
-                    .focusRequester(requester).focusObserver {
-                        hasFocus.value = it.isFocused
-                    }
+                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                    .focusRequester(requester)
             )
         }
     }
