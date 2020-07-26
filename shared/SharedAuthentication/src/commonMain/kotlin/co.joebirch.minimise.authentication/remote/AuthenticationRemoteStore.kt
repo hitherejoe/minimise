@@ -6,7 +6,7 @@ import co.joebirch.minimise.authentication.mapper.toAuthenticationModel
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloExperimental
-import com.apollographql.apollo.network.ApolloHttpNetworkTransport
+import com.apollographql.apollo.network.http.ApolloHttpNetworkTransport
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.single
 

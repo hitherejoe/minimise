@@ -9,14 +9,14 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha01"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha05"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4-M3"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
 
     object Apollo {
-        const val version = "2.2.1"
+        const val version = "2.2.3"
         const val plugin = "com.apollographql.apollo:apollo-gradle-plugin:$version"
         const val runtime = "com.apollographql.apollo:apollo-runtime-kotlin:$version"
         const val api = "com.apollographql.apollo:apollo-api:$version"
@@ -29,14 +29,16 @@ object Deps {
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
+        private const val serializationVersion = "0.20.0-1.4-M3"
+
         const val serializationRuntimeNative =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.20.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion"
 
         const val serializationRuntime =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion"
 
         const val kotlinSerialization =
-            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.20.0"
+            "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serializationVersion"
     }
 
     object Lifecycle {
@@ -80,7 +82,7 @@ object Deps {
     }
 
     object Fragment {
-        const val version = "1.2.2"
+        private const val version = "1.2.2"
 
         const val base = "androidx.fragment:fragment:1.3.0-alpha02"
         const val ktx = "androidx.fragment:fragment-ktx:$version"
@@ -88,7 +90,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.5"
+        private const val version = "1.3.7-1.4-M3"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -104,7 +106,7 @@ object Deps {
     }
 
     object Compose {
-        const val version = "0.1.0-dev15"
+        private const val version = "0.1.0-dev15"
 
         const val core = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -120,7 +122,7 @@ object Deps {
     }
 
     object Ktor {
-        const val version = "1.3.2"
+        private const val version = "1.3.2-1.4-M3"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"
