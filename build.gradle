@@ -2,7 +2,7 @@ import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 buildscript {
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = '1.4-M3'
     ext.buildConfig = [
         'compileSdk': 29,
         'minSdk'    : 21,
@@ -13,6 +13,9 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap/"
+        }
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -37,10 +40,21 @@ buildscript {
 }
 
 allprojects {
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+        }
+    }
+
     repositories {
         google()
         mavenCentral()
         jcenter()
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap/"
+        }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/kotlin/kotlinx.html' }
         maven { url 'https://dl.bintray.com/kotlin/ktor' }

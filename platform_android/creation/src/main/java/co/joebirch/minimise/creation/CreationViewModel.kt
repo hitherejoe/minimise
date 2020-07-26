@@ -26,10 +26,10 @@ class CreationViewModel @Inject constructor(
         )
     }
 
-    fun setStoreName(name: String) {
+    fun setStoreName(name: List<String>) {
         uiState.postValue(
             uiState.value!!.build {
-                this.store = name
+                this.categories = name
             }
         )
     }
@@ -38,6 +38,30 @@ class CreationViewModel @Inject constructor(
         uiState.postValue(
             uiState.value!!.build {
                 this.frequency = frequency
+            }
+        )
+    }
+
+    fun setRemindDays(daysToRemind: Int) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.daysToRemind = daysToRemind
+            }
+        )
+    }
+
+    fun setPositives(positives: List<String>) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.positiveReasons = positiveReasons
+            }
+        )
+    }
+
+    fun setNegatives(negatives: List<String>) {
+        uiState.postValue(
+            uiState.value!!.build {
+                this.negativeReasons = negativeReasons
             }
         )
     }

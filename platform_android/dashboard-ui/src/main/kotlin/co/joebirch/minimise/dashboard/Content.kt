@@ -2,6 +2,7 @@ package co.joebirch.minimise.dashboard
 
 import android.view.ViewGroup
 import androidx.animation.FloatPropKey
+import androidx.animation.keyframes
 import androidx.animation.transitionDefinition
 import androidx.compose.Composable
 import androidx.compose.state
@@ -80,8 +81,8 @@ private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transit
         this[colorState] = colorTwo
     }
     transition(fromState = FabState.Idle, toState = FabState.Exploded) {
-        sizeState using keyframes<Float> {
-            duration = 700
+        sizeState using keyframes {
+            durationMillis = 700
             80f at 0
             35f at 120
             4000f at 700
