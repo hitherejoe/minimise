@@ -29,3 +29,8 @@ Minimise is currently under heavy development and is not open to outside contrib
 ](https://joebirch.co/2020/01/16/building-an-app-with-kotlin-multiplatform-structuring-our-app/)
 
 [Building our Authentication Module](https://joebirch.co/2020/03/19/building-an-app-with-kotlin-multiplatform-building-our-authentication-module/)
+
+
+## Contributions
+
+The project is current changing a lot, so currently I'm not accepting external contributions :)
