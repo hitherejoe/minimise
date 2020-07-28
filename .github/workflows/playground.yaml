@@ -20,7 +20,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: file
-        path: hi/pact.log
+        path: pact.log
   placeholder:
     runs-on: ubuntu-latest
 
@@ -41,7 +41,6 @@ jobs:
         name: file
     - name: Commit and push tracking plan changes
       run: |
-        mv pact.log logs/
         git config --local user.email "hitherejoebirch@googlemail.com"
         git config --local user.name "hitherejoe"
         git add --all
