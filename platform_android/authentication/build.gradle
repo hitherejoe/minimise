@@ -15,6 +15,10 @@ androidExtensions {
 }
 
 android {
+    buildFeatures {
+        compose true
+    }
+
     compileSdkVersion Versions.compileSdk
 
     defaultConfig {
@@ -35,6 +39,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    composeOptions {
+        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
+        kotlinCompilerExtensionVersion "0.1.0-dev15"
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -42,11 +51,20 @@ android {
 
 dependencies {
     implementation project(":platform_android:core")
-    implementation project(":platform_android:authentication-ui")
     implementation project(":platform_android:navigation")
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedAuthentication')
     implementation project(':platform_android:common-ui')
+
+    implementation Deps.Compose.icons
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.livedata
+    implementation Deps.Compose.material
+    implementation Deps.Compose.tooling
+    implementation Deps.Compose.foundation
+    implementation Deps.Compose.text
+    implementation Deps.Compose.test
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
@@ -54,6 +72,7 @@ dependencies {
     implementation Deps.Google.Hilt.hilt
     implementation Deps.Google.Hilt.viewmodel
     kapt Deps.Google.Hilt.hiltCompiler
+    kapt Deps.Google.Hilt.compiler
 
     implementation Deps.Fragment.base
     implementation Deps.Fragment.ktx

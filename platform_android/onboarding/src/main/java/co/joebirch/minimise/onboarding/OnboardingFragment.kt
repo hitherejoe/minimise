@@ -9,18 +9,18 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OnboardingFragment : BaseFragment() {
 
-    private val timeToPostViewModel: OnboardingViewModel by viewModels()
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = timeToPostViewModel
+        viewModel = onboardingViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //binding.continueButton.setOnClickListener {
-          //  viewModel.navigate(OnboardingDirections.Authentication)
-       // }
+        //    viewModel.navigate(OnboardingDirections.Authentication)
+      //  }
     }
 
 }

@@ -1,8 +1,8 @@
 package co.joebirch.minimise.authentication
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.Preferences
 import co.joebirch.minimise.android.core.di.default
@@ -10,11 +10,11 @@ import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class AuthenticationViewModel @Inject constructor(
+class AuthenticationViewModel @ViewModelInject constructor(
     private val authenticate: Authenticate,
-    private val sharedPrefs: Preferences
+    private val sharedPrefs: Preferences,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), AuthenticateView {
 
     private var uiState =
@@ -72,7 +72,7 @@ class AuthenticationViewModel @Inject constructor(
             }
         )
         viewModelScope.launch {
-            authenticate.run(
+            authenticate?.run(
                 Authenticate.Params.forSignUp(
                     BuildConfig.FIREBASE_API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
@@ -91,7 +91,7 @@ class AuthenticationViewModel @Inject constructor(
             }
         )
         viewModelScope.launch {
-            authenticate.run(
+            authenticate?.run(
                 Authenticate.Params.forSignIn(
                     BuildConfig.FIREBASE_API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
@@ -104,7 +104,7 @@ class AuthenticationViewModel @Inject constructor(
 
     private fun handleResult(result: AuthenticationModel) {
         if (result.token != null) {
-            sharedPrefs.accessToken = result.token
+            sharedPrefs?.accessToken = result.token
             navigate(AuthenticationDirections.Dashboard)
         } else {
             uiState.postValue(
