@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Commit and push tracking plan changes
       run: |
-        echo >> pact.log
+        echo "some file content" > pact.log
     - name: Upload tracking plan as artifact
       uses: actions/upload-artifact@v2
       with:
