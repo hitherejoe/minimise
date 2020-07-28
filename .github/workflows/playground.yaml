@@ -33,6 +33,9 @@ jobs:
         persist-credentials: false
         repository: hitherejoe/pact_demo
         token: ${{ secrets.PTA_GITHUB }}
+    - name: Remove log file
+      run: |
+        rm pact.log
     - uses: actions/download-artifact@v2
       with:
         name: file
