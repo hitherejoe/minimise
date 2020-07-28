@@ -13,8 +13,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Commit and push tracking plan changes
       run: |
-        mkdir hi
-        cd hi
         echo >> pact.log
     - name: Upload tracking plan as artifact
       uses: actions/upload-artifact@v2
