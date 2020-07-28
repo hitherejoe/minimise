@@ -3,7 +3,7 @@ name: Playground
 on:
   push:
     branches:
-      - master
+      - main
       
 jobs:
   testOne:
