@@ -44,6 +44,16 @@ import androidx.ui.semantics.SemanticsProperties.TestTag
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextOverflow
 
+fun ViewGroup.composeDashboardContentTwo(
+    lifecycleOwner: LifecycleOwner
+): Any =
+    setContentWithLifecycle(lifecycleOwner) {
+        Box(
+            backgroundColor = MaterialTheme.colors.primary,
+            modifier = Modifier.fillMaxSize()
+        )
+}
+
 fun ViewGroup.composeDashboardContent(
     lifecycleOwner: LifecycleOwner,
     uiState: LiveData<CreationState>,

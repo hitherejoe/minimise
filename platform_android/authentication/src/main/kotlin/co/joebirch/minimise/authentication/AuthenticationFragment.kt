@@ -9,6 +9,7 @@ import co.joebirch.minimise.android.core.di.BaseFragment
 import co.joebirch.minimise.authentication.util.AuthenticationValidator
 import javax.inject.Inject
 import androidx.fragment.app.viewModels
+import co.joebirch.minimise.navigation.AuthenticationDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,10 +36,7 @@ class AuthenticationFragment : BaseFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-
-            /*
-            composeAuthenticationContent(
-                viewLifecycleOwner,
+            composeAuthenticationContentTwo(
                 authenticationViewModel.observeAuthenticationState(),
                 authenticationViewModel::toggleAuthenticationMode,
                 authenticationViewModel::authenticate,
@@ -46,12 +44,6 @@ class AuthenticationFragment : BaseFragment() {
                 authenticationViewModel::setEmailAddress,
                 authenticationViewModel::setPassword
             )
-
-             */
-
-            authenticationViewModel.setEmailAddress("")
-            authenticationViewModel.setPassword("")
-            authenticationViewModel.signIn()
         }
     }
 }

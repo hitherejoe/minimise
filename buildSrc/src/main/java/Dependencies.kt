@@ -56,8 +56,8 @@ object Deps {
         const val coreKtx = "androidx.core:core-ktx:1.2.0"
         const val appCompat = "androidx.appcompat:appcompat:1.1.0"
 
-        const val activity = "androidx.activity:activity:1.2.0-alpha02"
-        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha02"
+        const val activity = "androidx.activity:activity:1.2.0-alpha07"
+        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha07"
 
         const val junit = "androidx.test.ext:junit:1.1.1"
     }
@@ -82,9 +82,9 @@ object Deps {
     }
 
     object Fragment {
-        private const val version = "1.2.2"
+        private const val version = "1.3.0-alpha07"
 
-        const val base = "androidx.fragment:fragment:1.3.0-alpha02"
+        const val base = "androidx.fragment:fragment:1.3.0-alpha07"
         const val ktx = "androidx.fragment:fragment-ktx:$version"
         const val testing = "androidx.fragment:fragment-testing:$version"
     }
@@ -157,8 +157,8 @@ object Deps {
             private const val hiltVersion = "2.28-alpha"
             val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
             val hilt = "com.google.dagger:hilt-android:$hiltVersion"
-            val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
-            val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+            val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
+            val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha02"
             val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         }
     }

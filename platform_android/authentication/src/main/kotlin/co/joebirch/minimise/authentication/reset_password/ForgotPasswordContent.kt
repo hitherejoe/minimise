@@ -1,4 +1,4 @@
-package co.joebirch.minimise.authentication
+package co.joebirch.minimise.authentication.reset_password
 
 import android.view.ViewGroup
 import androidx.compose.Composable
@@ -24,8 +24,8 @@ import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
+import co.joebirch.minimise.authentication.R
 import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
-import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
 
