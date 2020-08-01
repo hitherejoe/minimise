@@ -20,40 +20,27 @@ jobs:
         git fetch origin
 
         while read line; do
-          echo $line
           tmp=${line#*/}
           module_name=${tmp%%/*}
-          echo "Module name:"$module_name
           if [[ ${MODULES} != *"${module_name}"* ]]; then
             MODULES="${MODULES} ${module_name}"
           fi
         done < <(git diff --name-only origin/$GITHUB_BASE_REF)
         changed_modules=$MODULES
-        echo "Changed modules:"$changed_modules
 
-        # Get a list of all available gradle tasks
         AVAILABLE_TASKS=$(./gradlew tasks --all)
-        git fetch origin
         dest="origin/"${{ github.base_ref }}
         branch="origin/"${{ github.head_ref }}
         build_commands=""
         for module in $changed_modules
         do
-          echo "Module:"$module
           if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ "platform_android:${module_name}" ]]; then 
-            echo "In if statement"
-            echo "platform_android:${module}:connectedCheck"
             build_commands="${build_commands} platform_android:${module}:connectedCheck"
-            echo "Commands="$build_commands
           fi
         done
-        echo "Build commands:"$build_commands
-        echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
         api-level: 29
         script: |
-          echo ${{ env.COMMANDS }}
-          
           ./gradlew ${{ env.COMMANDS }}
