@@ -33,7 +33,7 @@ jobs:
 
         # Get a list of all available gradle tasks
         AVAILABLE_TASKS=$(./gradlew tasks --all)
-
+        echo $AVAILABLE_TASKS
         git fetch origin
         dest="origin/"${{ github.base_ref }}
         branch="origin/"${{ github.head_ref }}
@@ -41,7 +41,7 @@ jobs:
         for module in $changed_modules
         do
           echo "Module:"$module
-          if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ ":platform_android${module_name}:connectedCheck" ]]; then 
+          if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ ":platform_android:${module_name}:connectedCheck" ]]; then 
             $build_commands="${build_commands} ${module}:platform_android:connectedCheck"
             echo "Commands="$build_commands
           fi
