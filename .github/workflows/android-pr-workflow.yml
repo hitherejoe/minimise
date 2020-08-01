@@ -21,7 +21,8 @@ jobs:
 
         while read line; do
           echo $line
-          module_name=${line%%/*}
+          tmp=${line#*/}
+          module_name=${tmp%%/*}
           echo $module_name
           if [[ ${MODULES} != *"${module_name}"* ]]; then
             MODULES="${MODULES} ${module_name}"
