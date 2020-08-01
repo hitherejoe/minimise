@@ -1,4 +1,4 @@
-package co.joebirch.creation_ui
+package co.joebirch.minimise.creation
 
 import android.view.ViewGroup
 import androidx.animation.FastOutLinearInEasing
@@ -40,7 +40,6 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.input.ImeAction
 import androidx.ui.layout.RowScope.gravity
 import androidx.ui.material.ripple.RippleIndication
-import androidx.ui.semantics.SemanticsProperties.TestTag
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextOverflow
 
@@ -193,7 +192,9 @@ internal fun CreationContent(
                                     .fillMaxHeight()
                                     .drawOpacity(state[contentAlphaState])
                             ) {
-                                stepCounter(selectedStep)
+                                stepCounter(
+                                    selectedStep
+                                )
                                 Box(modifier = Modifier.padding(16.dp)) {
                                     Spacer(modifier = Modifier.height(16.dp))
                                     when (selectedStep) {
@@ -227,10 +228,14 @@ internal fun CreationContent(
                                             )
                                         }
                                         CreationStep.NEGATIVE -> {
-                                            negativeStepComposable(creationState = creationState)
+                                            negativeStepComposable(
+                                                creationState = creationState
+                                            )
                                         }
                                         CreationStep.FINISHED -> {
-                                            finishedComposable(onFormCompleted)
+                                            finishedComposable(
+                                                onFormCompleted
+                                            )
                                         }
                                     }
                                 }
@@ -422,9 +427,17 @@ private fun positiveStepComposable(
         )
         Spacer(modifier = Modifier.height(48.dp))
 
-        labelTextField(1, focusModifiers[0], focusModifiers[1])
+        labelTextField(
+            1,
+            focusModifiers[0],
+            focusModifiers[1]
+        )
         Spacer(modifier = Modifier.height(36.dp))
-        labelTextField(2, focusModifiers[1], focusModifiers[2])
+        labelTextField(
+            2,
+            focusModifiers[1],
+            focusModifiers[2]
+        )
         Spacer(modifier = Modifier.height(36.dp))
         labelTextField(3, focusModifiers[2])
     }
@@ -449,9 +462,17 @@ private fun negativeStepComposable(
         )
         Spacer(modifier = Modifier.height(48.dp))
 
-        labelTextField(1, focusModifiers[0], focusModifiers[1])
+        labelTextField(
+            1,
+            focusModifiers[0],
+            focusModifiers[1]
+        )
         Spacer(modifier = Modifier.height(36.dp))
-        labelTextField(2, focusModifiers[1], focusModifiers[2])
+        labelTextField(
+            2,
+            focusModifiers[1],
+            focusModifiers[2]
+        )
         Spacer(modifier = Modifier.height(36.dp))
         labelTextField(3, focusModifiers[2])
     }

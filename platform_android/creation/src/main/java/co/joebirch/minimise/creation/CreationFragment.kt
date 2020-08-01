@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import co.joebirch.creation_ui.composeDashboardContent
 import co.joebirch.minimise.android.core.di.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
