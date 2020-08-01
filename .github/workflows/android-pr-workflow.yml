@@ -43,7 +43,7 @@ jobs:
           if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ "platform_android:${module_name}" ]]; then 
             echo "In if statement"
             echo "platform_android:${module}:connectedCheck"
-            $build_commands="${build_commands} platform_android:${module}:connectedCheck"
+            build_commands="${build_commands} platform_android:${module}:connectedCheck"
             echo "Commands="$build_commands
           fi
         done
