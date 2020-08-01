@@ -52,4 +52,5 @@ jobs:
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-        script: ${{ env.COMMANDS }}
+        script: |
+          echo ${{ env.COMMANDS }}
