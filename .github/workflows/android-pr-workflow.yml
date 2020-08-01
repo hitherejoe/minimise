@@ -47,6 +47,7 @@ jobs:
           fi
         done
         echo $build_commands
+        echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
