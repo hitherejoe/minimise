@@ -1,7 +1,6 @@
 package co.joebirch.minimise.shared_authentication
 
 import co.joebirch.minimise.authentication.AuthenticationDataRepository
-import co.joebirch.minimise.shared_authentication.mapper.MockAuthenticationResponseMapper
 import co.joebirch.minimise.shared_authentication.mapper.MockResetPasswordResponseMapper
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationModel
 import co.joebirch.minimise.shared_authentication.util.AuthenticationResponseFactory.makeAuthenticationResponse
@@ -14,22 +13,18 @@ class AuthenticationDataRepositoryTest {
 
     private val mockAuthenticationRemote =
         MockAuthenticationStore()
-    private val mockAuthenticationMapper = MockAuthenticationResponseMapper()
     private val mockPasswordResponseMapper = MockResetPasswordResponseMapper()
     private val authenticationRepository =
         AuthenticationDataRepository(
-            mockAuthenticationRemote, mockAuthenticationMapper, mockPasswordResponseMapper
+            mockAuthenticationRemote, mockPasswordResponseMapper
         )
 
     @Test
     fun `Sign up succeeds and returns data`() =
         runTest {
             val authenticationModel = makeAuthenticationModel()
-            val authenticationResponse = makeAuthenticationResponse(authenticationModel.token!!)
 
-            mockAuthenticationMapper.whenMapFromAuthenticationResponse =
-                { _ -> authenticationModel }
-            mockAuthenticationRemote.whenSignUp = { _, _ -> authenticationResponse }
+            mockAuthenticationRemote.whenSignUp = { _, _ -> authenticationModel }
 
             val result = authenticationRepository.signUp(randomString(), randomString(),
                 randomString())
@@ -40,11 +35,8 @@ class AuthenticationDataRepositoryTest {
     fun `Sign in succeeds and returns data`() =
         runTest {
             val authenticationModel = makeAuthenticationModel()
-            val authenticationResponse = makeAuthenticationResponse(authenticationModel.token!!)
 
-            mockAuthenticationMapper.whenMapFromAuthenticationResponse =
-                { _ -> authenticationModel }
-            mockAuthenticationRemote.whenSignIn = { _, _ -> authenticationResponse }
+            mockAuthenticationRemote.whenSignIn = { _, _ -> authenticationModel }
 
             val result = authenticationRepository.signIn(randomString(), randomString(),
                 randomString())

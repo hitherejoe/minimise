@@ -39,7 +39,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                //implementation(Deps.Coroutines.coreCommon)
+                implementation(Deps.Coroutines.core)
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Apollo.runtime)
                 implementation(project(":shared:SharedCommon"))
@@ -51,8 +51,8 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation(Deps.junit)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.8-1.4.0-rc")
             }
         }
 
@@ -60,8 +60,6 @@ kotlin {
             dependencies {
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Kotlin.stdLib)
-                implementation(Deps.Coroutines.android)
-                implementation(Deps.Coroutines.core)
             }
         }
 
@@ -69,11 +67,6 @@ kotlin {
             dependencies {
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Kotlin.stdLib)
-                implementation(Deps.Coroutines.native) {
-                    version {
-                        strictly("1.3.5-native-mt")
-                    }
-                }
             }
         }
     }

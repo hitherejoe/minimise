@@ -12,7 +12,7 @@ object AuthenticationResponseFactory {
         )
 
     fun makeAuthenticationResponse(token: String = randomString()) =
-        AuthenticationResponseModel(token, randomString(), randomInt())
+        AuthenticationModel(token, randomString(), randomInt())
 
     fun makeAuthenticationModelForError() =
         AuthenticationModel(
