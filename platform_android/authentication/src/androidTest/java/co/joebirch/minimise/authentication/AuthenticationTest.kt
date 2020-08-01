@@ -33,6 +33,7 @@ class AuthenticationTest {
     fun signInTitleIsNotDisplayedByDefault() {
         launchContent(AuthenticationState())
 
-        onNodeWithText("Sign in to your Minimise account").assertDoesNotExist()
+        onNodeWithText("Sign in to your Minimise account")
+            .assertDoesNotExist()
     }
 }
