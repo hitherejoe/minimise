@@ -54,3 +54,5 @@ jobs:
         api-level: 29
         script: |
           echo ${{ env.COMMANDS }}
+          
+          ./gradlew ${{ env.COMMANDS }}
