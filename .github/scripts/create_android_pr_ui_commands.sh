@@ -24,4 +24,4 @@ do
   fi
 done
 
-eval "./gradlew ${build_commands}"
+echo "./gradlew ${build_commands}"
