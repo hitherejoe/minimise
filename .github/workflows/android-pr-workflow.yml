@@ -20,12 +20,15 @@ jobs:
         git fetch origin
 
         while read line; do
+          echo $line
           module_name=${line%%/*}
+          echo $module_name
           if [[ ${MODULES} != *"${module_name}"* ]]; then
             MODULES="${MODULES} ${module_name}"
           fi
         done < <(git diff --name-only origin/$GITHUB_BASE_REF)
         changed_modules=$MODULES
+        echo $changed_modules
 
         # Get a list of all available gradle tasks
         AVAILABLE_TASKS=$(./gradlew tasks --all)
