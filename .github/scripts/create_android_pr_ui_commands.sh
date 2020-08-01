@@ -22,6 +22,4 @@ do
   fi
 done
 
-command="./gradlew ${build_commands}"
-
-echo $(command)
+echo "./gradlew "${build_commands}
