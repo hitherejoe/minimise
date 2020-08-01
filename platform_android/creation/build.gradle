@@ -16,6 +16,9 @@ androidExtensions {
 }
 
 android {
+    buildFeatures {
+        compose true
+    }
     compileSdkVersion Versions.compileSdk
 
     defaultConfig {
@@ -33,6 +36,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    composeOptions {
+        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
+        kotlinCompilerExtensionVersion "0.1.0-dev15"
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -45,10 +53,18 @@ dependencies {
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedCreation')
     implementation project(':platform_android:common-ui')
-    implementation project(':platform_android:creation-ui')
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
+
+    implementation Deps.Compose.icons
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.livedata
+    implementation Deps.Compose.material
+    implementation Deps.Compose.tooling
+    implementation Deps.Compose.foundation
+    implementation Deps.Compose.text
 
     implementation Deps.Google.Hilt.hilt
     implementation Deps.Google.Hilt.viewmodel
@@ -68,4 +84,5 @@ dependencies {
 
     androidTestImplementation Deps.AndroidX.junit
     androidTestImplementation Deps.Espresso.core
+    androidTestImplementation Deps.Compose.test
 }
