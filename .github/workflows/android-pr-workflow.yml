@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Create UI test commands
       run: |
-        $commands="$(../.github/scripts/create_android_pr_ui_commands.sh)"
+        $commands="$(./.github/scripts/create_android_pr_ui_commands.sh)"
         echo "::set-env name=COMMANDS::$commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
