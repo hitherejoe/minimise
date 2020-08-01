@@ -23,13 +23,13 @@ jobs:
           echo $line
           tmp=${line#*/}
           module_name=${tmp%%/*}
-          echo $module_name
+          echo "Module name:"$module_name
           if [[ ${MODULES} != *"${module_name}"* ]]; then
             MODULES="${MODULES} ${module_name}"
           fi
         done < <(git diff --name-only origin/$GITHUB_BASE_REF)
         changed_modules=$MODULES
-        echo $changed_modules
+        echo "Changed modules:"$changed_modules
 
         # Get a list of all available gradle tasks
         AVAILABLE_TASKS=$(./gradlew tasks --all)
@@ -40,13 +40,13 @@ jobs:
         build_commands=""
         for module in $changed_modules
         do
-          echo $module
+          echo "Module:"$module
           if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ ":platform_android${module_name}:connectedCheck" ]]; then 
             build_commands="${build_commands} ${module}:platform_android:connectedCheck"
-            echo "Commands=${build_commands}"
+            echo "Commands="$build_commands
           fi
         done
-        echo $build_commands
+        echo "Build commands:"$build_commands
         echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
