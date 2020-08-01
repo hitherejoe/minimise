@@ -18,7 +18,7 @@ build_commands=""
 for module in $changed_modules
 do
   if [[ $AVAILABLE_TASKS =~ ":platform_android"$module":connectedCheck" ]]; then
-    build_commands=${build_commands}" "${module}":platform_android:connectedCheck
+    build_commands=${build_commands}" "${module}":platform_android:connectedCheck"
   fi
 done
 
