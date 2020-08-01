@@ -23,13 +23,13 @@ object Deps {
     }
 
     object Kotlin {
-        const val version = "1.4-M3"
+        const val version = "1.4.0-rc"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
-        private const val serializationVersion = "0.20.0-1.4-M3"
+        private const val serializationVersion = "1.0-M1-1.4.0-rc"
 
         const val serializationRuntimeNative =
             "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion"
@@ -90,19 +90,13 @@ object Deps {
     }
 
     object Coroutines {
-        private const val version = "1.3.7-1.4-M3"
+        const val version = "1.3.8-native-mt-1.4.0-rc"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         const val android =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
-        const val native =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.5-native-mt"
-        const val iOS64 =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosx64:1.3.5-native-mt"
-        const val iOSarm64 =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-iosarm64:1.3.5-native-mt"
     }
 
     object Compose {
@@ -122,7 +116,7 @@ object Deps {
     }
 
     object Ktor {
-        private const val version = "1.3.2-1.4-M3"
+        private const val version = "1.3.2-1.4.0-rc"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"

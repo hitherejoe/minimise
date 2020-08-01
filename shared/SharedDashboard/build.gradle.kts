@@ -54,7 +54,7 @@ kotlin {
 
     sourceSets["iosMain"].dependencies {
         implementation(Deps.Kotlin.stdLib)
-        implementation(Deps.Coroutines.native)
+
     }
 }
 

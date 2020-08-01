@@ -64,11 +64,6 @@ kotlin {
 
         val iosMain by getting {
             dependencies {
-                implementation(Deps.Coroutines.native) {
-                    version {
-                        strictly("1.3.5-native-mt")
-                    }
-                }
                 implementation(Deps.Ktor.clientIos)
                 implementation(Deps.Ktor.clientSerializationNative)
                 implementation(Deps.Kotlin.serializationRuntimeNative)

@@ -28,7 +28,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.preferences)
 
             }
         }
@@ -49,8 +48,7 @@ kotlin {
         val iosMain by getting {
             dependsOn(mobileMain)
             dependencies {
-                implementation(Deps.Coroutines.native)
-                //api(Deps.Coroutines.iOS64)
+
                 //api(Deps.Coroutines.iOSarm64)
             }
         }
