@@ -42,14 +42,14 @@ jobs:
         do
           echo "Module:"$module
           if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS =~ ":platform_android${module_name}:connectedCheck" ]]; then 
-            build_commands="${build_commands} ${module}:platform_android:connectedCheck"
+            $build_commands="${build_commands} ${module}:platform_android:connectedCheck"
             echo "Commands="$build_commands
           fi
         done
         echo "Build commands:"$build_commands
         echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
-      uses: reactivecircus/android-emulator-runner@v2
+      uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
         api-level: 29
         script: |
