@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
+import androidx.ui.core.testTag
 import androidx.ui.foundation.*
 import androidx.ui.graphics.Color
 import androidx.ui.input.ImeAction
@@ -55,12 +56,8 @@ private fun ComposeAuthenticationContent(
     passwordChanged: (String) -> Unit
 ) {
     val viewState by uiState.observeAsState()
-    FormContent(
-        viewState!!.isLoading,
-        viewState!!.emailAddress,
-        viewState!!.password,
-        viewState!!.authenticationMode,
-        viewState!!.errorMessage,
+    AuthenticationContent(
+        viewState!!,
         authenticationModeToggled,
         authenticateClicked,
         forgotPasswordClicked,
@@ -70,27 +67,24 @@ private fun ComposeAuthenticationContent(
 }
 
 @Composable
-private fun FormContent(
-    isLoading: Boolean,
-    email: String,
-    password: String,
-    authenticationMode: AuthenticateMode,
-    errorMessage: String?,
-    authenticationModeToggled: () -> Unit,
-    authenticateClicked: () -> Unit,
-    forgotPasswordClicked: () -> Unit,
-    emailChanged: (String) -> Unit,
-    passwordChanged: (String) -> Unit
+internal fun AuthenticationContent(
+    viewState: AuthenticationState,
+    authenticationModeToggled: (() -> Unit)? = null,
+    authenticateClicked: (() -> Unit)? = null,
+    forgotPasswordClicked: (() -> Unit)? = null,
+    emailChanged: ((String) -> Unit)? = null,
+    passwordChanged: ((String) -> Unit)? = null
 ) {
-    val emailState = state { TextFieldValue(email) }
-    val passwordState = state { TextFieldValue(password) }
+    val emailState = state { TextFieldValue(viewState.emailAddress) }
+    val passwordState = state { TextFieldValue(viewState.password) }
 
     MinimiseTheme {
         Box(backgroundColor = Color.White, modifier = Modifier.fillMaxSize())
-        if (isLoading) {
+        if (viewState.isLoading) {
             CircularProgressIndicator(
                 modifier =
                 Modifier.gravity(Alignment.CenterVertically)
+                    .testTag("Progress")
             )
         } else {
             Column(
@@ -100,7 +94,7 @@ private fun FormContent(
                 Text(
                     modifier = Modifier.preferredWidth(240.dp)
                         .gravity(Alignment.CenterHorizontally),
-                    text = if (authenticationMode == AuthenticateMode.SignUp) {
+                    text = if (viewState.authenticationMode == AuthenticateMode.SignUp) {
                         "Sign up for a Minimise account"
                     } else "Sign in to your Minimise account",
                     textAlign = TextAlign.Center,
@@ -113,7 +107,7 @@ private fun FormContent(
                         value = emailState.value,
                         onValueChange = {
                             emailState.value = it
-                            emailChanged(it.text)
+                            emailChanged?.invoke(it.text)
                         },
                         label = {
                             Text(text = "Email Address", fontSize = 12.sp)
@@ -126,7 +120,7 @@ private fun FormContent(
                         value = passwordState.value,
                         onValueChange = {
                             passwordState.value = it
-                            passwordChanged(it.text)
+                            passwordChanged?.invoke(it.text)
                         },
                         label = {
                             Text(text = "Password", fontSize = 12.sp)
@@ -136,9 +130,9 @@ private fun FormContent(
                         imeAction = ImeAction.Done,
                         modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
-                    if (authenticationMode == AuthenticateMode.SignIn) {
+                    if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                         TextButton(onClick = {
-                            forgotPasswordClicked()
+                            forgotPasswordClicked?.invoke()
                         }) {
                             ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                                 Text(
@@ -157,11 +151,11 @@ private fun FormContent(
                 }
                 Spacer(Modifier.weight(1f, fill = true))
                 Button(onClick = {
-                    authenticateClicked()
+                    authenticateClicked?.invoke()
                 }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
                     ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                         Text(
-                            text = if (authenticationMode == AuthenticateMode.SignIn) {
+                            text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                                 stringResource(R.string.sign_in)
                             } else {
                                 stringResource(R.string.sign_up)
@@ -172,11 +166,11 @@ private fun FormContent(
                 }
                 Spacer(Modifier.preferredHeight(16.dp))
                 TextButton(onClick = {
-                    authenticationModeToggled()
+                    authenticationModeToggled?.invoke()
                 }, modifier = Modifier.gravity(Alignment.CenterHorizontally)) {
                     ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
                         Text(
-                            text = if (authenticationMode == AuthenticateMode.SignIn) {
+                            text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                                 stringResource(R.string.no_account)
                             } else {
                                 stringResource(R.string.existing_account)
@@ -187,14 +181,14 @@ private fun FormContent(
                 }
                 Spacer(Modifier.preferredHeight(26.dp))
             }
-            val showingDialog = state { errorMessage }
+            val showingDialog = state { viewState.errorMessage }
             if (showingDialog.value != null) {
                 AlertDialog(onCloseRequest = {
                     showingDialog.value = null
                 }, title = {
                     Text(text = "Whoops!")
                 }, text = {
-                    Text(text = errorMessage ?: "")
+                    Text(text = viewState.errorMessage ?: "")
                 }, buttons = {
                     Stack(modifier = Modifier.fillMaxWidth()) {
                         Text(

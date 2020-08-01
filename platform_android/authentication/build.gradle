@@ -64,7 +64,6 @@ dependencies {
     implementation Deps.Compose.tooling
     implementation Deps.Compose.foundation
     implementation Deps.Compose.text
-    implementation Deps.Compose.test
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
@@ -89,6 +88,8 @@ dependencies {
     androidTestImplementation Deps.AndroidX.junit
     androidTestImplementation Deps.Espresso.core
     androidTestImplementation Deps.Fragment.testing
+    androidTestImplementation Deps.Compose.test
+
 }
 
 def getProps(String propName) {
