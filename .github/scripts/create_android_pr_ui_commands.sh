@@ -1,5 +1,3 @@
-set -e
-
 git fetch --unshallow
 git fetch origin
 
