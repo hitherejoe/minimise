@@ -1,6 +1,7 @@
 package co.joebirch.minimise.authentication
 
 import androidx.test.filters.MediumTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.ui.layout.ExperimentalLayout
 import androidx.ui.test.*
 import org.junit.Rule
@@ -26,14 +27,32 @@ class AuthenticationTest {
     fun signUpTitleDisplayedByDefault() {
         launchContent(AuthenticationState())
 
-        onNodeWithText("Sign up for a Minimise account").assertIsDisplayed()
+        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_up)
+            .also {
+                onNodeWithText(it)
+                    .assertIsDisplayed()
+            }
     }
 
     @Test
     fun signInTitleIsNotDisplayedByDefault() {
         launchContent(AuthenticationState())
 
-        onNodeWithText("Sign in to your Minimise account")
-            .assertDoesNotExist()
+        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
+            .also {
+                onNodeWithText(it)
+                    .assertDoesNotExist()
+            }
+    }
+
+    @Test
+    fun signInTitleDisplayedForSignInState() {
+        launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
+
+        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
+            .also {
+                onNodeWithText(it)
+                    .assertIsDisplayed()
+            }
     }
 }

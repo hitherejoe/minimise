@@ -95,8 +95,8 @@ internal fun AuthenticationContent(
                     modifier = Modifier.preferredWidth(240.dp)
                         .gravity(Alignment.CenterHorizontally),
                     text = if (viewState.authenticationMode == AuthenticateMode.SignUp) {
-                        "Sign up for a Minimise account"
-                    } else "Sign in to your Minimise account",
+                        stringResource(id = R.string.title_sign_up)
+                    } else stringResource(id = R.string.title_sign_in),
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.Monospace,
                     style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
