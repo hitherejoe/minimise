@@ -36,7 +36,7 @@ jobs:
         for module in $changed_modules
         do
           echo $module
-          if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS == *"platform_android:${module_name}:connectedCheck"* ]]; then 
+          if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS == *"platform_android:${module}:connectedCheck"* ]]; then 
             echo $module
             build_commands="${build_commands} platform_android:${module}:connectedCheck"
           fi
