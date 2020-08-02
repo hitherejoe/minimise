@@ -1,7 +1,7 @@
 package co.joebirch.minimise.dashboard
 
 class CreationState(
-    val currentStep: CreationStep,
+    val currentStep: CreationStep = CreationStep.NAME,
     val isLoading: Boolean = false,
     val name: String = "",
     val categories: List<String> = emptyList(),

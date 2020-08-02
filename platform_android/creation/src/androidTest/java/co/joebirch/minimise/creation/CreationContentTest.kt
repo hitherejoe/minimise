@@ -1,10 +1,10 @@
 package co.joebirch.minimise.creation
 
 import androidx.test.filters.MediumTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.ui.layout.ExperimentalLayout
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Surface
 import androidx.ui.test.*
+import co.joebirch.minimise.dashboard.CreationState
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,18 +18,20 @@ class CreationContentTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private fun launchContent() {
+    private fun launchContent(viewState: CreationState = CreationState()) {
         composeTestRule.setContent {
-            MaterialTheme {
-                Surface {
-
-                }
-            }
+            CreationContent(creationState = viewState)
         }
     }
 
     @Test
-    fun productNameHintDisplayedByDefault() {
+    fun productNameTitleDisplayedByDefault() {
         launchContent()
+
+        InstrumentationRegistry.getInstrumentation().context.getString(R.string.hint_product_name)
+            .also {
+                onNodeWithText(it)
+                    .assertIsDisplayed()
+            }
     }
 }

@@ -24,12 +24,10 @@ import androidx.ui.text.style.TextDecoration
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import co.joebirch.minimise.common_ui.MinimiseTheme
-import co.joebirch.minimise.common_ui.setContentWithLifecycle
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.compose.Composable
 import androidx.compose.state
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.ui.animation.Transition
 import androidx.ui.core.Alignment.Companion.BottomEnd
@@ -43,18 +41,7 @@ import androidx.ui.material.ripple.RippleIndication
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.style.TextOverflow
 
-fun ViewGroup.composeDashboardContentTwo(
-    lifecycleOwner: LifecycleOwner
-): Any =
-    setContentWithLifecycle(lifecycleOwner) {
-        Box(
-            backgroundColor = MaterialTheme.colors.primary,
-            modifier = Modifier.fillMaxSize()
-        )
-}
-
 fun ViewGroup.composeDashboardContent(
-    lifecycleOwner: LifecycleOwner,
     uiState: LiveData<CreationState>,
     onNameChanged: (name: String) -> Unit,
     onCategoriesChanged: (store: List<String>) -> Unit,
@@ -65,7 +52,7 @@ fun ViewGroup.composeDashboardContent(
     onNextStep: () -> Unit,
     onPreviousStep: () -> Unit,
     onFormCompleted: () -> Unit
-): Any = setContentWithLifecycle(lifecycleOwner) {
+): Any = setContent(Recomposer.current()) {
     ComposeInventoryContent(
         uiState, onNameChanged, onCategoriesChanged, onFrequencyChanged,
         onRemindDays, onPositivesChanged, onNegativesChanged, onNextStep, onPreviousStep,
@@ -88,16 +75,15 @@ private fun ComposeInventoryContent(
     onFormCompleted: () -> Unit
 ) {
     val viewState by uiState.observeAsState()
-    if (viewState != null) {
+    viewState?.let {
         CreationContent(
-            viewState!!.isLoading, selectedStep = viewState!!.currentStep,
             onNameChanged = onNameChanged, onCategoriesChanged = onCategoriesChanged,
             onFrequencyChanged = onFrequencyChanged,
             onRemindDays = onRemindDays,
             onPositivesChanged = onPositivesChanged,
             onNegativesChanged = onNegativesChanged,
             onNextStep = onNextStep, onPreviousStep = onPreviousStep,
-            onFormCompleted = onFormCompleted, creationState = viewState!!
+            onFormCompleted = onFormCompleted, creationState = it
         )
     }
 }
@@ -152,18 +138,16 @@ private fun isValid(
 @ExperimentalLayout
 @Composable
 internal fun CreationContent(
-    isLoading: Boolean,
     creationState: CreationState,
-    selectedStep: CreationStep,
-    onNameChanged: (name: String) -> Unit,
-    onCategoriesChanged: (name: List<String>) -> Unit,
-    onFrequencyChanged: (frequency: Float) -> Unit,
-    onRemindDays: (days: Int) -> Unit,
-    onPositivesChanged: (frequency: List<String>) -> Unit,
-    onNegativesChanged: (frequency: List<String>) -> Unit,
-    onNextStep: () -> Unit,
-    onPreviousStep: () -> Unit,
-    onFormCompleted: () -> Unit
+    onNameChanged: ((name: String) -> Unit)? = null,
+    onCategoriesChanged: ((store: List<String>) -> Unit)? = null,
+    onFrequencyChanged: ((frequency: Float) -> Unit)? = null,
+    onRemindDays: ((days: Int) -> Unit)? = null,
+    onPositivesChanged: ((frequency: List<String>) -> Unit)? = null,
+    onNegativesChanged: ((frequency: List<String>) -> Unit)? = null,
+    onNextStep: (() -> Unit)? = null,
+    onPreviousStep: (() -> Unit)? = null,
+    onFormCompleted: (() -> Unit)? = null
 ) {
     val animatingFab = state { true }
     val animatingContent = state { true }
@@ -175,7 +159,7 @@ internal fun CreationContent(
                         backgroundColor = MaterialTheme.colors.primary,
                         modifier = Modifier.fillMaxSize()
                     )
-                    if (isLoading) {
+                    if (creationState.isLoading) {
                         CircularProgressIndicator(
                             color = MaterialTheme.colors.secondary,
                             modifier = Modifier.gravity(Center)
@@ -193,11 +177,11 @@ internal fun CreationContent(
                                     .drawOpacity(state[contentAlphaState])
                             ) {
                                 stepCounter(
-                                    selectedStep
+                                    creationState.currentStep
                                 )
                                 Box(modifier = Modifier.padding(16.dp)) {
                                     Spacer(modifier = Modifier.height(16.dp))
-                                    when (selectedStep) {
+                                    when (creationState.currentStep) {
                                         CreationStep.NAME -> {
                                             nameStepComposable(
                                                 creationState,
@@ -241,15 +225,15 @@ internal fun CreationContent(
                                 }
                             }
                         }
-                        if (selectedStep != CreationStep.NAME &&
-                            selectedStep != CreationStep.FINISHED
+                        if (creationState.currentStep != CreationStep.NAME &&
+                            creationState.currentStep != CreationStep.FINISHED
                         ) {
                             Box(
                                 shape = CircleShape,
                                 modifier = Modifier.gravity(BottomStart).padding(16.dp)
                                     .clickable(
                                         onClick = {
-                                            onNextStep()
+                                            onNextStep?.invoke()
                                         }, indication = RippleIndication(
                                             bounded = true,
                                             radius = 16.dp,
@@ -266,13 +250,13 @@ internal fun CreationContent(
 
 
 
-                        if (selectedStep != CreationStep.FINISHED) {
+                        if (creationState.currentStep != CreationStep.FINISHED) {
                             Box(
                                 shape = CircleShape,
                                 modifier = Modifier.gravity(BottomEnd).padding(16.dp)
                                     .clickable(
                                         onClick = {
-                                            onNextStep()
+                                            onNextStep?.invoke()
                                         }, indication = RippleIndication(
                                             bounded = true,
                                             radius = 16.dp,
@@ -310,7 +294,7 @@ private fun stepCounter(currentStep: CreationStep) {
 @Composable
 private fun nameStepComposable(
     creationState: CreationState,
-    onNameChanged: (name: String) -> Unit
+    onNameChanged: ((name: String) -> Unit)?
 ) {
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
         Spacer(modifier = Modifier.height(48.dp))
@@ -334,7 +318,7 @@ private fun nameStepComposable(
                 FilledTextField(
                     value = creationState.name,
                     onValueChange = { value ->
-                        onNameChanged(value)
+                        onNameChanged?.invoke(value)
                     },
                     label = {
 
@@ -354,7 +338,7 @@ private fun nameStepComposable(
 @Composable
 private fun storeStepComposable(
     creationState: CreationState,
-    onCategories: (name: List<String>) -> Unit
+    onCategories: ((store: List<String>) -> Unit)?
 ) {
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
         Spacer(modifier = Modifier.height(48.dp))
@@ -392,7 +376,7 @@ private fun storeStepComposable(
                         } else {
                             selectedItems.add(amenity)
                         }
-                        onCategories(selectedItems)
+                        onCategories?.invoke(selectedItems)
                     }).drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.7f),
                     children = {
                         Text(
@@ -480,7 +464,7 @@ private fun negativeStepComposable(
 
 @Composable
 private fun finishedComposable(
-    onFormCompleted: () -> Unit
+    onFormCompleted: (() -> Unit)?
 ) {
     Column(
         modifier = Modifier.gravity(align = Top).fillMaxSize(),
@@ -509,7 +493,7 @@ private fun finishedComposable(
         ) {
             Button(
                 onClick = {
-                    onFormCompleted()
+                    onFormCompleted?.invoke()
                 },
                 backgroundColor = MaterialTheme.colors.secondary
             ) {
@@ -567,7 +551,7 @@ fun labelTextField(
 @Composable
 private fun frequencyStepComposable(
     creationState: CreationState,
-    onFrequencyChanged: (frequency: Float) -> Unit
+    onFrequencyChanged: ((frequency: Float) -> Unit)?
 ) {
     Spacer(modifier = Modifier.height(48.dp))
     ScrollableColumn(
@@ -589,7 +573,7 @@ private fun frequencyStepComposable(
         Slider(
             value = creationState.frequencyCount,
             onValueChange = {
-                onFrequencyChanged(it)
+                onFrequencyChanged?.invoke(it)
             },
             color = Color.White,
             valueRange = 0f..4f,
@@ -609,7 +593,7 @@ private fun frequencyStepComposable(
 @Composable
 private fun remindStepComposable(
     creationState: CreationState,
-    onRemindDays: (remindDays: Int) -> Unit
+    onRemindDays: ((days: Int) -> Unit)?
 ) {
     Spacer(modifier = Modifier.height(48.dp))
     ScrollableColumn(
@@ -631,7 +615,7 @@ private fun remindStepComposable(
         Slider(
             value = creationState.daysToRemind.toFloat(),
             onValueChange = {
-                onRemindDays(it.toInt())
+                onRemindDays?.invoke(it.toInt())
             },
             color = Color.White,
             valueRange = 0f..4f,

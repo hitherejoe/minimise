@@ -31,7 +31,7 @@ import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 
-fun ViewGroup.composeAuthenticationContentTwo(
+fun ViewGroup.composeAuthenticationContent(
     uiState: LiveData<AuthenticationState>,
     authenticationModeToggled: () -> Unit,
     authenticateClicked: () -> Unit,
