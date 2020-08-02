@@ -56,14 +56,16 @@ private fun ComposeAuthenticationContent(
     passwordChanged: (String) -> Unit
 ) {
     val viewState by uiState.observeAsState()
-    AuthenticationContent(
-        viewState!!,
-        authenticationModeToggled,
-        authenticateClicked,
-        forgotPasswordClicked,
-        emailChanged,
-        passwordChanged
-    )
+    viewState?.let {
+        AuthenticationContent(
+            it,
+            authenticationModeToggled,
+            authenticateClicked,
+            forgotPasswordClicked,
+            emailChanged,
+            passwordChanged
+        )
+    }
 }
 
 @Composable
@@ -75,8 +77,6 @@ internal fun AuthenticationContent(
     emailChanged: ((String) -> Unit)? = null,
     passwordChanged: ((String) -> Unit)? = null
 ) {
-    val emailState = state { TextFieldValue(viewState.emailAddress) }
-    val passwordState = state { TextFieldValue(viewState.password) }
 
     MinimiseTheme {
         Box(backgroundColor = Color.White, modifier = Modifier.fillMaxSize())
@@ -104,26 +104,30 @@ internal fun AuthenticationContent(
                 Spacer(modifier = Modifier.preferredHeight(36.dp))
                 Column(modifier = Modifier.padding(8.dp)) {
                     FilledTextField(
-                        value = emailState.value,
+                        value = viewState.emailAddress,
                         onValueChange = {
-                            emailState.value = it
-                            emailChanged?.invoke(it.text)
+                            emailChanged?.invoke(it)
                         },
                         label = {
-                            Text(text = "Email Address", fontSize = 12.sp)
+                            Text(
+                                text = stringResource(id = R.string.hint_email_address),
+                                fontSize = 12.sp
+                            )
                         },
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
                         modifier = Modifier.padding(16.dp).fillMaxWidth()
                     )
                     FilledTextField(
-                        value = passwordState.value,
+                        value = viewState.password,
                         onValueChange = {
-                            passwordState.value = it
-                            passwordChanged?.invoke(it.text)
+                            passwordChanged?.invoke(it)
                         },
                         label = {
-                            Text(text = "Password", fontSize = 12.sp)
+                            Text(
+                                text = stringResource(id = R.string.hint_password),
+                                fontSize = 12.sp
+                            )
                         },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardType = KeyboardType.Password,
@@ -186,13 +190,14 @@ internal fun AuthenticationContent(
                 AlertDialog(onCloseRequest = {
                     showingDialog.value = null
                 }, title = {
-                    Text(text = "Whoops!")
+                    Text(text = stringResource(id = R.string.error_title))
                 }, text = {
                     Text(text = viewState.errorMessage ?: "")
                 }, buttons = {
                     Stack(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            text = "OK", style = currentTextStyle().plus(
+                            text = stringResource(id = R.string.error_action),
+                            style = currentTextStyle().plus(
                                 TextStyle(fontWeight = FontWeight.SemiBold)
                             ),
                             modifier = Modifier.padding(16.dp).gravity(Alignment.CenterEnd)

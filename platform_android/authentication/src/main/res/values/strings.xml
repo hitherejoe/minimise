@@ -4,9 +4,13 @@
     <string name="sign_in">Sign In</string>
     <string name="existing_account">Already have an account?</string>
     <string name="no_account">Don\'t have an account yet?</string>
-    <string name="hint_email_address">Email address</string>
     <string name="forgotten_your_password">Forgotten your password?</string>
 
     <string name="title_sign_in">Sign in to your Minimise account</string>
     <string name="title_sign_up">Sign up for a Minimise account</string>
+
+    <string name="hint_email_address">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="error_title">Whoops</string>
+    <string name="error_action">OK</string>
 </resources>
