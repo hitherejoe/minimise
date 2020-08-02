@@ -38,6 +38,7 @@ jobs:
             build_commands="${build_commands} platform_android:${module}:connectedCheck"
           fi
         done
+        echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
