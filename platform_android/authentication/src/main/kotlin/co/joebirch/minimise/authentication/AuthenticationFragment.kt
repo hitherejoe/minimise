@@ -36,7 +36,7 @@ class AuthenticationFragment : BaseFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-            composeAuthenticationContentTwo(
+            composeAuthenticationContent(
                 authenticationViewModel.observeAuthenticationState(),
                 authenticationViewModel::toggleAuthenticationMode,
                 authenticationViewModel::authenticate,
