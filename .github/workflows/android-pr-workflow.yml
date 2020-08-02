@@ -29,6 +29,7 @@ jobs:
         changed_modules=$MODULES
 
         AVAILABLE_TASKS=$(./gradlew tasks --all)
+        git fetch origin
         dest="origin/"${{ github.base_ref }}
         branch="origin/"${{ github.head_ref }}
         build_commands=""
