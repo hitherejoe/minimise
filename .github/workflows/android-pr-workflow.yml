@@ -29,21 +29,15 @@ jobs:
         changed_modules=$MODULES
 
         AVAILABLE_TASKS=$(./gradlew tasks --all)
-        git fetch origin
         dest="origin/"${{ github.base_ref }}
         branch="origin/"${{ github.head_ref }}
         build_commands=""
         for module in $changed_modules
         do
-          echo $module
           if [[ ${module} != ".github" && ${module} != "buildSrc" && $AVAILABLE_TASKS == *"platform_android:${module}:connectedCheck"* ]]; then 
-            echo $module
             build_commands="${build_commands} platform_android:${module}:connectedCheck"
           fi
         done
-        echo $build_commands
-        echo $AVAILABLE_TASKS
-        echo "::set-env name=COMMANDS::$build_commands"
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
