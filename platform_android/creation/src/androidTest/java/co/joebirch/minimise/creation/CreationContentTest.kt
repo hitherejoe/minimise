@@ -1,8 +1,8 @@
 package co.joebirch.minimise.creation
 
+import androidx.compose.foundation.layout.ExperimentalLayout
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.ui.layout.ExperimentalLayout
 import androidx.ui.test.*
 import co.joebirch.minimise.dashboard.CreationState
 import org.junit.Rule

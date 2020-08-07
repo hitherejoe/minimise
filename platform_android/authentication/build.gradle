@@ -41,7 +41,7 @@ android {
 
     composeOptions {
         kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
-        kotlinCompilerExtensionVersion "0.1.0-dev15"
+        kotlinCompilerExtensionVersion Deps.Compose.version
     }
 
     kotlinOptions {

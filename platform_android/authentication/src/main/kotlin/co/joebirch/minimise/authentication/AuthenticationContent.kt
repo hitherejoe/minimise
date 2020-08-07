@@ -1,28 +1,31 @@
 package co.joebirch.minimise.authentication
 
 import android.view.ViewGroup
-import androidx.compose.Composable
-import androidx.compose.Recomposer
-import androidx.compose.getValue
-import androidx.compose.state
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.RowScope.gravity
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Recomposer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.state
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
-import androidx.ui.core.*
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.graphics.Color
-import androidx.ui.input.ImeAction
-import androidx.ui.input.KeyboardType
-import androidx.ui.input.PasswordVisualTransformation
-import androidx.ui.layout.*
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.livedata.observeAsState
-import androidx.ui.material.*
-import androidx.ui.res.stringResource
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.dp
-import androidx.ui.unit.sp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 
 fun ViewGroup.composeAuthenticationContent(
@@ -107,7 +110,7 @@ internal fun AuthenticationContent(
                 ) {
                     Column {
 
-                        FilledTextField(
+                        TextField(
                             value = viewState.emailAddress,
                             onValueChange = {
                                 emailChanged?.invoke(it)
@@ -132,7 +135,7 @@ internal fun AuthenticationContent(
                         )
                         Spacer(modifier = Modifier.height(36.dp))
 
-                        FilledTextField(
+                        TextField(
                             value = viewState.password,
                             onValueChange = {
                                 passwordChanged?.invoke(it)

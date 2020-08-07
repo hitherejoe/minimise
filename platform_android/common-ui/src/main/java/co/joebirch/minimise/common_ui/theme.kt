@@ -1,11 +1,11 @@
 package co.joebirch.minimise.common_ui
 
-import androidx.ui.material.lightColorPalette
-import androidx.compose.Composable
-import androidx.ui.foundation.isSystemInDarkTheme
-import androidx.ui.graphics.Color
-import androidx.ui.material.MaterialTheme
-import androidx.ui.res.colorResource
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 
 @Composable
 fun MinimiseTheme(
@@ -13,7 +13,7 @@ fun MinimiseTheme(
     content: @Composable() () -> Unit
 ) {
     MaterialTheme(
-        colors = lightColorPalette(
+        colors = lightColors(
             primary = colorResource(id = R.color.primaryColor),
             primaryVariant = colorResource(id = R.color.primaryDarkColor),
             onPrimary = Color.White,

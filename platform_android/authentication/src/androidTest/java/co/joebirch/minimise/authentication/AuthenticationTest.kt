@@ -2,14 +2,12 @@ package co.joebirch.minimise.authentication
 
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.ui.layout.ExperimentalLayout
 import androidx.ui.test.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@ExperimentalLayout
 @MediumTest
 @RunWith(JUnit4::class)
 class AuthenticationTest {
