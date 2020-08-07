@@ -1,45 +1,48 @@
 package co.joebirch.minimise.creation
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
-import androidx.animation.FastOutLinearInEasing
-import androidx.animation.FloatPropKey
-import androidx.animation.transitionDefinition
-import androidx.animation.*
-import androidx.compose.*
-import androidx.ui.core.*
-import androidx.ui.core.Alignment.Companion.BottomStart
-import androidx.ui.core.Alignment.Companion.Center
-import androidx.ui.core.Alignment.Companion.CenterHorizontally
-import androidx.ui.foundation.*
-import androidx.ui.graphics.Color
-import androidx.ui.layout.*
-import androidx.ui.livedata.observeAsState
-import androidx.ui.material.*
-import androidx.ui.res.stringArrayResource
-import androidx.ui.res.stringResource
-import androidx.ui.res.vectorResource
-import androidx.ui.text.TextStyle
-import androidx.ui.text.style.TextAlign
-import androidx.ui.text.style.TextDecoration
-import androidx.ui.unit.TextUnit
-import androidx.ui.unit.dp
+import androidx.compose.animation.core.*
+import androidx.compose.animation.transition
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.RowScope.gravity
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.ripple.RippleIndication
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Recomposer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.state
+import androidx.compose.ui.Alignment.Companion.BottomEnd
+import androidx.compose.ui.Alignment.Companion.BottomStart
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.Top
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.focus.ExperimentalFocus
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
-import androidx.compose.Composable
-import androidx.compose.state
 import androidx.lifecycle.LiveData
-import androidx.ui.animation.Transition
-import androidx.ui.core.Alignment.Companion.BottomEnd
-import androidx.ui.core.Alignment.Companion.Top
-import androidx.ui.core.focus.*
-import androidx.ui.foundation.shape.corner.CircleShape
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.input.ImeAction
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.material.ripple.RippleIndication
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextOverflow
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
@@ -92,7 +95,8 @@ val sizeState = FloatPropKey()
 val alphaState = FloatPropKey()
 val contentAlphaState = FloatPropKey()
 
-private val sizeTransitionDefinition = transitionDefinition {
+@SuppressLint("Range")
+private val sizeTransitionDefinition = transitionDefinition<String> {
     state("A") {
         this[sizeState] = 0f
         this[alphaState] = 0f
@@ -165,62 +169,61 @@ internal fun CreationContent(
                             modifier = Modifier.gravity(Center)
                         )
                     } else {
-                        Transition(
+                        val state = transition(
                             definition = sizeTransitionDefinition,
                             initState = "A",
                             toState = "B"
-                        ) { state ->
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                modifier = Modifier.gravity(Center)
-                                    .fillMaxHeight()
-                                    .drawOpacity(state[contentAlphaState])
-                            ) {
-                                stepCounter(
-                                    creationState.currentStep
-                                )
-                                Box(modifier = Modifier.padding(16.dp)) {
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    when (creationState.currentStep) {
-                                        CreationStep.NAME -> {
-                                            nameStepComposable(
-                                                creationState,
-                                                onNameChanged = onNameChanged
-                                            )
-                                        }
-                                        CreationStep.CATEGORY -> {
-                                            storeStepComposable(
-                                                creationState,
-                                                onCategories = onCategoriesChanged
-                                            )
-                                        }
-                                        CreationStep.FREQUENCY -> {
-                                            frequencyStepComposable(
-                                                creationState,
-                                                onFrequencyChanged = onFrequencyChanged
-                                            )
-                                        }
-                                        CreationStep.REMIND -> {
-                                            remindStepComposable(
-                                                creationState,
-                                                onRemindDays = onRemindDays
-                                            )
-                                        }
-                                        CreationStep.POSITIVE -> {
-                                            positiveStepComposable(
-                                                creationState
-                                            )
-                                        }
-                                        CreationStep.NEGATIVE -> {
-                                            negativeStepComposable(
-                                                creationState = creationState
-                                            )
-                                        }
-                                        CreationStep.FINISHED -> {
-                                            finishedComposable(
-                                                onFormCompleted
-                                            )
-                                        }
+                        )
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier.gravity(Center)
+                                .fillMaxHeight()
+                                .drawOpacity(state[contentAlphaState])
+                        ) {
+                            stepCounter(
+                                creationState.currentStep
+                            )
+                            Box(modifier = Modifier.padding(16.dp)) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                when (creationState.currentStep) {
+                                    CreationStep.NAME -> {
+                                        nameStepComposable(
+                                            creationState,
+                                            onNameChanged = onNameChanged
+                                        )
+                                    }
+                                    CreationStep.CATEGORY -> {
+                                        storeStepComposable(
+                                            creationState,
+                                            onCategories = onCategoriesChanged
+                                        )
+                                    }
+                                    CreationStep.FREQUENCY -> {
+                                        frequencyStepComposable(
+                                            creationState,
+                                            onFrequencyChanged = onFrequencyChanged
+                                        )
+                                    }
+                                    CreationStep.REMIND -> {
+                                        remindStepComposable(
+                                            creationState,
+                                            onRemindDays = onRemindDays
+                                        )
+                                    }
+                                    CreationStep.POSITIVE -> {
+                                        positiveStepComposable(
+                                            creationState
+                                        )
+                                    }
+                                    CreationStep.NEGATIVE -> {
+                                        negativeStepComposable(
+                                            creationState = creationState
+                                        )
+                                    }
+                                    CreationStep.FINISHED -> {
+                                        finishedComposable(
+                                            onFormCompleted
+                                        )
                                     }
                                 }
                             }
@@ -315,7 +318,7 @@ private fun nameStepComposable(
         ) {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Spacer(modifier = Modifier.width(16.dp))
-                FilledTextField(
+                TextField(
                     value = creationState.name,
                     onValueChange = { value ->
                         onNameChanged?.invoke(value)
@@ -432,7 +435,6 @@ private fun positiveStepComposable(
 private fun negativeStepComposable(
     creationState: CreationState
 ) {
-    val states = state { androidx.ui.input.TextFieldValue() }
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
 
     Spacer(modifier = Modifier.height(48.dp))
@@ -510,7 +512,7 @@ fun labelTextField(
     requester: FocusRequester,
     nextModifier: FocusRequester? = null
 ) {
-    val states = state { androidx.ui.input.TextFieldValue() }
+    val states = state { TextFieldValue() }
     val hasFocus = state { false }
     Box(
         shape = RoundedCornerShape(16.dp),
@@ -524,7 +526,7 @@ fun labelTextField(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
                 fontSize = TextUnit.Companion.Sp(16)
             )
-            FilledTextField(
+            TextField(
                 value = states.value,
                 onValueChange = { value ->
                     states.value = value
@@ -630,52 +632,4 @@ private fun remindStepComposable(
                 .padding(16.dp)
         )
     }
-}
-
-@Composable
-fun HintEditText(
-    hintText: String = "",
-    text: String = "",
-    modifier: Modifier,
-    textStyle: TextStyle = currentTextStyle(),
-    onTextChange: (text: TextFieldValue) -> Unit
-) {
-    val selected = state { false }
-    val state = state { TextFieldValue(text) }
-    val inputField = @Composable {
-        TextField(
-            value = state.value,
-            onFocusChange = {
-                selected.value = it
-            },
-            modifier = Modifier.fillMaxWidth().plus(modifier),
-            onValueChange = {
-                state.value = it
-                onTextChange(it)
-            },
-            cursorColor = Color.White,
-            textStyle = textStyle.merge(TextStyle(textDecoration = TextDecoration.None))
-        )
-    }
-
-    Layout(
-        children = @Composable {
-            inputField()
-            Text(
-                text = hintText,
-                style = textStyle.merge(TextStyle(color = Color.White))
-            )
-        },
-        measureBlock = { measurables: List<Measurable>, constraints: Constraints, _ ->
-            val inputFieldPlace = measurables[0].measure(constraints)
-            val hintEditPlace = measurables[1].measure(constraints)
-            layout(
-                inputFieldPlace.width,
-                inputFieldPlace.height
-            ) {
-                inputFieldPlace.place(0, 0)
-                if (state.value.text.isEmpty() && !selected.value)
-                    hintEditPlace.place(0, 0)
-            }
-        })
 }
