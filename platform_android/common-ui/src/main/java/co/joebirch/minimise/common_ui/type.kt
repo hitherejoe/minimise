@@ -1,11 +1,11 @@
 package co.joebirch.minimise.common_ui
 
-import androidx.ui.material.Typography
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.font.font
-import androidx.ui.text.font.fontFamily
-import androidx.ui.unit.sp
+import androidx.compose.material.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.font
+import androidx.compose.ui.text.font.fontFamily
+import androidx.compose.ui.unit.sp
 
 private val regular = font(R.font.poppins_regular)
 private val medium = font(R.font.poppins_medium, FontWeight.W500)

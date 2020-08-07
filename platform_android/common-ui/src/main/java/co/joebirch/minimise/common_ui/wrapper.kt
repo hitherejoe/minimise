@@ -1,12 +1,12 @@
 package co.joebirch.minimise.common_ui
 
 import android.view.ViewGroup
-import androidx.compose.Composable
-import androidx.compose.Composition
-import androidx.compose.Recomposer
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Composition
+import androidx.compose.runtime.Recomposer
+import androidx.compose.ui.platform.setContent
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.ui.core.setContent
 
 fun ViewGroup.setContentWithLifecycle(
     lifecycle: LifecycleOwner,

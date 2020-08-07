@@ -1,34 +1,39 @@
 package co.joebirch.minimise.dashboard
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
-import androidx.animation.FloatPropKey
-import androidx.animation.keyframes
-import androidx.animation.transitionDefinition
-import androidx.compose.Composable
-import androidx.compose.state
+import androidx.compose.animation.ColorPropKey
+import androidx.compose.animation.animate
+import androidx.compose.animation.core.FloatPropKey
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.transitionDefinition
+import androidx.compose.animation.transition
+import androidx.compose.foundation.Box
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumnItems
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.ripple.RippleIndication
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.state
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.imageFromResource
+import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.ui.animation.*
-import androidx.ui.core.*
-import androidx.ui.foundation.*
-import androidx.ui.foundation.lazy.LazyColumnItems
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.geometry.Offset
-import androidx.ui.graphics.Color
-import androidx.ui.graphics.imageFromResource
-import androidx.ui.layout.*
-import androidx.ui.livedata.observeAsState
-import androidx.ui.material.*
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Add
-import androidx.ui.material.ripple.RippleIndication
-import androidx.ui.res.colorResource
-import androidx.ui.res.imageResource
-import androidx.ui.res.vectorResource
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.TextUnit
-import androidx.ui.unit.dp
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.setContentWithLifecycle
@@ -69,7 +74,8 @@ enum class FabState {
     Idle, Exploded
 }
 
-private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transitionDefinition {
+@SuppressLint("Range")
+private fun sizeTransitionDefinition(colorOne: Color, colorTwo: Color) = transitionDefinition<FabState> {
     state(FabState.Idle) {
         this[alphaState] = 1f
         this[sizeState] = 80f
@@ -118,8 +124,7 @@ private fun DashboardContent(
                         )
                     ).wrapContentSize()
                 ) {
-
-                    Transition(
+                    val state = transition(
                         definition = sizeTransitionDefinition(
                             MaterialTheme.colors.secondary,
                             MaterialTheme.colors.primary
@@ -128,7 +133,7 @@ private fun DashboardContent(
                         toState = if (!animatingFab.value) {
                             FabState.Idle
                         } else FabState.Exploded
-                    ) { state ->
+                    )
                         Canvas(
                             modifier = Modifier.size(40.dp)
                         ) {
@@ -143,7 +148,6 @@ private fun DashboardContent(
                                 alpha = state[alphaState]
                             )
                         }
-                    }
                 }
             },
             bodyContent = {
