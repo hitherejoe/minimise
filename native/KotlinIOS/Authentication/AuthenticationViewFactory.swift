@@ -7,22 +7,22 @@
 //
 
 import SwiftUI
-import Backend
+import SharedAuthentication
 import Common
 
 public struct AuthenticationViewFactory : ViewFactory {
 
-    let backendProvider: BackendProvider
+    let backendProvider: Authenticate
     let viewProvider: ScreenFactory
     
-    public init(backendProvider: BackendProvider,
+    public init(authenticate: Authenticate,
                 viewProvider: ScreenFactory) {
-        self.backendProvider = backendProvider
+        self.backendProvider = authenticate
         self.viewProvider = viewProvider
     }
 
     public func make() -> AnyView {
-        let viewModel = AuthenticationViewModel(backendService: backendProvider)
+        let viewModel = AuthenticationViewModel(authenticate: backendProvider)
         return AnyView(AuthenticationView(viewModel: viewModel, viewProvider: viewProvider))
     }
 }

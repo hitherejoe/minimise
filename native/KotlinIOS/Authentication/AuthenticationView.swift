@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 import SharedAuthentication
 import Dashboard
-import Backend
 import Common
 
 public struct AuthenticationView: View {

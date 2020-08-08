@@ -8,22 +8,18 @@
 
 import Foundation
 import SwiftUI
-import Backend
 import Common
 
 public struct DashboardViewFactory : ViewFactory {
 
-    let backendProvider: BackendProvider
     let viewProvider: ScreenFactory
     
-    public init(backendProvider: BackendProvider,
-                viewProvider: ScreenFactory) {
-        self.backendProvider = backendProvider
+    public init(viewProvider: ScreenFactory) {
         self.viewProvider = viewProvider
     }
 
     public func make() -> AnyView {
-        let viewModel = DashboardViewModel(backendService: backendProvider)
+        let viewModel = DashboardViewModel()
         return AnyView(DashboardView(viewModel: viewModel, viewProvider: viewProvider))
     }
 }

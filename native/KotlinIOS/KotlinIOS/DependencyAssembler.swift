@@ -9,8 +9,7 @@
 import UIKit
 import SwiftUI
 import Authentication
-import Firebase
-import Backend
+import SharedAuthentication
 import Dashboard
 import Swinject
 import Common
@@ -19,11 +18,8 @@ import Creation
 class DependencyAssembler: Assembly {
     
     func assemble(container: Container) {
-        container.register(BackendProvider.self) { _ in BackendProvider() }
+        container.register(Authenticate.self) { _ in Authenticate() }
         .inObjectScope(.container)
-        .initCompleted { resolver, screen in
-            (resolver.resolve(BackendProvider.self)!).configure()
-        }
         
         container.register(ScreenFactory.self) { resolver -> ScreenFactory in
             ViewProvider(
@@ -32,14 +28,13 @@ class DependencyAssembler: Assembly {
         }
     
         container.register(DashboardViewFactory.self) { resolver -> DashboardViewFactory in
-             DashboardViewFactory(
-                 backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenFactory.self)!
+             DashboardViewFactory(viewProvider: container.resolve(ScreenFactory.self)!
              )
          }
                  
          container.register(AuthenticationViewFactory.self) { resolver -> AuthenticationViewFactory in
              AuthenticationViewFactory(
-                backendProvider: container.resolve(BackendProvider.self)!, viewProvider: container.resolve(ScreenFactory.self)!
+                authenticate: container.resolve(Authenticate.self)!, viewProvider: container.resolve(ScreenFactory.self)!
              )
          }
 

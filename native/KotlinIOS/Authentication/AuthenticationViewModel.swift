@@ -1,15 +1,13 @@
 import Foundation
 import SharedAuthentication
-import Backend
-import Firebase
 
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     @Published internal var state: AuthenticationState = AuthenticationState.Companion.init().initialise()
-    private var backendService: BackendProvider
+    private var authenticateUseCase: Authenticate
     
-    init(backendService: BackendProvider) {
-        self.backendService = backendService
+    init(authenticate: Authenticate) {
+        self.authenticateUseCase = authenticate
     }
     
     func setEmailAddress(emailAddress: String) {
@@ -49,6 +47,7 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
             builder.loading = true
             builder.error = nil
         }
+        /*
         backendService.signIn(emailAddress: self.state.emailAddress,
                               password: self.state.password) { (success) in
                                 if (success) {
@@ -61,6 +60,7 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
                                     }
                                 }
         }
+ */
     }
     
     func signUp() {
@@ -68,6 +68,7 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
             builder.loading = true
             builder.error = nil
         }
+        /*
         backendService.signUp(emailAddress: self.state.emailAddress,
                               password: self.state.password) { (success) in
                                 if (success) {
@@ -80,6 +81,7 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
                                     }
                                 }
         }
+ */
        /*
         Auth.auth().createUser(withEmail: self.state.emailAddress, password: self.state.password) { authResult, error in
             if (authResult?.user != nil) {

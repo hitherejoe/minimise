@@ -2,7 +2,7 @@ import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 buildscript {
-    ext.kotlin_version = '1.4-M3'
+    ext.kotlin_version = '1.3.72'
     ext.buildConfig = [
         'compileSdk': 29,
         'minSdk'    : 21,

@@ -10,7 +10,7 @@ object Versions {
 object Deps {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha05"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4-M3"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
@@ -20,16 +20,17 @@ object Deps {
         const val plugin = "com.apollographql.apollo:apollo-gradle-plugin:$version"
         const val runtime = "com.apollographql.apollo:apollo-runtime-kotlin:$version"
         const val api = "com.apollographql.apollo:apollo-api:$version"
+        const val ios = "com.apollographql.apollo:apollo-runtime-kotlin-ios-x64:$version"
     }
 
     object Kotlin {
-        const val version = "1.4.0-rc"
+        const val version = "1.3.72"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
-        private const val serializationVersion = "1.0-M1-1.4.0-rc"
+        private const val serializationVersion = "0.20.0"
 
         const val serializationRuntimeNative =
             "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion"
@@ -90,7 +91,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.8-native-mt-1.4.0-rc"
+        const val version = "1.3.5-native-mt"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -116,7 +117,7 @@ object Deps {
     }
 
     object Ktor {
-        private const val version = "1.3.2-1.4.0-rc"
+        private const val version = "1.3.2"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"

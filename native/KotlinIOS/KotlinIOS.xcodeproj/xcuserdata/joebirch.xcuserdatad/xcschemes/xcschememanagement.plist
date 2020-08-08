@@ -14,7 +14,7 @@
 		<key>Backend.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>34</integer>
+			<integer>12</integer>
 		</dict>
 		<key>BackendProvider.xcscheme_^#shared#^_</key>
 		<dict>
@@ -29,22 +29,22 @@
 		<key>Common.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>35</integer>
+			<integer>12</integer>
 		</dict>
 		<key>Creation.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>36</integer>
+			<integer>14</integer>
 		</dict>
 		<key>Dashboard.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>37</integer>
+			<integer>13</integer>
 		</dict>
 		<key>DashboardTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>35</integer>
+			<integer>15</integer>
 		</dict>
 		<key>Firebase.xcscheme_^#shared#^_</key>
 		<dict>

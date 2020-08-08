@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'SharedAuthentication'
     spec.version                  = '1.0'
-    spec.homepage                 = 'https://github.com/hitherejoe/minimise'
+    spec.homepage                 = 'www.joebirch.co'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''
     spec.license                  = ''
@@ -12,7 +12,9 @@ Pod::Spec.new do |spec|
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 
-            
+                
+
+                
 
     spec.pod_target_xcconfig = {
         'KOTLIN_TARGET[sdk=iphonesimulator*]' => 'ios_x64',

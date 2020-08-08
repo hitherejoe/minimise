@@ -7,7 +7,6 @@
 //
 import Foundation
 import SwiftUI
-import Backend
 import Common
 
 public struct DashboardView: View {
@@ -33,6 +32,7 @@ public struct DashboardView: View {
                         }.pickerStyle(SegmentedPickerStyle())
                             .padding(.leading, 8)
                         .padding(.trailing, 8)
+                        /*
                         List {
                             ForEach (self.viewModel.state) { task in // (3)
                                 ProductCard(title: task.name, description: task.storeName,
@@ -42,6 +42,7 @@ public struct DashboardView: View {
                             }
                         }.onAppear { UITableView.appearance().separatorStyle = .none } .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                             .padding(.top, 6)
+ */
                     }
                     NavigationLink(destination: viewProvider.makeCreationView(), tag: 1, selection: $action) {
                         Button(action: {
@@ -67,11 +68,10 @@ public struct DashboardView: View {
     }
 
     struct TaskCell: View { // (5)
-      var task: Belonging
       
       var body: some View {
         HStack {// (12)
-          Text(task.name)
+          Text("task.name")
         }
       }
     }

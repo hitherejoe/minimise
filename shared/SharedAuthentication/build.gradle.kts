@@ -4,6 +4,7 @@ import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 plugins {
+    id("org.jetbrains.kotlin.native.cocoapods")
     id("com.apollographql.apollo")
     kotlin("multiplatform")
 }
@@ -19,6 +20,11 @@ version = "1.0"
 group = "co.joebirch.minimise.authentication"
 
 kotlin {
+    cocoapods {
+        summary = "Shared Authentication"
+        homepage = "www.joebirch.co"
+        frameworkName = "SharedAuthentication"
+    }
     val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
             ::iosArm64
@@ -51,8 +57,8 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation(Deps.junit)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.8-1.4.0-rc")
+                implementation(Deps.Coroutines.core)
+                implementation(Deps.Coroutines.test)
             }
         }
 
