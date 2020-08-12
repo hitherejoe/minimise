@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Recomposer
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.state
 import androidx.compose.ui.Alignment
@@ -28,25 +29,23 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.imageFromResource
 import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import co.joebirch.minimise.authentication.ui.R
 import co.joebirch.minimise.common_ui.MinimiseTheme
-import co.joebirch.minimise.common_ui.setContentWithLifecycle
 import java.util.*
 import kotlin.concurrent.schedule
 
 fun ViewGroup.composeDashboardContent(
-    lifecycleOwner: LifecycleOwner,
     state: LiveData<DashboardState>,
     categories: List<Category>,
     updateSelectedCategory: (Category) -> Unit,
     navigateToCreation: () -> Unit
-): Any = setContentWithLifecycle(lifecycleOwner) {
+): Any = setContent(Recomposer.current()) {
     ComposeInventoryContent(state, categories, updateSelectedCategory, navigateToCreation)
 }
 

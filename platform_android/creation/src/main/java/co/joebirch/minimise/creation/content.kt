@@ -43,6 +43,7 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
+import androidx.ui.tooling.preview.Preview
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
@@ -126,18 +127,6 @@ private val sizeTransitionDefinition = transitionDefinition<String> {
     }
 }
 
-
-private fun isValid(
-    creationState: CreationState,
-    selectedStep: CreationStep
-): Boolean {
-    return when (selectedStep) {
-        CreationStep.NAME -> creationState.name.isNotEmpty()
-        //CreationStep.CATEGORY -> creationState.store.isNotEmpty()
-        else -> true
-    }
-}
-
 @OptIn(ExperimentalFocus::class)
 @ExperimentalLayout
 @Composable
@@ -153,8 +142,6 @@ internal fun CreationContent(
     onPreviousStep: (() -> Unit)? = null,
     onFormCompleted: (() -> Unit)? = null
 ) {
-    val animatingFab = state { true }
-    val animatingContent = state { true }
     MinimiseTheme {
         Scaffold(
             bodyContent = {
@@ -216,9 +203,7 @@ internal fun CreationContent(
                                         )
                                     }
                                     CreationStep.NEGATIVE -> {
-                                        negativeStepComposable(
-                                            creationState = creationState
-                                        )
+                                        negativeStepComposable()
                                     }
                                     CreationStep.FINISHED -> {
                                         finishedComposable(
@@ -236,12 +221,12 @@ internal fun CreationContent(
                                 modifier = Modifier.gravity(BottomStart).padding(16.dp)
                                     .clickable(
                                         onClick = {
-                                            onNextStep?.invoke()
+                                            onPreviousStep?.invoke()
                                         }, indication = RippleIndication(
-                                            bounded = true,
-                                            radius = 16.dp,
-                                            color = Color.Black
-                                        )
+                                        bounded = true,
+                                        radius = 16.dp,
+                                        color = Color.Black
+                                    )
                                     )
                             ) {
                                 Icon(
@@ -251,8 +236,6 @@ internal fun CreationContent(
                             }
                         }
 
-
-
                         if (creationState.currentStep != CreationStep.FINISHED) {
                             Box(
                                 shape = CircleShape,
@@ -261,10 +244,10 @@ internal fun CreationContent(
                                         onClick = {
                                             onNextStep?.invoke()
                                         }, indication = RippleIndication(
-                                            bounded = true,
-                                            radius = 16.dp,
-                                            color = Color.Black
-                                        )
+                                        bounded = true,
+                                        radius = 16.dp,
+                                        color = Color.Black
+                                    )
                                     )
                             ) {
                                 Icon(
@@ -301,15 +284,8 @@ private fun nameStepComposable(
 ) {
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
         Spacer(modifier = Modifier.height(48.dp))
-        Text(
-            text = stringResource(id = R.string.hint_product_name),
-            style = TextStyle(
-                textAlign = TextAlign.Center,
-                fontSize = TextUnit.Companion.Sp(26),
-                color = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
+        titleComposable(title = stringResource(id = R.string.hint_product_name))
+
         Spacer(modifier = Modifier.height(48.dp))
         Box(
             shape = RoundedCornerShape(16.dp),
@@ -345,15 +321,10 @@ private fun storeStepComposable(
 ) {
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
         Spacer(modifier = Modifier.height(48.dp))
-        Text(
-            text = "What categories does this item belong to?",
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            modifier = Modifier.fillMaxWidth(),
-            color = Color.White
-        )
+        titleComposable(title = stringResource(id = R.string.title_categories))
+
         Spacer(modifier = Modifier.height(48.dp))
-        val amenityList = listOf(
+        val items = listOf(
             "Art",
             "Automotive",
             "Beauty",
@@ -371,7 +342,7 @@ private fun storeStepComposable(
             mainAxisSpacing = 16.dp,
             mainAxisSize = SizeMode.Expand
         ) {
-            amenityList.forEachIndexed { _, amenity ->
+            items.forEachIndexed { _, amenity ->
                 Box(
                     Modifier.clickable(onClick = {
                         if (selectedItems.contains(amenity)) {
@@ -405,13 +376,8 @@ private fun positiveStepComposable(
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
     Spacer(modifier = Modifier.height(48.dp))
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        Text(
-            text = "Can you list some reasons why you need this item?",
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            modifier = Modifier.fillMaxWidth(),
-            color = Color.White
-        )
+        titleComposable(title = stringResource(id = R.string.title_positive_reasons))
+
         Spacer(modifier = Modifier.height(48.dp))
 
         labelTextField(
@@ -432,20 +398,13 @@ private fun positiveStepComposable(
 
 @ExperimentalFocus
 @Composable
-private fun negativeStepComposable(
-    creationState: CreationState
+internal fun negativeStepComposable(
 ) {
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
 
     Spacer(modifier = Modifier.height(48.dp))
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        Text(
-            text = "How about why you might not need this item?",
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            modifier = Modifier.fillMaxWidth(),
-            color = Color.White
-        )
+        titleComposable(title = stringResource(id = R.string.title_negative_reasons))
         Spacer(modifier = Modifier.height(48.dp))
 
         labelTextField(
@@ -482,7 +441,7 @@ private fun finishedComposable(
 
         Text(
             text = "We'll come back to you in a few days before you purchase this item. " +
-                    "Until then, take a few moments to reflect on the needs for this purchase.",
+                "Until then, take a few moments to reflect on the needs for this purchase.",
             textAlign = TextAlign.Center,
             fontSize = TextUnit.Companion.Sp(18),
             modifier = Modifier.fillMaxWidth().weight(4f).padding(16.dp),
@@ -560,17 +519,7 @@ private fun frequencyStepComposable(
         modifier = Modifier.fillMaxSize().gravity(align = Top),
         horizontalGravity = CenterHorizontally
     ) {
-        Text(
-            text = stringResource(id = R.string.hint_frequency),
-            style = currentTextStyle().merge(
-                TextStyle(
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit.Companion.Sp(26),
-                    color = Color.White
-                )
-            ),
-            modifier = Modifier.padding(16.dp).fillMaxWidth()
-        )
+        titleComposable(title = stringResource(id = R.string.hint_frequency))
         Spacer(modifier = Modifier.height(48.dp))
         Slider(
             value = creationState.frequencyCount,
@@ -593,6 +542,19 @@ private fun frequencyStepComposable(
 }
 
 @Composable
+internal fun titleComposable(title: String) {
+    Text(
+        text = title,
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+            fontSize = TextUnit.Companion.Sp(26),
+            color = MaterialTheme.colors.onPrimary
+        ),
+        modifier = Modifier.padding(16.dp).fillMaxWidth()
+    )
+}
+
+@Composable
 private fun remindStepComposable(
     creationState: CreationState,
     onRemindDays: ((days: Int) -> Unit)?
@@ -602,17 +564,7 @@ private fun remindStepComposable(
         modifier = Modifier.fillMaxSize().gravity(align = Top),
         horizontalGravity = CenterHorizontally
     ) {
-        Text(
-            text = stringResource(id = R.string.hint_remind_days),
-            style = currentTextStyle().merge(
-                TextStyle(
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit.Companion.Sp(26),
-                    color = Color.White
-                )
-            ),
-            modifier = Modifier.padding(16.dp).fillMaxWidth()
-        )
+        titleComposable(title = stringResource(id = R.string.hint_remind_days))
         Spacer(modifier = Modifier.height(48.dp))
         Slider(
             value = creationState.daysToRemind.toFloat(),

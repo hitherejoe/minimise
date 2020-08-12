@@ -16,10 +16,10 @@ fun MinimiseTheme(
         colors = lightColors(
             primary = colorResource(id = R.color.primaryColor),
             primaryVariant = colorResource(id = R.color.primaryDarkColor),
-            onPrimary = Color.White,
+            onPrimary = colorResource(id = R.color.color_on_primary),
             secondary = colorResource(id = R.color.secondaryColor),
             secondaryVariant = colorResource(id = R.color.secondaryDarkColor),
-            onSecondary = Color.White,
+            onSecondary = colorResource(id = R.color.color_on_secondary),
             error = colorResource(id = R.color.color_error),
             surface = colorResource(id = R.color.color_surface),
             onSurface = colorResource(id = R.color.color_on_surface),

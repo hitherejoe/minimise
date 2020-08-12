@@ -31,21 +31,12 @@ android {
 
 dependencies {
     implementation project(":platform_android:design")
-    implementation Deps.AndroidX.coreKtx
 
     implementation Deps.Compose.material
     implementation Deps.Compose.layout
     implementation Deps.Compose.foundation
     implementation Deps.Compose.runtime
     implementation Deps.Compose.tooling
-
-    implementation Deps.Google.material
-
-    implementation Deps.Lifecycle.extensions
-    implementation Deps.Lifecycle.viewModelKtx
-    implementation Deps.Lifecycle.commonJava8
-    implementation Deps.Lifecycle.commonJava8
-    implementation Deps.Lifecycle.runtime
 
     implementation Deps.Kotlin.stdLib
 }

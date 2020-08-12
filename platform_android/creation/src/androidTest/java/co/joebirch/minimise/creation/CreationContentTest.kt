@@ -34,4 +34,15 @@ class CreationContentTest {
                     .assertIsDisplayed()
             }
     }
+    
+    @Test
+    fun titleComposableDisplaysText() {
+        val title = "This is a title"
+        composeTestRule.setContent {
+            titleComposable(title = title)
+        }
+
+        onNodeWithText(title)
+            .assertIsDisplayed()
+    }
 }
