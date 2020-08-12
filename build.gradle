@@ -13,9 +13,6 @@ buildscript {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap/"
-        }
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
@@ -52,9 +49,6 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
-        maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap/"
-        }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/kotlin/kotlinx.html' }
         maven { url 'https://dl.bintray.com/kotlin/ktor' }

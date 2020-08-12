@@ -4,6 +4,9 @@
     <string name="hint_store_name">What store is this item from?</string>
     <string name="hint_frequency">How often will you use this item?</string>
     <string name="hint_remind_days">When shall we check-in with you about this item?</string>
+    <string name="title_negative_reasons">How about why you might not need this item?</string>
+    <string name="title_positive_reasons">Can you list some reasons why you need this item?</string>
+    <string name="title_categories">What categories does this item belong to?</string>
 
     <string name="frequency_hardly">Hardly</string>
     <string name="frequency_not_often">Not very often</string>

@@ -25,7 +25,7 @@
 
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
     <!--on which they appear.-->
-    <color name="color_on_primary">@color/text_primary</color>
+    <color name="color_on_primary">@color/white</color>
     <color name="color_on_primary_inverse">@color/white</color>
     <color name="color_on_secondary">@color/white</color>
     <color name="color_on_background">@color/primaryDarkColor</color>
