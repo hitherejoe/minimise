@@ -11,11 +11,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ripple.RippleIndication
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Recomposer
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.state
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
@@ -28,6 +25,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -176,7 +174,8 @@ internal fun CreationContent(
                                     CreationStep.NAME -> {
                                         nameStepComposable(
                                             creationState,
-                                            onNameChanged = onNameChanged
+                                            onNameChanged = onNameChanged,
+                                            onNextStep
                                         )
                                     }
                                     CreationStep.CATEGORY -> {
@@ -263,16 +262,31 @@ internal fun CreationContent(
 }
 
 @Composable
-private fun stepCounter(currentStep: CreationStep) {
+internal fun stepCounter(currentStep: CreationStep) {
     Row(modifier = Modifier.padding(top = 8.dp, start = 4.dp)) {
-        repeat(CreationStep.values().count()) {
+        CreationStep.values().forEachIndexed { index, creationStep ->
+            val isStepViewed = index <= currentStep.ordinal
             Box(
                 backgroundColor = MaterialTheme.colors.secondary,
                 modifier = Modifier.height(6.dp).weight(1f)
-                    .drawOpacity(if (it <= currentStep.ordinal) 1f else 0.6f)
+                    .drawOpacity(if (isStepViewed) 1f else 0.5f)
+                    .testTag(if (isStepViewed) creationStep.name else "")
                     .padding(end = 4.dp)
             )
         }
+    }
+}
+
+@Composable
+fun roundedBackgroundBox(
+    children: @Composable () -> Unit = emptyContent()
+) {
+    Box(
+        shape = RoundedCornerShape(16.dp),
+        backgroundColor = MaterialTheme.colors.secondary,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        children()
     }
 }
 
@@ -280,18 +294,15 @@ private fun stepCounter(currentStep: CreationStep) {
 @Composable
 private fun nameStepComposable(
     creationState: CreationState,
-    onNameChanged: ((name: String) -> Unit)?
+    onNameChanged: ((name: String) -> Unit)?,
+    onNextStep: (() -> Unit)?
 ) {
     ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
         Spacer(modifier = Modifier.height(48.dp))
         titleComposable(title = stringResource(id = R.string.hint_product_name))
 
         Spacer(modifier = Modifier.height(48.dp))
-        Box(
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = MaterialTheme.colors.secondary,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        roundedBackgroundBox {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Spacer(modifier = Modifier.width(16.dp))
                 TextField(
@@ -302,9 +313,14 @@ private fun nameStepComposable(
                     label = {
 
                     },
+                    imeAction = ImeAction.Next,
+                    onImeActionPerformed = { imeAction, _ ->
+                        if (imeAction == ImeAction.Next) {
+                            onNextStep?.invoke()
+                        }
+                    },
                     activeColor = Color.White,
-                    shape = RoundedCornerShape(16.dp),
-                    backgroundColor = MaterialTheme.colors.secondary,
+                    backgroundColor = Color.Transparent,
                     modifier = Modifier.padding(16.dp).fillMaxWidth().sizeIn(minHeight = 80.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -473,13 +489,7 @@ fun labelTextField(
 ) {
     val states = state { TextFieldValue() }
     val hasFocus = state { false }
-    Box(
-        shape = RoundedCornerShape(16.dp),
-        backgroundColor = MaterialTheme.colors.secondary,
-        modifier = Modifier.fillMaxWidth()
-            .focusRequester(requester)
-            .drawOpacity(if (hasFocus.value) 1f else 0.6f)
-    ) {
+    roundedBackgroundBox {
         Row(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
             Text(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
