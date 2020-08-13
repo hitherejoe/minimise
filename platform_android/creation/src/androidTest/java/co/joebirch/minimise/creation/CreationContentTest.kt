@@ -5,6 +5,7 @@ import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.ui.test.*
 import co.joebirch.minimise.dashboard.CreationState
+import co.joebirch.minimise.dashboard.CreationStep
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -44,5 +45,33 @@ class CreationContentTest {
 
         onNodeWithText(title)
             .assertIsDisplayed()
+    }
+
+    @Test
+    fun stepCounterDisplaysViewedSteps() {
+        composeTestRule.setContent {
+            stepCounter(currentStep = CreationStep.FREQUENCY)
+        }
+
+        repeat(CreationStep.FREQUENCY.ordinal + 1) {
+            onNodeWithTag(CreationStep.values()[it].name)
+                .assertIsDisplayed()
+        }
+    }
+
+    @Test
+    fun stepCounterDoesNotDisplayNotViewedSteps() {
+        composeTestRule.setContent {
+            stepCounter(currentStep = CreationStep.FREQUENCY)
+        }
+
+        onNodeWithTag(CreationStep.POSITIVE.name)
+            .assertDoesNotExist()
+        onNodeWithTag(CreationStep.NEGATIVE.name)
+            .assertDoesNotExist()
+        onNodeWithTag(CreationStep.REMIND.name)
+            .assertDoesNotExist()
+        onNodeWithTag(CreationStep.FINISHED.name)
+            .assertDoesNotExist()
     }
 }
