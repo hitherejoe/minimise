@@ -7,6 +7,7 @@
     <string name="title_negative_reasons">How about why you might not need this item?</string>
     <string name="title_positive_reasons">Can you list some reasons why you need this item?</string>
     <string name="title_categories">What categories does this item belong to?</string>
+    <string name="title_finished">All done!</string>
 
     <string name="frequency_hardly">Hardly</string>
     <string name="frequency_not_often">Not very often</string>
