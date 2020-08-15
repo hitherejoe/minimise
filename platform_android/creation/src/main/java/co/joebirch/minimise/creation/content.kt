@@ -2,10 +2,14 @@ package co.joebirch.minimise.creation
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
+import androidx.annotation.ArrayRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.*
 import androidx.compose.animation.transition
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.ColumnScope.gravity
+import androidx.compose.foundation.layout.ColumnScope.weight
 import androidx.compose.foundation.layout.RowScope.gravity
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -290,6 +294,23 @@ fun roundedBackgroundBox(
     }
 }
 
+@Composable
+private fun creationStep(
+    @StringRes title: Int,
+    children: @Composable () -> Unit = emptyContent()
+) {
+    ScrollableColumn(
+        modifier = Modifier.fillMaxSize().gravity(align = Top),
+        horizontalGravity = CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(48.dp))
+        titleComposable(title = stringResource(id = title))
+
+        Spacer(modifier = Modifier.height(48.dp))
+        children()
+    }
+}
+
 @ExperimentalFocus
 @Composable
 private fun nameStepComposable(
@@ -297,11 +318,7 @@ private fun nameStepComposable(
     onNameChanged: ((name: String) -> Unit)?,
     onNextStep: (() -> Unit)?
 ) {
-    ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        Spacer(modifier = Modifier.height(48.dp))
-        titleComposable(title = stringResource(id = R.string.hint_product_name))
-
-        Spacer(modifier = Modifier.height(48.dp))
+    creationStep(title = R.string.hint_product_name) {
         roundedBackgroundBox {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Spacer(modifier = Modifier.width(16.dp))
@@ -335,11 +352,7 @@ private fun storeStepComposable(
     creationState: CreationState,
     onCategories: ((store: List<String>) -> Unit)?
 ) {
-    ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        Spacer(modifier = Modifier.height(48.dp))
-        titleComposable(title = stringResource(id = R.string.title_categories))
-
-        Spacer(modifier = Modifier.height(48.dp))
+    creationStep(title = R.string.title_categories) {
         val items = listOf(
             "Art",
             "Automotive",
@@ -390,12 +403,8 @@ private fun positiveStepComposable(
     creationState: CreationState
 ) {
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
-    Spacer(modifier = Modifier.height(48.dp))
-    ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        titleComposable(title = stringResource(id = R.string.title_positive_reasons))
 
-        Spacer(modifier = Modifier.height(48.dp))
-
+    creationStep(title = R.string.title_positive_reasons) {
         labelTextField(
             1,
             focusModifiers[0],
@@ -418,11 +427,7 @@ internal fun negativeStepComposable(
 ) {
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
 
-    Spacer(modifier = Modifier.height(48.dp))
-    ScrollableColumn(modifier = Modifier.fillMaxSize().gravity(align = Top)) {
-        titleComposable(title = stringResource(id = R.string.title_negative_reasons))
-        Spacer(modifier = Modifier.height(48.dp))
-
+    creationStep(title = R.string.title_negative_reasons) {
         labelTextField(
             1,
             focusModifiers[0],
@@ -443,18 +448,7 @@ internal fun negativeStepComposable(
 private fun finishedComposable(
     onFormCompleted: (() -> Unit)?
 ) {
-    Column(
-        modifier = Modifier.gravity(align = Top).fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-        Text(
-            text = "All done!",
-            textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
-            modifier = Modifier.fillMaxWidth().padding(16.dp).weight(1f),
-            color = Color.White
-        )
-
+    creationStep(title = R.string.title_finished) {
         Text(
             text = "We'll come back to you in a few days before you purchase this item. " +
                 "Until then, take a few moments to reflect on the needs for this purchase.",
@@ -524,30 +518,12 @@ private fun frequencyStepComposable(
     creationState: CreationState,
     onFrequencyChanged: ((frequency: Float) -> Unit)?
 ) {
-    Spacer(modifier = Modifier.height(48.dp))
-    ScrollableColumn(
-        modifier = Modifier.fillMaxSize().gravity(align = Top),
-        horizontalGravity = CenterHorizontally
-    ) {
-        titleComposable(title = stringResource(id = R.string.hint_frequency))
-        Spacer(modifier = Modifier.height(48.dp))
-        Slider(
-            value = creationState.frequencyCount,
-            onValueChange = {
-                onFrequencyChanged?.invoke(it)
-            },
-            color = Color.White,
-            valueRange = 0f..4f,
-            steps = 3,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-        )
-
-        Text(
-            text = stringArrayResource(id = R.array.frequency_options)[creationState.frequencyCount.toInt()],
-            style = currentTextStyle().merge(TextStyle(color = Color.White)),
-            modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
-                .padding(16.dp)
-        )
+    creationStep(title = R.string.hint_frequency) {
+        creationStepSlider(value = creationState.frequencyCount,
+            options = R.array.frequency_options,
+            onValueChanged = {
+                onFrequencyChanged?.invoke(it.toFloat())
+            })
     }
 }
 
@@ -565,33 +541,40 @@ internal fun titleComposable(title: String) {
 }
 
 @Composable
+private fun creationStepSlider(
+    value: Float,
+    @ArrayRes options: Int,
+    onValueChanged: (value: Int) -> Unit
+) {
+    Slider(
+        value = value,
+        onValueChange = {
+            onValueChanged(it.toInt())
+        },
+        color = Color.White,
+        valueRange = 0f..4f,
+        steps = 3,
+        modifier = Modifier.fillMaxWidth().padding(16.dp)
+    )
+
+    Text(
+        text = stringArrayResource(id = options)[value.toInt()],
+        style = currentTextStyle().merge(TextStyle(color = Color.White)),
+        modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
+            .padding(16.dp)
+    )
+}
+
+@Composable
 private fun remindStepComposable(
     creationState: CreationState,
     onRemindDays: ((days: Int) -> Unit)?
 ) {
-    Spacer(modifier = Modifier.height(48.dp))
-    ScrollableColumn(
-        modifier = Modifier.fillMaxSize().gravity(align = Top),
-        horizontalGravity = CenterHorizontally
-    ) {
-        titleComposable(title = stringResource(id = R.string.hint_remind_days))
-        Spacer(modifier = Modifier.height(48.dp))
-        Slider(
-            value = creationState.daysToRemind.toFloat(),
-            onValueChange = {
-                onRemindDays?.invoke(it.toInt())
-            },
-            color = Color.White,
-            valueRange = 0f..4f,
-            steps = 3,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
-        )
-
-        Text(
-            text = stringArrayResource(id = R.array.reminder_options)[creationState.daysToRemind.toInt()],
-            style = currentTextStyle().merge(TextStyle(color = Color.White)),
-            modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
-                .padding(16.dp)
-        )
+    creationStep(title = R.string.hint_remind_days) {
+        creationStepSlider(value = creationState.daysToRemind.toFloat(),
+            options = R.array.reminder_options,
+            onValueChanged = {
+                onRemindDays?.invoke(it)
+            })
     }
 }
