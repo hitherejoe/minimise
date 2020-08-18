@@ -1,13 +1,15 @@
 import Foundation
 import SwiftUI
-import SharedAuthentication
 import Dashboard
 import Common
+import SharedAuthentication
 
 public struct AuthenticationView: View {
 
     @ObservedObject var viewModel: AuthenticationViewModel
     var viewProvider: ScreenFactory
+    @State var emailHasFocus: Bool = false
+    @State var passwordHasFocus: Bool = false
 
     public func authenticateButtonText() -> String {
         if (self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self)) {
@@ -46,6 +48,8 @@ public struct AuthenticationView: View {
                             self.viewModel.setPassword(password: password)
                         }
                 ),
+                   emailHasFocus: self.$emailHasFocus,
+                   passwordHasFocus: self.$passwordHasFocus,
                     authenticateButtonText: authenticateButtonText(),
                     switchAuthenticationModeText: switchAuthenticationModeText(),
                     isSigningUp: self.viewModel.state.authenticationMode.isKind(of: AuthenticateMode.SignUp.self),
@@ -108,17 +112,74 @@ struct ConnectButton: View {
     }
 
     var body: some View {
-        return Button(action: self.action) {
-            HStack {
-                Spacer()
-                Text(label)
-                Spacer()
+        
+        return LargeButton(title: label,
+        backgroundColor: Color("secondary"),
+        foregroundColor: Color.white, action: self.action)
+        
+    }
+}
+
+struct LargeButtonStyle: ButtonStyle {
+    
+    let backgroundColor: Color
+    let foregroundColor: Color
+    let isDisabled: Bool
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
+        let currentForegroundColor = isDisabled || configuration.isPressed ? foregroundColor.opacity(0.3) : foregroundColor
+        return configuration.label
+            .padding()
+            .foregroundColor(currentForegroundColor)
+            .background(isDisabled || configuration.isPressed ? backgroundColor.opacity(0.3) : backgroundColor)
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(currentForegroundColor, lineWidth: 0)
+        )
+            .padding([.top, .bottom], 10)
+    }
+}
+
+struct LargeButton: View {
+    
+    private static let buttonHorizontalMargins: CGFloat = 20
+    
+    var backgroundColor: Color
+    var foregroundColor: Color
+    
+    private let title: String
+    private let action: () -> Void
+    
+    // It would be nice to make this into a binding.
+    private let disabled: Bool
+    
+    init(title: String,
+         disabled: Bool = false,
+         backgroundColor: Color = Color.green,
+         foregroundColor: Color = Color.white,
+         action: @escaping () -> Void) {
+        self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
+        self.title = title
+        self.action = action
+        self.disabled = disabled
+    }
+    
+    var body: some View {
+        HStack {
+            Spacer(minLength: LargeButton.buttonHorizontalMargins)
+            Button(action:self.action) {
+                Text(self.title)
+                    .frame(maxWidth:.infinity)
             }
+            .buttonStyle(LargeButtonStyle(backgroundColor: backgroundColor,
+                                          foregroundColor: foregroundColor,
+                                          isDisabled: disabled))
+                .disabled(self.disabled)
+            Spacer(minLength: LargeButton.buttonHorizontalMargins)
         }
-                .padding(.vertical, 10.0)
-                .background(true ? Color.blue : Color.gray)
-                .foregroundColor(Color.white)
-                .padding(.all, 20)
+        .frame(maxWidth:.infinity)
     }
 }
 
@@ -126,6 +187,8 @@ struct AuthenticationContent: View {
 
     let email: Binding<String>
     let password: Binding<String>
+    let emailHasFocus: Binding<Bool>
+    let passwordHasFocus: Binding<Bool>
     let authenticateButtonText: String
     let switchAuthenticationModeText: String
     let isSigningUp: Bool
@@ -134,6 +197,8 @@ struct AuthenticationContent: View {
 
     init(email: Binding<String>,
          password: Binding<String>,
+         emailHasFocus: Binding<Bool>,
+         passwordHasFocus: Binding<Bool>,
          authenticateButtonText: String,
          switchAuthenticationModeText: String,
          isSigningUp: Bool,
@@ -142,6 +207,8 @@ struct AuthenticationContent: View {
     ) {
         self.email = email
         self.password = password
+        self.emailHasFocus = emailHasFocus
+        self.passwordHasFocus = passwordHasFocus
         self.authenticateButtonText = authenticateButtonText
         self.switchAuthenticationModeText = switchAuthenticationModeText
         self.isSigningUp = isSigningUp
@@ -152,15 +219,19 @@ struct AuthenticationContent: View {
     public var body: some View {
         VStack {
             Text("Minimise")
+                .foregroundColor(Color.white)
 
             Spacer()
-
-            TextField("Email", text: email)
-                    .padding(.all, 10.0)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            TextField("Password", text: password)
-                    .padding(.all, 10.0)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            VStack {
+            
+                CustomTextField(placeHolder: "Email address", value: email, hasFocus: emailHasFocus, width: 2).padding(.top, 30)
+                .padding(.bottom, 24)
+            CustomTextField(placeHolder: "Password", value: password,
+                            hasFocus: passwordHasFocus, width: 2).padding(.bottom, 30)
+                
+            }.background(Color("secondary"))
+            .cornerRadius(8)
             
             if (isSigningUp) {
                 Button(action: self.action) {
@@ -173,9 +244,39 @@ struct AuthenticationContent: View {
             Spacer()
 
             ConnectButton(label:self.authenticateButtonText, action: self.action)
-
+                
             ConnectButton(label:self.switchAuthenticationModeText, action: self.switchAuthenticationAction)
         }
+    }
+}
+
+struct CustomTextField: View {
+    var placeHolder: String
+    @Binding var value: String
+    @Binding var hasFocus: Bool
+
+
+    var width: CGFloat
+
+    var body: some View {
+        VStack {
+            TextField(self.placeHolder, text: $value, onEditingChanged: { (editingChanged) in
+                if editingChanged {
+                    self.hasFocus = true
+                    print("TextField focused")
+                } else {
+                    self.hasFocus = false
+                    print("TextField focus removed")
+                }
+            })
+                .accentColor(hasFocus ? Color.white : Color.gray)
+            .padding(.horizontal, 16)
+
+            Rectangle().frame(height: self.width)
+                .foregroundColor(hasFocus ? Color.white : Color.gray)
+            .padding(.horizontal, 16)
+        }
+        
     }
 }
 
@@ -216,3 +317,4 @@ fileprivate struct NavigateModifier<SomeView: View>: ViewModifier {
         }
     }
 }
+

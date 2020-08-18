@@ -1,6 +1,7 @@
 import Foundation
 import SharedAuthentication
 
+
 class AuthenticationViewModel: ObservableObject, AuthenticateView {
     
     @Published internal var state: AuthenticationState = AuthenticationState.Companion.init().initialise()
