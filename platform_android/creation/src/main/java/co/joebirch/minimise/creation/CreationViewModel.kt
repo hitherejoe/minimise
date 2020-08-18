@@ -16,6 +16,38 @@ class CreationViewModel @Inject constructor(
             CreationState(CreationStep.NAME)
         )
 
+    fun handleCreationEvent(event: CreationEvent) {
+        when (event) {
+            is CreationEvent.NameChanged -> {
+                setProductName(event.name)
+            }
+            is CreationEvent.CategoriesChanged -> {
+                // create categories function
+            }
+            is CreationEvent.FrequencyChanged -> {
+                setFrequency(event.frequency)
+            }
+            is CreationEvent.ReminderLengthChanged -> {
+                setRemindDays(event.days)
+            }
+            is CreationEvent.PositiveNotesChanged -> {
+                setPositives(event.notes)
+            }
+            is CreationEvent.NegativeNotesChanged -> {
+                setNegatives(event.notes)
+            }
+            CreationEvent.NextStepRequested -> {
+                navigateToNextStep()
+            }
+            CreationEvent.PreviousStepRequested -> {
+                navigateToPreviousStep()
+            }
+            CreationEvent.FormCompleted -> {
+                createBelonging()
+            }
+        }
+    }
+
     fun observeAuthenticationState(): LiveData<CreationState> = uiState
 
     fun setProductName(name: String) {

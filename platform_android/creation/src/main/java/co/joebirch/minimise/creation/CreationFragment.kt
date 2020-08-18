@@ -46,17 +46,8 @@ class CreationFragment : BaseFragment() {
             )
 
             composeDashboardContent(
-                dashboardViewModel.observeAuthenticationState(),
-                dashboardViewModel::setProductName,
-                dashboardViewModel::setStoreName,
-                dashboardViewModel::setFrequency,
-                dashboardViewModel::setRemindDays,
-                dashboardViewModel::setPositives,
-                dashboardViewModel::setNegatives,
-                dashboardViewModel::navigateToNextStep,
-                dashboardViewModel::navigateToPreviousStep,
-                dashboardViewModel::createBelonging
-            )
+                dashboardViewModel.observeAuthenticationState()
+            ) { dashboardViewModel.handleCreationEvent(it)  }
         }
     }
 }

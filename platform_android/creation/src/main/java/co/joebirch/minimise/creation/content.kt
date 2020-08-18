@@ -49,20 +49,10 @@ import androidx.ui.tooling.preview.Preview
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
-    onNameChanged: (name: String) -> Unit,
-    onCategoriesChanged: (store: List<String>) -> Unit,
-    onFrequencyChanged: (frequency: Float) -> Unit,
-    onRemindDays: (days: Int) -> Unit,
-    onPositivesChanged: (frequency: List<String>) -> Unit,
-    onNegativesChanged: (frequency: List<String>) -> Unit,
-    onNextStep: () -> Unit,
-    onPreviousStep: () -> Unit,
-    onFormCompleted: () -> Unit
+    creationEvents: (event: CreationEvent) -> Unit
 ): Any = setContent(Recomposer.current()) {
     ComposeInventoryContent(
-        uiState, onNameChanged, onCategoriesChanged, onFrequencyChanged,
-        onRemindDays, onPositivesChanged, onNegativesChanged, onNextStep, onPreviousStep,
-        onFormCompleted
+        uiState, creationEvents
     )
 }
 
@@ -70,26 +60,12 @@ fun ViewGroup.composeDashboardContent(
 @Composable
 private fun ComposeInventoryContent(
     uiState: LiveData<CreationState>,
-    onNameChanged: (name: String) -> Unit,
-    onCategoriesChanged: (store: List<String>) -> Unit,
-    onFrequencyChanged: (frequency: Float) -> Unit,
-    onRemindDays: (days: Int) -> Unit,
-    onPositivesChanged: (frequency: List<String>) -> Unit,
-    onNegativesChanged: (frequency: List<String>) -> Unit,
-    onNextStep: () -> Unit,
-    onPreviousStep: () -> Unit,
-    onFormCompleted: () -> Unit
+    creationEvents: (event: CreationEvent) -> Unit
 ) {
     val viewState by uiState.observeAsState()
     viewState?.let {
         CreationContent(
-            onNameChanged = onNameChanged, onCategoriesChanged = onCategoriesChanged,
-            onFrequencyChanged = onFrequencyChanged,
-            onRemindDays = onRemindDays,
-            onPositivesChanged = onPositivesChanged,
-            onNegativesChanged = onNegativesChanged,
-            onNextStep = onNextStep, onPreviousStep = onPreviousStep,
-            onFormCompleted = onFormCompleted, creationState = it
+            creationEvents = creationEvents, creationState = it
         )
     }
 }
@@ -134,15 +110,7 @@ private val sizeTransitionDefinition = transitionDefinition<String> {
 @Composable
 internal fun CreationContent(
     creationState: CreationState,
-    onNameChanged: ((name: String) -> Unit)? = null,
-    onCategoriesChanged: ((store: List<String>) -> Unit)? = null,
-    onFrequencyChanged: ((frequency: Float) -> Unit)? = null,
-    onRemindDays: ((days: Int) -> Unit)? = null,
-    onPositivesChanged: ((frequency: List<String>) -> Unit)? = null,
-    onNegativesChanged: ((frequency: List<String>) -> Unit)? = null,
-    onNextStep: (() -> Unit)? = null,
-    onPreviousStep: (() -> Unit)? = null,
-    onFormCompleted: (() -> Unit)? = null
+    creationEvents: (event: CreationEvent) -> Unit
 ) {
     MinimiseTheme {
         Scaffold(
@@ -178,26 +146,25 @@ internal fun CreationContent(
                                     CreationStep.NAME -> {
                                         nameStepComposable(
                                             creationState,
-                                            onNameChanged = onNameChanged,
-                                            onNextStep
+                                            creationEvents = creationEvents
                                         )
                                     }
                                     CreationStep.CATEGORY -> {
                                         storeStepComposable(
                                             creationState,
-                                            onCategories = onCategoriesChanged
+                                            creationEvents = creationEvents
                                         )
                                     }
                                     CreationStep.FREQUENCY -> {
                                         frequencyStepComposable(
                                             creationState,
-                                            onFrequencyChanged = onFrequencyChanged
+                                            creationEvents = creationEvents
                                         )
                                     }
                                     CreationStep.REMIND -> {
                                         remindStepComposable(
                                             creationState,
-                                            onRemindDays = onRemindDays
+                                            creationEvents = creationEvents
                                         )
                                     }
                                     CreationStep.POSITIVE -> {
@@ -210,7 +177,7 @@ internal fun CreationContent(
                                     }
                                     CreationStep.FINISHED -> {
                                         finishedComposable(
-                                            onFormCompleted
+                                            creationEvents = creationEvents
                                         )
                                     }
                                 }
@@ -224,7 +191,7 @@ internal fun CreationContent(
                                 modifier = Modifier.gravity(BottomStart).padding(16.dp)
                                     .clickable(
                                         onClick = {
-                                            onPreviousStep?.invoke()
+                                            creationEvents(CreationEvent.PreviousStepRequested)
                                         }, indication = RippleIndication(
                                         bounded = true,
                                         radius = 16.dp,
@@ -245,7 +212,7 @@ internal fun CreationContent(
                                 modifier = Modifier.gravity(BottomEnd).padding(16.dp)
                                     .clickable(
                                         onClick = {
-                                            onNextStep?.invoke()
+                                            creationEvents(CreationEvent.NextStepRequested)
                                         }, indication = RippleIndication(
                                         bounded = true,
                                         radius = 16.dp,
@@ -315,8 +282,7 @@ private fun creationStep(
 @Composable
 private fun nameStepComposable(
     creationState: CreationState,
-    onNameChanged: ((name: String) -> Unit)?,
-    onNextStep: (() -> Unit)?
+    creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.hint_product_name) {
         roundedBackgroundBox {
@@ -325,7 +291,7 @@ private fun nameStepComposable(
                 TextField(
                     value = creationState.name,
                     onValueChange = { value ->
-                        onNameChanged?.invoke(value)
+                        creationEvents(CreationEvent.NameChanged(value))
                     },
                     label = {
 
@@ -333,7 +299,7 @@ private fun nameStepComposable(
                     imeAction = ImeAction.Next,
                     onImeActionPerformed = { imeAction, _ ->
                         if (imeAction == ImeAction.Next) {
-                            onNextStep?.invoke()
+                            creationEvents(CreationEvent.NextStepRequested)
                         }
                     },
                     activeColor = Color.White,
@@ -350,7 +316,7 @@ private fun nameStepComposable(
 @Composable
 private fun storeStepComposable(
     creationState: CreationState,
-    onCategories: ((store: List<String>) -> Unit)?
+    creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.title_categories) {
         val items = listOf(
@@ -379,7 +345,7 @@ private fun storeStepComposable(
                         } else {
                             selectedItems.add(amenity)
                         }
-                        onCategories?.invoke(selectedItems)
+                        creationEvents(CreationEvent.CategoriesChanged(selectedItems))
                     }).drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.7f),
                     children = {
                         Text(
@@ -446,7 +412,7 @@ internal fun negativeStepComposable(
 
 @Composable
 private fun finishedComposable(
-    onFormCompleted: (() -> Unit)?
+    creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.title_finished) {
         Text(
@@ -464,7 +430,7 @@ private fun finishedComposable(
         ) {
             Button(
                 onClick = {
-                    onFormCompleted?.invoke()
+                    creationEvents(CreationEvent.FormCompleted)
                 },
                 backgroundColor = MaterialTheme.colors.secondary
             ) {
@@ -516,13 +482,13 @@ fun labelTextField(
 @Composable
 private fun frequencyStepComposable(
     creationState: CreationState,
-    onFrequencyChanged: ((frequency: Float) -> Unit)?
+    creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.hint_frequency) {
         creationStepSlider(value = creationState.frequencyCount,
             options = R.array.frequency_options,
             onValueChanged = {
-                onFrequencyChanged?.invoke(it.toFloat())
+                creationEvents(CreationEvent.FrequencyChanged(it.toFloat()))
             })
     }
 }
@@ -568,13 +534,13 @@ private fun creationStepSlider(
 @Composable
 private fun remindStepComposable(
     creationState: CreationState,
-    onRemindDays: ((days: Int) -> Unit)?
+    creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.hint_remind_days) {
         creationStepSlider(value = creationState.daysToRemind.toFloat(),
             options = R.array.reminder_options,
             onValueChanged = {
-                onRemindDays?.invoke(it)
+                creationEvents(CreationEvent.ReminderLengthChanged(it))
             })
     }
 }
