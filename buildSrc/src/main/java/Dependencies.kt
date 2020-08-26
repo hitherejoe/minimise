@@ -10,27 +10,26 @@ object Versions {
 object Deps {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha07"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0-rc"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
 
     object Apollo {
-        const val version = "2.2.3"
+        const val version = "2.3.0"
         const val plugin = "com.apollographql.apollo:apollo-gradle-plugin:$version"
         const val runtime = "com.apollographql.apollo:apollo-runtime-kotlin:$version"
         const val api = "com.apollographql.apollo:apollo-api:$version"
-        const val ios = "com.apollographql.apollo:apollo-runtime-kotlin-ios-x64:$version"
     }
 
     object Kotlin {
-        const val version = "1.4.0-rc"
+        const val version = "1.4.0"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
-        private const val serializationVersion = "0.20.0"
+        private const val serializationVersion = "1.0.0-RC"
 
         const val serializationRuntimeNative =
             "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion"
@@ -91,7 +90,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.5-native-mt"
+        const val version = "1.3.9"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -101,7 +100,7 @@ object Deps {
     }
 
     object Compose {
-        private const val version = "0.1.0-dev16"
+        private const val version = "0.1.0-dev17"
 
         const val core = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -117,7 +116,7 @@ object Deps {
     }
 
     object Ktor {
-        private const val version = "1.3.2"
+        private const val version = "1.4.0"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"

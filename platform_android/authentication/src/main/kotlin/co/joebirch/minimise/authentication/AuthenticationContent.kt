@@ -233,7 +233,7 @@ internal fun AuthenticationContent(
             }
             val showingDialog = state { viewState.errorMessage }
             if (showingDialog.value != null) {
-                AlertDialog(onCloseRequest = {
+                AlertDialog(onDismissRequest = {
                     showingDialog.value = null
                 }, title = {
                     Text(text = stringResource(id = R.string.error_title))

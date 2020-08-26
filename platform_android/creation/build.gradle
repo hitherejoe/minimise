@@ -81,6 +81,7 @@ dependencies {
     implementation Deps.Lifecycle.viewModelKtx
 
     testImplementation Deps.junit
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
 
     androidTestImplementation Deps.AndroidX.junit
     androidTestImplementation Deps.Espresso.core

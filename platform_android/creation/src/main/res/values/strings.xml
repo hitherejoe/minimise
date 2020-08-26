@@ -15,6 +15,20 @@
     <string name="frequency_very_often">Very often</string>
     <string name="frequency_all_the_time">All the time</string>
 
+    <string name="label_completed">Close</string>
+    <string name="message_completed">We\'ll come back to you in a few days before you purchase this item. Until then, take a few moments to reflect on the needs for this purchase.</string>
+
+    <string-array name="category_options">
+        <item>Art</item>
+        <item>Automotive</item>
+        <item>Beauty</item>
+        <item>Books</item>
+        <item>Electronics</item>
+        <item>Gaming</item>
+        <item>Tools</item>
+        <item>Hobbies</item>
+    </string-array>
+
     <string-array name="frequency_options">
         <item>@string/frequency_hardly</item>
         <item>@string/frequency_not_often</item>

@@ -8,14 +8,12 @@ import androidx.compose.animation.core.FloatPropKey
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.transitionDefinition
 import androidx.compose.animation.transition
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnItems
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.TabConstants.defaultTabIndicatorOffset
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Recomposer
@@ -153,7 +151,7 @@ private fun DashboardContent(
                 Column {
                     Box(
                         backgroundColor = MaterialTheme.colors.primary,
-                        shape = RoundedCornerShape(0.dp, 0.dp, 18.dp, 18.dp)
+                        shape = RoundedCornerShape(bottomRight = 18.dp, bottomLeft = 18.dp)
                     ) {
                         Spacer(modifier = Modifier.preferredHeight(8.dp))
                         TopAppBar(title = {
@@ -169,49 +167,46 @@ private fun DashboardContent(
                             )
                         }, elevation = 0.dp)
                         Spacer(modifier = Modifier.preferredHeight(16.dp))
-                        TabRow(
-                            items = tabTitles,
-                            scrollable = true,
+                        ScrollableTabRow(
+                            modifier = Modifier.width(350.dp),
+                            edgePadding = 24.dp,
                             contentColor = Color.White,
-                            indicatorContainer = { tabPositions ->
-                                TabRow.IndicatorContainer(
-                                    tabPositions,
-                                    categories.indexOf(currentCategory)
-                                ) {
-                                    Box(
-                                        Modifier.fillMaxWidth().widthIn(maxWidth = 80.dp)
-                                            .preferredHeight(5.dp),
-                                        backgroundColor = Color.White,
-                                        shape = RoundedCornerShape(16.dp, 16.dp, 0.dp, 0.dp)
+                            selectedTabIndex = categories.indexOf(currentCategory),
+                            divider = { },
+                            indicator = { tabPositions: List<TabPosition> ->
+                                val modifier = Modifier.defaultTabIndicatorOffset(
+                                    tabPositions[categories.indexOf(currentCategory)])
+                                Box(
+                                    modifier.fillMaxWidth().preferredHeight(5.dp),
+                                    backgroundColor = Color.White,
+                                    shape = RoundedCornerShape(topLeft = 16.dp, topRight = 16.dp)
+                                )
+                            }
+                        ) {
+                            tabTitles.forEachIndexed { index, category ->
+                                Tab(
+                                    selected = categories.indexOf(currentCategory) == index,
+                                    onClick = { updateSelectedCategory(categories[index]) }
+                                )
+                                {
+                                    val textColor = if (categories.indexOf(currentCategory) == index) {
+                                        1f
+                                    } else {
+                                        0.65f
+                                    }
+                                    Text(
+                                        text = category.title,
+                                        fontWeight = FontWeight.Normal,
+                                        textAlign = TextAlign.Center,
+                                        color = Color.White,
+                                        modifier = Modifier.padding(
+                                            top = 16.dp,
+                                            bottom = 12.dp,
+                                            start = 16.dp,
+                                            end = 16.dp
+                                        ).drawOpacity(textColor)
                                     )
                                 }
-                            },
-                            selectedIndex = categories.indexOf(currentCategory),
-                            divider = { },
-                            modifier = Modifier.wrapContentWidth().offset(x = (-36).dp)
-                        ) { index, currentTab ->
-                            Tab(
-                                selected = categories.indexOf(currentCategory) == index,
-                                onSelected = { updateSelectedCategory(categories[index]) }
-                            )
-                            {
-                                val textColor = if (categories.indexOf(currentCategory) == index) {
-                                    1f
-                                } else {
-                                    0.65f
-                                }
-                                Text(
-                                    text = currentTab.title,
-                                    fontWeight = FontWeight.Normal,
-                                    textAlign = TextAlign.Center,
-                                    color = Color.White,
-                                    modifier = Modifier.padding(
-                                        top = 16.dp,
-                                        bottom = 12.dp,
-                                        start = 16.dp,
-                                        end = 16.dp
-                                    ).drawOpacity(textColor)
-                                )
                             }
                         }
                     }

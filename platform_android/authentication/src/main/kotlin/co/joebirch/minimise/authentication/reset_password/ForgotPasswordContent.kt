@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.ColumnScope.weight
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FilledTextField
+import androidx.compose.material.TextField
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Recomposer
@@ -89,7 +89,7 @@ private fun FormContent(
                     )
                     Spacer(modifier = Modifier.preferredHeight(36.dp))
                     Column(modifier = Modifier.padding(8.dp)) {
-                        FilledTextField(
+                        TextField(
                             value = emailState.value,
                             onValueChange = {
                                 emailChanged(emailState.value.text)
@@ -122,7 +122,7 @@ private fun FormContent(
                 }
                 val showingDialog = state { errorMessage }
                 if (showingDialog.value != null) {
-                    AlertDialog(onCloseRequest = {
+                    AlertDialog(onDismissRequest = {
                         showingDialog.value = null
                     }, title = {
                         Text(text = "Whoops!")

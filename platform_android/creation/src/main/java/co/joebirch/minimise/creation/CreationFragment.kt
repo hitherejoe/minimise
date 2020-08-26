@@ -46,7 +46,7 @@ class CreationFragment : BaseFragment() {
             )
 
             composeDashboardContent(
-                dashboardViewModel.observeAuthenticationState()
+                dashboardViewModel.uiState
             ) { dashboardViewModel.handleCreationEvent(it)  }
         }
     }

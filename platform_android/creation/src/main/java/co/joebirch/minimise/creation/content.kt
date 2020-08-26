@@ -45,7 +45,6 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
-import androidx.ui.tooling.preview.Preview
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
@@ -150,7 +149,7 @@ internal fun CreationContent(
                                         )
                                     }
                                     CreationStep.CATEGORY -> {
-                                        storeStepComposable(
+                                        categoriesStepComposable(
                                             creationState,
                                             creationEvents = creationEvents
                                         )
@@ -250,12 +249,13 @@ internal fun stepCounter(currentStep: CreationStep) {
 
 @Composable
 fun roundedBackgroundBox(
-    children: @Composable () -> Unit = emptyContent()
+    modifier: Modifier = Modifier,
+    children: @Composable () -> Unit = emptyContent(),
 ) {
     Box(
         shape = RoundedCornerShape(16.dp),
         backgroundColor = MaterialTheme.colors.secondary,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier
     ) {
         children()
     }
@@ -285,7 +285,7 @@ private fun nameStepComposable(
     creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.hint_product_name) {
-        roundedBackgroundBox {
+        roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                 Spacer(modifier = Modifier.width(16.dp))
                 TextField(
@@ -314,22 +314,12 @@ private fun nameStepComposable(
 
 @ExperimentalLayout
 @Composable
-private fun storeStepComposable(
+private fun categoriesStepComposable(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.title_categories) {
-        val items = listOf(
-            "Art",
-            "Automotive",
-            "Beauty",
-            "Books",
-            "Clothing",
-            "Electronics",
-            "Gaming",
-            "Tools",
-            "Hobbies"
-        )
+        val items = stringArrayResource(id = R.array.category_options)
         val selectedItems = creationState.categories.toMutableList()
         FlowRow(
             mainAxisAlignment = MainAxisAlignment.Center,
@@ -338,26 +328,24 @@ private fun storeStepComposable(
             mainAxisSize = SizeMode.Expand
         ) {
             items.forEachIndexed { _, amenity ->
-                Box(
-                    Modifier.clickable(onClick = {
-                        if (selectedItems.contains(amenity)) {
-                            selectedItems.remove(amenity)
-                        } else {
-                            selectedItems.add(amenity)
-                        }
-                        creationEvents(CreationEvent.CategoriesChanged(selectedItems))
-                    }).drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.7f),
-                    children = {
-                        Text(
-                            text = amenity,
-                            overflow = TextOverflow.Ellipsis,
-                            color = Color.White,
-                            modifier = Modifier.padding(12.dp)
-                        )
-                    },
-                    shape = RoundedCornerShape(16.dp),
-                    backgroundColor = MaterialTheme.colors.secondary
-                )
+
+                val modifier = Modifier.clickable(onClick = {
+                    if (selectedItems.contains(amenity)) {
+                        selectedItems.remove(amenity)
+                    } else {
+                        selectedItems.add(amenity)
+                    }
+                    creationEvents(CreationEvent.CategoriesChanged(selectedItems))
+                }).drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.6f)
+
+                roundedBackgroundBox(modifier = modifier) {
+                    Text(
+                        text = amenity,
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.White,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                }
             }
         }
     }
@@ -416,8 +404,7 @@ private fun finishedComposable(
 ) {
     creationStep(title = R.string.title_finished) {
         Text(
-            text = "We'll come back to you in a few days before you purchase this item. " +
-                "Until then, take a few moments to reflect on the needs for this purchase.",
+            text = stringResource(id = R.string.message_completed),
             textAlign = TextAlign.Center,
             fontSize = TextUnit.Companion.Sp(18),
             modifier = Modifier.fillMaxWidth().weight(4f).padding(16.dp),
@@ -434,7 +421,7 @@ private fun finishedComposable(
                 },
                 backgroundColor = MaterialTheme.colors.secondary
             ) {
-                Text(text = "Close", color = Color.White)
+                Text(text = stringResource(id = R.string.label_completed) , color = Color.White)
             }
         }
     }
@@ -449,7 +436,7 @@ fun labelTextField(
 ) {
     val states = state { TextFieldValue() }
     val hasFocus = state { false }
-    roundedBackgroundBox {
+    roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
             Text(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
@@ -462,9 +449,6 @@ fun labelTextField(
                 },
                 label = {
 
-                },
-                onFocusChanged = { focus ->
-                    hasFocus.value = focus
                 },
                 onImeActionPerformed = { _, _ ->
                     nextModifier?.requestFocus()
@@ -517,7 +501,9 @@ private fun creationStepSlider(
         onValueChange = {
             onValueChanged(it.toInt())
         },
-        color = Color.White,
+        thumbColor = Color.White,
+        activeTrackColor = Color.White,
+        activeTickColor = Color.White,
         valueRange = 0f..4f,
         steps = 3,
         modifier = Modifier.fillMaxWidth().padding(16.dp)
