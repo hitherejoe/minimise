@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import co.joebirch.minimise.shared.dashboard.Belonging
+import co.joebirch.minimise.shared.dashboard.Category
+import co.joebirch.minimise.shared.dashboard.DashboardState
+import co.joebirch.minimise.shared.dashboard.DashboardView
 import javax.inject.Inject
 
 class DashboardViewModel @Inject constructor(
@@ -40,11 +41,13 @@ class DashboardViewModel @Inject constructor(
          */
         _uiState.postValue(
             _uiState.value!!.build {
-                this.pendingBelongings = listOf(Belonging(
+                this.pendingBelongings = listOf(
+                    Belonging(
                     "id",
                     "Name",
                     "Store"
-                ))
+                )
+                )
             }
         )
     }

@@ -2,12 +2,15 @@ package co.joebirch.minimise.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavDirections
+import androidx.navigation.compose.NamedNavArgument
 
 object DashboardDirections {
 
-    val Creation = object : NavDirections {
-        override fun getArguments() = Bundle()
+    val Creation = object : NavigationDirection {
 
-        override fun getActionId() = R.id.action_inventoryFragment_to_creationFragment
+        override fun getArguments() = emptyList<NamedNavArgument>()
+
+        override fun getDestination() = "creation"
+
     }
 }

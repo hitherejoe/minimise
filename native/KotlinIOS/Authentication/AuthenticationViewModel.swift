@@ -48,20 +48,13 @@ class AuthenticationViewModel: ObservableObject, AuthenticateView {
             builder.loading = true
             builder.error = nil
         }
-        /*
-        backendService.signIn(emailAddress: self.state.emailAddress,
-                              password: self.state.password) { (success) in
-                                if (success) {
-                                    self.state = self.state.build { (builder) in
-                                        builder.success = true
-                                    }
-                                } else {
-                                    self.state = self.state.build { (builder) in
-                                        builder.error = "Error"
-                                    }
-                                }
-        }
- */
+        authenticateUseCase.runWithoutThreading(params: Authenticate.ParamsCompanion().forSignIn(apiKey: "", emailAddress: self.state.emailAddress, password: self.state.password), completion: { response in
+            
+            self.state = self.state.build { (builder) in
+                builder.success = true
+            }
+            
+        })
     }
     
     func signUp() {

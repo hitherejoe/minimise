@@ -36,13 +36,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    composeOptions {
-        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
-        kotlinCompilerExtensionVersion Deps.Compose.version
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Deps.Kotlin.version
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
     }
 }
 
@@ -64,7 +65,6 @@ dependencies {
     implementation Deps.Compose.material
     implementation Deps.Compose.tooling
     implementation Deps.Compose.foundation
-    implementation Deps.Compose.text
 
     implementation Deps.Google.Hilt.hilt
     implementation Deps.Google.Hilt.viewmodel

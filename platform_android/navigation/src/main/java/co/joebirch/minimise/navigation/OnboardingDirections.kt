@@ -1,13 +1,14 @@
 package co.joebirch.minimise.navigation
 
-import android.os.Bundle
-import androidx.navigation.NavDirections
+import androidx.navigation.compose.NamedNavArgument
 
 object OnboardingDirections {
 
-    val Authentication = object : NavDirections {
-        override fun getArguments() = Bundle()
+    val Authentication = object : NavigationDirection {
 
-        override fun getActionId() = R.id.action_onboardingFragment_to_authenticationFragment
+        override fun getArguments() = emptyList<NamedNavArgument>()
+
+        override fun getDestination() = "authentication"
+
     }
 }

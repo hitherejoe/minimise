@@ -18,8 +18,6 @@ android {
 }
 
 dependencies {
-    implementation project(":platform_android:navigation")
-
     implementation Deps.AndroidX.appCompat
 
     implementation Deps.Google.Hilt.hilt

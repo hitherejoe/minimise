@@ -32,8 +32,6 @@ kotlin {
 
     sourceSets["androidMain"].dependencies {
         implementation(Deps.Kotlin.stdLib)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
     }
 
     sourceSets["iosMain"].dependencies {

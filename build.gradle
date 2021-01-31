@@ -2,7 +2,7 @@ import co.joebirch.minimise.buildsrc.Deps
 import co.joebirch.minimise.buildsrc.Versions
 
 buildscript {
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = Deps.Kotlin.version
     ext.buildConfig = [
         'compileSdk': 29,
         'minSdk'    : 21,
@@ -29,7 +29,7 @@ buildscript {
         classpath Deps.androidGradlePlugin
         classpath Deps.kotlinGradlePlugin
         classpath Deps.Kotlin.serialization
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.gms:google-services:4.3.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath Deps.Apollo.plugin
         classpath Deps.Google.Hilt.gradlePlugin

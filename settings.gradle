@@ -1,7 +1,6 @@
 include ':platform_android:creation'
 include ':platform_android:common-ui'
 include ':platform_android:dashboard'
-include ':platform_android:dashboard-ui'
 include ':platform_android:design'
 include ':platform_android:core'
 include ':platform_android:onboarding'

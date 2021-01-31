@@ -14,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/MinimiseTheme.DayNight">
         <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

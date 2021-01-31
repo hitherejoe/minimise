@@ -6,27 +6,24 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.*
 import androidx.compose.animation.transition
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.ColumnScope.gravity
-import androidx.compose.foundation.layout.ColumnScope.weight
-import androidx.compose.foundation.layout.RowScope.gravity
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.ripple.RippleIndication
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.platform.testTag
@@ -45,6 +42,7 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
+import co.joebirch.minimise.common_ui.roundedBackgroundBox
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
@@ -73,20 +71,24 @@ val sizeState = FloatPropKey()
 val alphaState = FloatPropKey()
 val contentAlphaState = FloatPropKey()
 
+enum class ContentState {
+    Hidden, Visible
+}
+
 @SuppressLint("Range")
-private val sizeTransitionDefinition = transitionDefinition<String> {
-    state("A") {
+private val sizeTransitionDefinition = transitionDefinition<ContentState> {
+    state(ContentState.Hidden) {
         this[sizeState] = 0f
         this[alphaState] = 0f
         this[contentAlphaState] = 0f
     }
-    state("B") {
+    state(ContentState.Visible) {
         this[sizeState] = 80f
         this[alphaState] = 1f
         this[contentAlphaState] = 1f
     }
 
-    transition(fromState = "A", toState = "B") {
+    transition(fromState = ContentState.Hidden, toState = ContentState.Visible) {
         sizeState using tween(
             durationMillis = 200,
             easing = FastOutLinearInEasing
@@ -104,7 +106,6 @@ private val sizeTransitionDefinition = transitionDefinition<String> {
     }
 }
 
-@OptIn(ExperimentalFocus::class)
 @ExperimentalLayout
 @Composable
 internal fun CreationContent(
@@ -114,92 +115,70 @@ internal fun CreationContent(
     MinimiseTheme {
         Scaffold(
             bodyContent = {
-                Stack(modifier = Modifier.fillMaxSize()) {
-                    Box(
-                        backgroundColor = MaterialTheme.colors.primary,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.primary)
+                ) {
                     if (creationState.isLoading) {
                         CircularProgressIndicator(
                             color = MaterialTheme.colors.secondary,
-                            modifier = Modifier.gravity(Center)
+                            modifier = Modifier.align(Center)
                         )
                     } else {
                         val state = transition(
                             definition = sizeTransitionDefinition,
-                            initState = "A",
-                            toState = "B"
+                            initState = ContentState.Hidden,
+                            toState = ContentState.Visible
                         )
                         Column(
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.gravity(Center)
+                            modifier = Modifier
+                                .align(Center)
                                 .fillMaxHeight()
                                 .drawOpacity(state[contentAlphaState])
                         ) {
                             stepCounter(
                                 creationState.currentStep
                             )
-                            Box(modifier = Modifier.padding(16.dp)) {
-                                Spacer(modifier = Modifier.height(16.dp))
-                                when (creationState.currentStep) {
-                                    CreationStep.NAME -> {
-                                        nameStepComposable(
-                                            creationState,
-                                            creationEvents = creationEvents
-                                        )
-                                    }
-                                    CreationStep.CATEGORY -> {
-                                        categoriesStepComposable(
-                                            creationState,
-                                            creationEvents = creationEvents
-                                        )
-                                    }
-                                    CreationStep.FREQUENCY -> {
-                                        frequencyStepComposable(
-                                            creationState,
-                                            creationEvents = creationEvents
-                                        )
-                                    }
-                                    CreationStep.REMIND -> {
-                                        remindStepComposable(
-                                            creationState,
-                                            creationEvents = creationEvents
-                                        )
-                                    }
-                                    CreationStep.POSITIVE -> {
-                                        positiveStepComposable(
-                                            creationState
-                                        )
-                                    }
-                                    CreationStep.NEGATIVE -> {
-                                        negativeStepComposable()
-                                    }
-                                    CreationStep.FINISHED -> {
-                                        finishedComposable(
-                                            creationEvents = creationEvents
-                                        )
-                                    }
-                                }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            when (creationState.currentStep) {
+                                CreationStep.NAME ->
+                                    nameStepComposable(creationState, creationEvents)
+                                CreationStep.CATEGORY ->
+                                    categoriesStepComposable(creationState, creationEvents)
+                                CreationStep.FREQUENCY ->
+                                    frequencyStepComposable(creationState, creationEvents)
+                                CreationStep.REMIND ->
+                                    remindStepComposable(creationState, creationEvents)
+                                CreationStep.POSITIVE ->
+                                    positiveStepComposable(creationState)
+                                CreationStep.NEGATIVE -> negativeStepComposable()
+                                CreationStep.FINISHED -> finishedComposable(creationEvents)
                             }
                         }
                         if (creationState.currentStep != CreationStep.NAME &&
                             creationState.currentStep != CreationStep.FINISHED
                         ) {
                             Box(
-                                shape = CircleShape,
-                                modifier = Modifier.gravity(BottomStart).padding(16.dp)
+                                modifier = Modifier
+                                    .align(BottomStart)
+                                    .background(
+                                        shape = CircleShape,
+                                        color = MaterialTheme.colors.primary
+                                    )
+                                    .padding(16.dp)
                                     .clickable(
                                         onClick = {
                                             creationEvents(CreationEvent.PreviousStepRequested)
-                                        }, indication = RippleIndication(
-                                        bounded = true,
-                                        radius = 16.dp,
-                                        color = Color.Black
-                                    )
+                                        }
                                     )
                             ) {
                                 Icon(
-                                    asset = vectorResource(id = R.drawable.ic_baseline_arrow_back_24),
+                                    contentDescription = "Go back",
+                                    imageVector = vectorResource(id = R.drawable.ic_baseline_arrow_back_24),
                                     tint = Color.White
                                 )
                             }
@@ -207,21 +186,23 @@ internal fun CreationContent(
 
                         if (creationState.currentStep != CreationStep.FINISHED) {
                             Box(
-                                shape = CircleShape,
-                                modifier = Modifier.gravity(BottomEnd).padding(16.dp)
+                                modifier = Modifier
+                                    .align(BottomEnd)
+                                    .background(
+                                        shape = CircleShape,
+                                        color = MaterialTheme.colors.primary
+                                    )
+                                    .padding(16.dp)
                                     .clickable(
                                         onClick = {
                                             creationEvents(CreationEvent.NextStepRequested)
-                                        }, indication = RippleIndication(
-                                        bounded = true,
-                                        radius = 16.dp,
-                                        color = Color.Black
-                                    )
+                                        }
                                     )
                             ) {
                                 Icon(
-                                    asset = vectorResource(id = R.drawable.ic_baseline_arrow_forward_24),
-                                    tint = Color.White
+                                    imageVector = vectorResource(id = R.drawable.ic_baseline_arrow_forward_24),
+                                    tint = Color.White,
+                                    contentDescription = "Go to next step"
                                 )
                             }
                         }
@@ -237,9 +218,11 @@ internal fun stepCounter(currentStep: CreationStep) {
         CreationStep.values().forEachIndexed { index, creationStep ->
             val isStepViewed = index <= currentStep.ordinal
             Box(
-                backgroundColor = MaterialTheme.colors.secondary,
-                modifier = Modifier.height(6.dp).weight(1f)
+                modifier = Modifier
+                    .height(6.dp)
+                    .weight(1f)
                     .drawOpacity(if (isStepViewed) 1f else 0.5f)
+                    .background(MaterialTheme.colors.secondary)
                     .testTag(if (isStepViewed) creationStep.name else "")
                     .padding(end = 4.dp)
             )
@@ -248,27 +231,14 @@ internal fun stepCounter(currentStep: CreationStep) {
 }
 
 @Composable
-fun roundedBackgroundBox(
-    modifier: Modifier = Modifier,
-    children: @Composable () -> Unit = emptyContent(),
-) {
-    Box(
-        shape = RoundedCornerShape(16.dp),
-        backgroundColor = MaterialTheme.colors.secondary,
-        modifier = modifier
-    ) {
-        children()
-    }
-}
-
-@Composable
 private fun creationStep(
     @StringRes title: Int,
-    children: @Composable () -> Unit = emptyContent()
+    children: @Composable () -> Unit
 ) {
     ScrollableColumn(
-        modifier = Modifier.fillMaxSize().gravity(align = Top),
-        horizontalGravity = CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Spacer(modifier = Modifier.height(48.dp))
         titleComposable(title = stringResource(id = title))
@@ -278,7 +248,6 @@ private fun creationStep(
     }
 }
 
-@ExperimentalFocus
 @Composable
 private fun nameStepComposable(
     creationState: CreationState,
@@ -286,7 +255,9 @@ private fun nameStepComposable(
 ) {
     creationStep(title = R.string.hint_product_name) {
         roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+            Column(modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()) {
                 Spacer(modifier = Modifier.width(16.dp))
                 TextField(
                     value = creationState.name,
@@ -296,7 +267,7 @@ private fun nameStepComposable(
                     label = {
 
                     },
-                    imeAction = ImeAction.Next,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     onImeActionPerformed = { imeAction, _ ->
                         if (imeAction == ImeAction.Next) {
                             creationEvents(CreationEvent.NextStepRequested)
@@ -304,7 +275,10 @@ private fun nameStepComposable(
                     },
                     activeColor = Color.White,
                     backgroundColor = Color.Transparent,
-                    modifier = Modifier.padding(16.dp).fillMaxWidth().sizeIn(minHeight = 80.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .sizeIn(minHeight = 80.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -329,14 +303,16 @@ private fun categoriesStepComposable(
         ) {
             items.forEachIndexed { _, amenity ->
 
-                val modifier = Modifier.clickable(onClick = {
-                    if (selectedItems.contains(amenity)) {
-                        selectedItems.remove(amenity)
-                    } else {
-                        selectedItems.add(amenity)
-                    }
-                    creationEvents(CreationEvent.CategoriesChanged(selectedItems))
-                }).drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.6f)
+                val modifier = Modifier
+                    .clickable(onClick = {
+                        if (selectedItems.contains(amenity)) {
+                            selectedItems.remove(amenity)
+                        } else {
+                            selectedItems.add(amenity)
+                        }
+                        creationEvents(CreationEvent.CategoriesChanged(selectedItems))
+                    })
+                    .drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.6f)
 
                 roundedBackgroundBox(modifier = modifier) {
                     Text(
@@ -351,7 +327,6 @@ private fun categoriesStepComposable(
     }
 }
 
-@ExperimentalFocus
 @Composable
 private fun positiveStepComposable(
     creationState: CreationState
@@ -375,7 +350,6 @@ private fun positiveStepComposable(
     }
 }
 
-@ExperimentalFocus
 @Composable
 internal fun negativeStepComposable(
 ) {
@@ -407,37 +381,37 @@ private fun finishedComposable(
             text = stringResource(id = R.string.message_completed),
             textAlign = TextAlign.Center,
             fontSize = TextUnit.Companion.Sp(18),
-            modifier = Modifier.fillMaxWidth().weight(4f).padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             color = Color.White
         )
 
-        Box(
-            modifier = Modifier.gravity(align = CenterHorizontally).weight(1f),
-            gravity = Center
-        ) {
+        Box {
             Button(
                 onClick = {
                     creationEvents(CreationEvent.FormCompleted)
                 },
-                backgroundColor = MaterialTheme.colors.secondary
+                modifier = Modifier.background(MaterialTheme.colors.secondary)
             ) {
-                Text(text = stringResource(id = R.string.label_completed) , color = Color.White)
+                Text(text = stringResource(id = R.string.label_completed), color = Color.White)
             }
         }
     }
 }
 
-@OptIn(ExperimentalFocus::class)
 @Composable
 fun labelTextField(
     position: Int,
     requester: FocusRequester,
     nextModifier: FocusRequester? = null
 ) {
-    val states = state { TextFieldValue() }
-    val hasFocus = state { false }
+    val states = remember { mutableStateOf(TextFieldValue()) }
+    val hasFocus = remember { mutableStateOf(false) }
     roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+        Row(modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()) {
             Text(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
                 fontSize = TextUnit.Companion.Sp(16)
@@ -453,11 +427,14 @@ fun labelTextField(
                 onImeActionPerformed = { _, _ ->
                     nextModifier?.requestFocus()
                 },
-                imeAction = if (position < 3) ImeAction.Next else ImeAction.Done,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = if (position < 3) ImeAction.Next else ImeAction.Done
+                ),
                 activeColor = Color.White,
                 backgroundColor = Color.Transparent,
-                modifier = Modifier.padding(16.dp).fillMaxWidth()
-                    .focusRequester(requester)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             )
         }
     }
@@ -486,7 +463,9 @@ internal fun titleComposable(title: String) {
             fontSize = TextUnit.Companion.Sp(26),
             color = MaterialTheme.colors.onPrimary
         ),
-        modifier = Modifier.padding(16.dp).fillMaxWidth()
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
     )
 }
 
@@ -506,13 +485,15 @@ private fun creationStepSlider(
         activeTickColor = Color.White,
         valueRange = 0f..4f,
         steps = 3,
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     )
 
     Text(
         text = stringArrayResource(id = options)[value.toInt()],
-        style = currentTextStyle().merge(TextStyle(color = Color.White)),
-        modifier = Modifier.wrapContentWidth(align = CenterHorizontally)
+        modifier = Modifier
+            .wrapContentWidth(align = CenterHorizontally)
             .padding(16.dp)
     )
 }

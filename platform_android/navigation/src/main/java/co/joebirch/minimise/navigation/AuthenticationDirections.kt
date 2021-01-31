@@ -1,25 +1,22 @@
 package co.joebirch.minimise.navigation
 
-import android.os.Bundle
-import androidx.navigation.NavDirections
+import androidx.navigation.compose.NamedNavArgument
 
 object AuthenticationDirections {
 
-    val Onboarding = object : NavDirections {
-        override fun getArguments() = Bundle()
+    val Dashboard = object : NavigationDirection {
 
-        override fun getActionId() = R.id.action_authenticationFragment_to_onboardingFragment
+        override fun getArguments() = emptyList<NamedNavArgument>()
+
+        override fun getDestination() = "dashboard"
+
     }
 
-    val ResetPassword = object : NavDirections {
-        override fun getArguments() = Bundle()
+    val ForgotPassword = object : NavigationDirection {
 
-        override fun getActionId() = R.id.action_authenticationFragment_to_forgottenPasswordFragment
-    }
+        override fun getArguments() = emptyList<NamedNavArgument>()
 
-    val Dashboard = object : NavDirections {
-        override fun getArguments() = Bundle()
+        override fun getDestination() = "forgot_password"
 
-        override fun getActionId() = R.id.action_authenticationFragment_to_dashboard
     }
 }

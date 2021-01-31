@@ -1,5 +1,5 @@
 Pod::Spec.new do |spec|
-    spec.name                     = 'SharedCommon'
+    spec.name                     = 'SharedDashboard'
     spec.version                  = 'unspecified'
     spec.homepage                 = ''
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = ''
 
     spec.static_framework         = true
-    spec.vendored_frameworks      = "build/cocoapods/framework/SharedCommon.framework"
+    spec.vendored_frameworks      = "build/cocoapods/framework/SharedDashboard.framework"
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
 
@@ -28,13 +28,13 @@ Pod::Spec.new do |spec|
 
     spec.script_phases = [
         {
-            :name => 'Build SharedCommon',
+            :name => 'Build SharedDashboard',
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
                 set -ev
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
-                "$REPO_ROOT/../../gradlew" -p "$REPO_ROOT" :shared:SharedCommon:syncFramework \
+                "$REPO_ROOT/../../gradlew" -p "$REPO_ROOT" :shared:SharedDashboard:syncFramework \
                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET \
                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION \
                     -Pkotlin.native.cocoapods.cflags="$OTHER_CFLAGS" \

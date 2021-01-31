@@ -2,28 +2,28 @@ package co.joebirch.minimise.buildsrc
 
 object Versions {
     val minSdk = 21
-    val targetSdk = 29
-    val compileSdk = 29
+    val targetSdk = 30
+    val compileSdk = 30
     val kotlin = Deps.Kotlin.version
 }
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha07"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
 
     object Apollo {
-        const val version = "2.3.0"
+        const val version = "2.4.6"
         const val plugin = "com.apollographql.apollo:apollo-gradle-plugin:$version"
         const val runtime = "com.apollographql.apollo:apollo-runtime-kotlin:$version"
         const val api = "com.apollographql.apollo:apollo-api:$version"
     }
 
     object Kotlin {
-        const val version = "1.4.0"
+        const val version = "1.4.21-2"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
@@ -64,10 +64,7 @@ object Deps {
 
     object Navigation {
         const val version = "2.3.0-alpha03"
-        const val fragment = "androidx.navigation:navigation-fragment:$version"
-        const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
-        const val ui = "androidx.navigation:navigation-ui:$version"
-        const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+        const val compose = "androidx.navigation:navigation-compose:1.0.0-alpha05"
     }
 
     object Espresso {
@@ -90,7 +87,7 @@ object Deps {
     }
 
     object Coroutines {
-        const val version = "1.3.9"
+        const val version = "1.4.2-native-mt"
         const val coreCommon =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$version"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
@@ -100,8 +97,10 @@ object Deps {
     }
 
     object Compose {
-        private const val version = "0.1.0-dev17"
+        private const val version = "1.0.0-alpha11"
 
+        const val animation = "androidx.compose.animation:animation:$version"
+        const val animationCore = "androidx.compose.animation:animation-core:$version"
         const val core = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val layout = "androidx.compose.foundation:foundation-layout:$version"
@@ -111,12 +110,12 @@ object Deps {
         const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
         const val runtime = "androidx.compose.runtime:runtime:$version"
         const val text = "androidx.compose.foundation:foundation-text:$version"
-        const val tooling = "androidx.ui:ui-tooling:$version"
-        const val test = "androidx.ui:ui-test:$version"
+        const val tooling = "androidx.ui:ui-tooling:1.0.0-alpha07"
+        const val test = "androidx.compose.ui:ui-test-junit4:$version"
     }
 
     object Ktor {
-        private const val version = "1.4.0"
+        private const val version = "1.4.3"
 
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientJson = "io.ktor:ktor-client-json:$version"
@@ -148,11 +147,12 @@ object Deps {
         val material = "com.google.android.material:material:1.2.0-alpha03"
 
         object Hilt {
-            private const val hiltVersion = "2.28-alpha"
+            private const val hiltVersion = "2.31.2-alpha"
             val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
             val hilt = "com.google.dagger:hilt-android:$hiltVersion"
-            val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
-            val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha02"
+            val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+            val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
+            val hiltNavigation = "com.google.dagger:hilt-navigation:1.0.0-alpha03"
             val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         }
     }

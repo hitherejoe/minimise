@@ -1,15 +1,12 @@
 package co.joebirch.minimise.authentication
 
-import androidx.test.filters.MediumTest
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.ui.test.*
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
-@MediumTest
-@RunWith(JUnit4::class)
 class AuthenticationTest {
 
     @get:Rule
@@ -17,7 +14,9 @@ class AuthenticationTest {
 
     private fun launchContent(viewState: AuthenticationState) {
         composeTestRule.setContent {
-            AuthenticationContent(viewState)
+            AuthenticationContent(viewState) {
+
+            }
         }
     }
 
@@ -27,7 +26,7 @@ class AuthenticationTest {
 
         InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_up)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
             }
     }
@@ -38,7 +37,7 @@ class AuthenticationTest {
 
         InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertDoesNotExist()
             }
     }
@@ -49,7 +48,7 @@ class AuthenticationTest {
 
         InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
             }
     }
@@ -60,7 +59,7 @@ class AuthenticationTest {
 
         InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_up)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
             }
     }
@@ -72,7 +71,7 @@ class AuthenticationTest {
         InstrumentationRegistry.getInstrumentation().context.getString(
             R.string.forgotten_your_password)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
             }
     }
@@ -84,7 +83,7 @@ class AuthenticationTest {
         InstrumentationRegistry.getInstrumentation().context.getString(
             R.string.forgotten_your_password)
             .also {
-                onNodeWithText(it)
+                composeTestRule.onNode(matcher = hasText(it))
                     .assertDoesNotExist()
             }
     }
@@ -93,7 +92,7 @@ class AuthenticationTest {
     fun errorMessageDisplayedWhenThereIsAnError() {
         val message = "There was an error"
         launchContent(AuthenticationState(errorMessage = message))
-
-        onNodeWithText(message).assertIsDisplayed()
+        composeTestRule.onNode(matcher = hasText(message))
+            .assertIsDisplayed()
     }
 }

@@ -19,13 +19,14 @@ android {
         compose true
     }
 
-    composeOptions {
-        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
-        kotlinCompilerExtensionVersion Deps.Compose.version
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Deps.Kotlin.version
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
     }
 }
 

@@ -16,6 +16,9 @@ androidExtensions {
 }
 
 android {
+    buildFeatures {
+        compose true
+    }
     compileSdkVersion Versions.compileSdk
 
     defaultConfig {
@@ -36,15 +39,39 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Deps.Kotlin.version
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
+    }
 }
 
 dependencies {
     implementation project(":platform_android:core")
-    implementation project(":platform_android:dashboard-ui")
     implementation project(":platform_android:navigation")
     implementation project(':shared:SharedCommon')
     implementation project(':shared:SharedDashboard')
     implementation project(':platform_android:common-ui')
+
+    implementation Deps.Compose.icons
+    implementation Deps.Compose.runtime
+    implementation Deps.Compose.layout
+    implementation Deps.Compose.livedata
+    implementation Deps.Compose.material
+    implementation Deps.Compose.tooling
+    implementation Deps.Compose.foundation
+    implementation Deps.Navigation.compose
+    implementation Deps.Compose.animation
+    implementation Deps.Compose.animationCore
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
@@ -53,17 +80,12 @@ dependencies {
     implementation Deps.Google.Hilt.viewmodel
     kapt Deps.Google.Hilt.hiltCompiler
 
-    implementation Deps.Fragment.base
-    implementation Deps.Fragment.ktx
-
     implementation Deps.Google.material
 
     implementation Deps.Kotlin.stdLib
 
     implementation Deps.Lifecycle.common
     implementation Deps.Lifecycle.viewModelKtx
-
-    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
 
     testImplementation Deps.junit
 

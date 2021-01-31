@@ -1,4 +1,4 @@
-package co.joebirch.minimise.dashboard
+package co.joebirch.minimise.shared.dashboard
 
 sealed class Category(val title: String, val key: String) {
 

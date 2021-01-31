@@ -3,7 +3,6 @@ import co.joebirch.minimise.buildsrc.Versions
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
@@ -19,6 +18,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -26,10 +33,12 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
 
-    packagingOptions {
-        exclude 'META-INF/*.kotlin_module'
+    composeOptions {
+        kotlinCompilerVersion Deps.Kotlin.version
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
     }
 }
 
@@ -43,7 +52,10 @@ dependencies {
     implementation project(':platform_android:onboarding')
     implementation project(':shared:SharedCore')
     implementation project(':shared:SharedAuthentication')
+    implementation project(':shared:SharedDashboard')
 
+    implementation Deps.Compose.livedata
+    implementation Deps.Navigation.compose
     implementation Deps.Kotlin.stdLib
     implementation Deps.Google.material
     api Deps.AndroidX.appCompat

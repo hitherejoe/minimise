@@ -13,4 +13,9 @@
     <string name="hint_password">Password</string>
     <string name="error_title">Whoops</string>
     <string name="error_action">OK</string>
+
+    <!-- Forgot password -->
+    <string name="hint_forgot_password">Email Address</string>
+    <string name="title_forgot_password">Reset password</string>
+    <string name="action_forgot_password">Rest Password</string>
 </resources>

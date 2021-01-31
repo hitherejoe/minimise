@@ -1,4 +1,4 @@
-package co.joebirch.minimise.dashboard
+package co.joebirch.minimise.shared.dashboard
 
 class DashboardState(
     val selectedCategory: Category = Category.PendingBelongings,

@@ -45,7 +45,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(Deps.Kotlin.common)
-                implementation(Deps.Coroutines.core)
+                implementation(Deps.Coroutines.core) {
+                    version {
+                        strictly(Deps.Coroutines.version)
+                    }
+                }
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Apollo.runtime)
                 implementation(project(":shared:SharedCommon"))
@@ -57,8 +61,11 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation(Deps.junit)
-                implementation(Deps.Coroutines.core)
-                implementation(Deps.Coroutines.test)
+                implementation(Deps.Coroutines.core) {
+                    version {
+                        strictly(Deps.Coroutines.version)
+                    }
+                }
             }
         }
 

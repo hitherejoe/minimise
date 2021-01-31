@@ -1,4 +1,4 @@
-package co.joebirch.minimise.dashboard
+package co.joebirch.minimise.shared.dashboard
 
 interface DashboardView {
 

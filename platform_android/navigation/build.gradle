@@ -23,19 +23,30 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Deps.Kotlin.version
+        kotlinCompilerExtensionVersion '1.0.0-alpha11'
+    }
 }
 
 dependencies {
+    implementation project(":platform_android:core")
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
 
     implementation Deps.Kotlin.stdLib
 
-    implementation Deps.Navigation.fragment
-    implementation Deps.Navigation.ui
-
-    api Deps.Navigation.fragmentKtx
-    api Deps.Navigation.uiKtx
+    implementation Deps.Navigation.compose
 
     testImplementation Deps.junit
 
