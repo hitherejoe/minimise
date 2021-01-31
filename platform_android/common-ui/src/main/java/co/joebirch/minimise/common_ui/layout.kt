@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun roundedBackgroundBox(
+fun RoundedBackgroundBox(
     modifier: Modifier = Modifier,
     children: @Composable () -> Unit = emptyContent(),
 ) {

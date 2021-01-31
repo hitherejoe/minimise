@@ -9,12 +9,10 @@ import androidx.compose.animation.transition
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.BottomEnd
@@ -42,7 +40,7 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
-import co.joebirch.minimise.common_ui.roundedBackgroundBox
+import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
 fun ViewGroup.composeDashboardContent(
     uiState: LiveData<CreationState>,
@@ -254,7 +252,7 @@ private fun nameStepComposable(
     creationEvents: (name: CreationEvent) -> Unit
 ) {
     creationStep(title = R.string.hint_product_name) {
-        roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
+        RoundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()) {
@@ -314,7 +312,7 @@ private fun categoriesStepComposable(
                     })
                     .drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.6f)
 
-                roundedBackgroundBox(modifier = modifier) {
+                RoundedBackgroundBox(modifier = modifier) {
                     Text(
                         text = amenity,
                         overflow = TextOverflow.Ellipsis,
@@ -408,7 +406,7 @@ fun labelTextField(
 ) {
     val states = remember { mutableStateOf(TextFieldValue()) }
     val hasFocus = remember { mutableStateOf(false) }
-    roundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
+    RoundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()) {

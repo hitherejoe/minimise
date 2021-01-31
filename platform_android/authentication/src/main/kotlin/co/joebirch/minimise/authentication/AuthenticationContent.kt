@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.FilledButton
 import co.joebirch.minimise.common_ui.onSecondaryInputField
-import co.joebirch.minimise.common_ui.roundedBackgroundBox
+import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
 @Composable
 fun Content(
@@ -54,7 +54,7 @@ fun Content(
                 style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
             )
             Spacer(modifier = Modifier.height(48.dp))
-            roundedBackgroundBox(
+            RoundedBackgroundBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(

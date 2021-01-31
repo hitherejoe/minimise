@@ -21,8 +21,7 @@ import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.common_ui.FilledButton
 import co.joebirch.minimise.common_ui.onSecondaryInputField
-import co.joebirch.minimise.common_ui.roundedBackgroundBox
-import co.joebirch.minimise.navigation.NavigationController
+import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 import javax.inject.Inject
 
 class ForgotPasswordContentFactory @Inject constructor(
@@ -60,7 +59,7 @@ class ForgotPasswordContentFactory @Inject constructor(
                         )
                         Spacer(modifier = Modifier.height(36.dp))
 
-                        roundedBackgroundBox(
+                        RoundedBackgroundBox(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
