@@ -49,11 +49,4 @@ open class AuthenticationRemoteStore: AuthenticationRemote {
         return apolloClient.query(repositoriesQuery).execute().single().data?.login
             ?.toAuthenticationModel() ?: AuthenticationModel()
     }
-
-    override fun resetPassword(
-        apiKey: String,
-        emailAddress: String
-    ) {
-
-    }
 }

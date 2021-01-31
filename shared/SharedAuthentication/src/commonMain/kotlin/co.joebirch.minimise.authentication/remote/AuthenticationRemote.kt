@@ -17,9 +17,4 @@ interface AuthenticationRemote {
         emailAddress: String,
         password: String
     ): AuthenticationModel
-
-    fun resetPassword(
-        apiKey: String,
-        emailAddress: String
-    ): AuthenticationModel
 }
