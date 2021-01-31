@@ -97,7 +97,7 @@ object Deps {
     }
 
     object Compose {
-        private const val version = "1.0.0-alpha11"
+        const val version = "1.0.0-alpha11"
 
         const val animation = "androidx.compose.animation:animation:$version"
         const val animationCore = "androidx.compose.animation:animation-core:$version"
