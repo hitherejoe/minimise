@@ -1,7 +1,6 @@
 package co.joebirch.minimise.authentication
 
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
@@ -14,7 +13,7 @@ class AuthenticationTest {
 
     private fun launchContent(viewState: AuthenticationState) {
         composeTestRule.setContent {
-            AuthenticationContent(viewState) {
+            Content(viewState) {
 
             }
         }
@@ -69,7 +68,8 @@ class AuthenticationTest {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
 
         InstrumentationRegistry.getInstrumentation().context.getString(
-            R.string.forgotten_your_password)
+            R.string.forgotten_your_password
+        )
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
@@ -81,11 +81,23 @@ class AuthenticationTest {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignUp))
 
         InstrumentationRegistry.getInstrumentation().context.getString(
-            R.string.forgotten_your_password)
+            R.string.forgotten_your_password
+        )
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertDoesNotExist()
             }
+    }
+
+    @Test
+    fun loginButtonDisabled() {
+        launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignUp))
+        composeTestRule.onNode(matcher = hasTestTag("authenticate"))
+            .assertTextEquals(
+                InstrumentationRegistry.getInstrumentation().context.getString(
+                    R.string.sign_up
+                )
+            )
     }
 
     @Test

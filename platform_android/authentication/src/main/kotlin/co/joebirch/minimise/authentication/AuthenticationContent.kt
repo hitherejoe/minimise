@@ -138,7 +138,7 @@ fun Content(
                 Modifier.weight(1f, fill = true)
             )
             FilledButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier.align(Alignment.CenterHorizontally).testTag("authenticate"),
                 text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                     stringResource(R.string.sign_in)
                 } else {
