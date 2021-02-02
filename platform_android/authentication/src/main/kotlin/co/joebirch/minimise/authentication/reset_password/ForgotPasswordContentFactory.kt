@@ -89,7 +89,8 @@ class ForgotPasswordContentFactory @Inject constructor(
                             text = stringResource(R.string.action_forgot_password),
                             onClick = {
                                 authenticateClicked()
-                            }
+                            },
+                            enabled = true
                         )
                         Box(Modifier.preferredHeight(16.dp))
                     }

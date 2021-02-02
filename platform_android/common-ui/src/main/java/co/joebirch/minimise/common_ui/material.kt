@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 fun FilledButton(
     modifier: Modifier,
     text: String,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     Button(
@@ -37,7 +38,8 @@ fun FilledButton(
         shape = RoundedCornerShape(10.dp),
         colors = textButtonColors(
             backgroundColor = MaterialTheme.colors.secondary
-        )
+        ),
+        enabled = enabled
     ) {
         Text(
             text = text,

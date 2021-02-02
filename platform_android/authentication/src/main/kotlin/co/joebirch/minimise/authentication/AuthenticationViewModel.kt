@@ -3,16 +3,13 @@ package co.joebirch.minimise.authentication
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.Preferences
 import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
-import co.joebirch.minimise.navigation.NavigationCommand
 import co.joebirch.minimise.navigation.NavigationController
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class AuthenticationViewModel @ViewModelInject constructor(
     private val authenticate: Authenticate,
@@ -44,6 +41,9 @@ class AuthenticationViewModel @ViewModelInject constructor(
                         } else {
                             this.mode = AuthenticateMode.SignIn
                         }
+                    }
+                    AuthenticationEvent.DismissErrorDialog -> {
+                        this.error = null
                     }
                     AuthenticationEvent.AuthenticateClicked -> {
                         this.loading = true

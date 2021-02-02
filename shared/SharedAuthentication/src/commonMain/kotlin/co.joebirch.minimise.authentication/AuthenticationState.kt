@@ -3,6 +3,7 @@ package co.joebirch.minimise.authentication
 class AuthenticationState(
     val emailAddress: String = "",
     val password: String = "",
+    val isAuthenticationContentValid: Boolean = false,
     val authenticationMode: AuthenticateMode = AuthenticateMode.SignUp,
     val isLoading: Boolean = false,
     val success: Boolean? = null,
@@ -18,6 +19,8 @@ class AuthenticationState(
     class Builder(state: AuthenticationState) {
         var userEmail = state.emailAddress
         var userPassword = state.password
+        var isAuthenticationContentValid = userEmail.trim().isNotEmpty() &&
+                userPassword.trim().isNotEmpty()
         var mode: AuthenticateMode = state.authenticationMode
         var loading = state.isLoading
         var success = state.success
@@ -27,6 +30,7 @@ class AuthenticationState(
             return AuthenticationState(
                 userEmail,
                 userPassword,
+                isAuthenticationContentValid,
                 mode,
                 loading,
                 success,

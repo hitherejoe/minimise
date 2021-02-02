@@ -25,14 +25,17 @@ import co.joebirch.minimise.common_ui.FilledButton
 import co.joebirch.minimise.common_ui.onSecondaryInputField
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
+const val TAG_PROGRESS = "progress"
+const val TAG_AUTHENTICATE = "authenticate"
+
 @Composable
-fun Content(
+fun AuthenticationUI(
     viewState: AuthenticationState,
     events: (event: AuthenticationEvent) -> Unit
 ) {
     if (viewState.isLoading) {
         CircularProgressIndicator(
-            modifier = Modifier.testTag("Progress"),
+            modifier = Modifier.testTag(TAG_PROGRESS),
             color = MaterialTheme.colors.secondary
         )
     } else {
@@ -138,7 +141,7 @@ fun Content(
                 Modifier.weight(1f, fill = true)
             )
             FilledButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally).testTag("authenticate"),
+                modifier = Modifier.align(Alignment.CenterHorizontally).testTag(TAG_AUTHENTICATE),
                 text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                     stringResource(R.string.sign_in)
                 } else {
@@ -146,7 +149,8 @@ fun Content(
                 },
                 onClick = {
                     events(AuthenticationEvent.AuthenticateClicked)
-                }
+                },
+                enabled = viewState.isAuthenticationContentValid,
             )
             Spacer(Modifier.preferredHeight(16.dp))
             TextButton(
@@ -168,10 +172,9 @@ fun Content(
             }
             Spacer(Modifier.height(26.dp))
         }
-        val showingDialog = remember { mutableStateOf(viewState.errorMessage) }
-        if (showingDialog.value != null) {
+        if (viewState.errorMessage != null) {
             AlertDialog(onDismissRequest = {
-                showingDialog.value = null
+                events(AuthenticationEvent.DismissErrorDialog)
             }, title = {
                 Text(text = stringResource(id = R.string.error_title))
             }, text = {
@@ -185,7 +188,7 @@ fun Content(
                             .padding(16.dp)
                             .align(Alignment.CenterEnd)
                             .clickable(onClick = {
-                                showingDialog.value = null
+                                events(AuthenticationEvent.DismissErrorDialog)
                             })
                     )
                 }

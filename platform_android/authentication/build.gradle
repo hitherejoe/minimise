@@ -100,9 +100,12 @@ dependencies {
     testImplementation Deps.junit
 
     androidTestImplementation Deps.AndroidX.junit
-    androidTestImplementation Deps.Espresso.core
-    androidTestImplementation Deps.Fragment.testing
     androidTestImplementation Deps.Compose.test
+
+    androidTestImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation "androidx.compose.ui:ui-test:1.0.0-alpha11"
 
 }
 

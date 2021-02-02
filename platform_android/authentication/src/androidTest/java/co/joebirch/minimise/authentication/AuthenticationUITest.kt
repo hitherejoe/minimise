@@ -6,14 +6,14 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 
-class AuthenticationTest {
+class AuthenticationUITest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     private fun launchContent(viewState: AuthenticationState) {
         composeTestRule.setContent {
-            Content(viewState) {
+            AuthenticationUI(viewState) {
 
             }
         }
@@ -23,7 +23,8 @@ class AuthenticationTest {
     fun signUpTitleDisplayedByDefault() {
         launchContent(AuthenticationState())
 
-        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_up)
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.title_sign_up)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
@@ -34,7 +35,8 @@ class AuthenticationTest {
     fun signInTitleIsNotDisplayedByDefault() {
         launchContent(AuthenticationState())
 
-        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.title_sign_in)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertDoesNotExist()
@@ -45,7 +47,8 @@ class AuthenticationTest {
     fun signInTitleDisplayedForSignInState() {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
 
-        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_in)
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.title_sign_in)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
@@ -56,7 +59,8 @@ class AuthenticationTest {
     fun signUpTitleDisplayedForSignUpState() {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignUp))
 
-        InstrumentationRegistry.getInstrumentation().context.getString(R.string.title_sign_up)
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.title_sign_up)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
@@ -67,9 +71,8 @@ class AuthenticationTest {
     fun forgottenPasswordDisplayedForSignInState() {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
 
-        InstrumentationRegistry.getInstrumentation().context.getString(
-            R.string.forgotten_your_password
-        )
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.forgotten_your_password)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertIsDisplayed()
@@ -80,9 +83,8 @@ class AuthenticationTest {
     fun forgottenPasswordNotDisplayedForSignUpState() {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignUp))
 
-        InstrumentationRegistry.getInstrumentation().context.getString(
-            R.string.forgotten_your_password
-        )
+        InstrumentationRegistry.getInstrumentation().targetContext
+            .getString(R.string.forgotten_your_password)
             .also {
                 composeTestRule.onNode(matcher = hasText(it))
                     .assertDoesNotExist()
@@ -90,14 +92,41 @@ class AuthenticationTest {
     }
 
     @Test
-    fun loginButtonDisabled() {
+    fun signUpButtonDisplayed() {
         launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignUp))
-        composeTestRule.onNode(matcher = hasTestTag("authenticate"))
+        composeTestRule.onNode(matcher = hasTestTag(TAG_AUTHENTICATE))
             .assertTextEquals(
-                InstrumentationRegistry.getInstrumentation().context.getString(
-                    R.string.sign_up
-                )
+                InstrumentationRegistry.getInstrumentation().targetContext
+                    .getString(R.string.sign_up)
             )
+    }
+
+    @Test
+    fun signInButtonDisplayed() {
+        launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
+        composeTestRule.onNode(matcher = hasTestTag(TAG_AUTHENTICATE))
+            .assertTextEquals(
+                InstrumentationRegistry.getInstrumentation().targetContext
+                    .getString(R.string.sign_in)
+            )
+    }
+
+    @Test
+    fun authenticateButtonDisabledByDefault() {
+        launchContent(AuthenticationState(authenticationMode = AuthenticateMode.SignIn))
+        composeTestRule.onNode(matcher = hasTestTag(TAG_AUTHENTICATE))
+            .assertIsNotEnabled()
+    }
+
+    @Test
+    fun authenticateButtonEnabledWithText() {
+        launchContent(
+            AuthenticationState(
+                isAuthenticationContentValid = true
+            )
+        )
+        composeTestRule.onNode(matcher = hasTestTag(TAG_AUTHENTICATE))
+            .assertIsEnabled()
     }
 
     @Test
