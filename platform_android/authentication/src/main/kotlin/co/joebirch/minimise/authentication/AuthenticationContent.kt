@@ -190,13 +190,16 @@ fun AuthenticationUI(
             AlertDialog(onDismissRequest = {
                 events(AuthenticationEvent.DismissErrorDialog)
             }, title = {
-                Text(text = stringResource(id = R.string.error_title))
+                Text(text = stringResource(id = R.string.error_generic_title))
             }, text = {
-                Text(text = viewState.errorMessage ?: "")
+                Text(
+                    text = viewState.errorMessage
+                        ?: stringResource(id = R.string.error_generic_message)
+                )
             }, buttons = {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = stringResource(id = R.string.error_action),
+                        text = stringResource(id = R.string.error_generic_action),
                         style = TextStyle(fontWeight = FontWeight.SemiBold),
                         modifier = Modifier
                             .padding(16.dp)

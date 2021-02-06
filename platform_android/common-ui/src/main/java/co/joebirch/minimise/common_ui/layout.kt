@@ -16,7 +16,7 @@ fun RoundedBackgroundBox(
 ) {
     Box(
         modifier = modifier.background(
-            MaterialTheme.colors.secondary, RoundedCornerShape(16.dp)
+            MaterialTheme.colors.surface, RoundedCornerShape(16.dp)
         )
     ) {
         children()

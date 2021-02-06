@@ -11,8 +11,9 @@
 
     <string name="hint_email_address">Email Address</string>
     <string name="hint_password">Password</string>
-    <string name="error_title">Whoops</string>
-    <string name="error_action">OK</string>
+    <string name="error_generic_title">Whoops</string>
+    <string name="error_generic_message">There was a problem performing that request. Please try again!</string>
+    <string name="error_generic_action">OK</string>
 
     <!-- Forgot password -->
     <string name="hint_forgot_password">Email Address</string>

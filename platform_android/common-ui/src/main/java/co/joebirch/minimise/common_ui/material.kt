@@ -1,6 +1,5 @@
 package co.joebirch.minimise.common_ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.preferredSizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +16,6 @@ import androidx.compose.ui.text.SoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,10 +33,8 @@ fun FilledButton(
             onClick()
         },
         modifier = modifier,
+        colors = textButtonColors(backgroundColor = MaterialTheme.colors.surface),
         shape = RoundedCornerShape(10.dp),
-        colors = textButtonColors(
-            backgroundColor = MaterialTheme.colors.secondary
-        ),
         enabled = enabled
     ) {
         Text(
@@ -82,6 +78,6 @@ fun onSecondaryInputField(
         activeColor = MaterialTheme.colors.onSecondary,
         textStyle = TextStyle(color = MaterialTheme.colors.onSecondary),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = MaterialTheme.colors.secondary,
+        backgroundColor = MaterialTheme.colors.surface,
     )
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#3B577D</color>
-    <color name="primaryLightColor">#ae52d4</color>
+    <color name="primaryColor">#003b46</color>
+    <color name="primaryLightColor">#07575b</color>
     <color name="primaryDarkColor">#344E6F</color>
-    <color name="secondaryColor">#C05D73</color>
-    <color name="secondaryLightColor">#e56b6f</color>
+    <color name="secondaryColor">#66a5ad</color>
+    <color name="secondaryLightColor">#c4dfe6</color>
     <color name="secondaryDarkColor">#75a478</color>
     <color name="text_primary">#3D3D3D</color>
     <color name="text_secondary">#757575</color>
@@ -21,7 +21,7 @@
     <!--and menus. colorError is used to indicate an error state for components such as-->
     <!--text fields.-->
     <color name="color_background">#e0e0e0</color>
-    <color name="color_surface">@color/white</color>
+    <color name="color_surface">#07575b</color>
     <color name="color_error">#e53935</color>
 
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
