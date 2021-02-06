@@ -36,10 +36,17 @@ fun AuthenticationUI(
     events: (event: AuthenticationEvent) -> Unit
 ) {
     if (viewState.isLoading) {
-        CircularProgressIndicator(
-            modifier = Modifier.testTag(TAG_PROGRESS),
-            color = MaterialTheme.colors.secondary
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colors.primary),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.testTag(TAG_PROGRESS),
+                color = MaterialTheme.colors.secondary
+            )
+        }
     } else {
         val passwordFocusRequest = remember { FocusRequester() }
         Column(
@@ -104,11 +111,13 @@ fun AuthenticationUI(
                         imeActionPerformed = { _, _ ->
                             events(AuthenticationEvent.AuthenticateClicked)
                         },
-                        modifier = Modifier.padding(
-                            start = 24.dp,
-                            end = 24.dp,
-                            bottom = 36.dp,
-                        ).focusRequester(passwordFocusRequest)
+                        modifier = Modifier
+                            .padding(
+                                start = 24.dp,
+                                end = 24.dp,
+                                bottom = 36.dp,
+                            )
+                            .focusRequester(passwordFocusRequest)
                     )
                 }
             }
@@ -144,7 +153,9 @@ fun AuthenticationUI(
                 Modifier.weight(1f, fill = true)
             )
             FilledButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally).testTag(TAG_AUTHENTICATE),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .testTag(TAG_AUTHENTICATE),
                 text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
                     stringResource(R.string.sign_in)
                 } else {
