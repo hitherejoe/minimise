@@ -10,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -39,6 +41,7 @@ fun AuthenticationUI(
             color = MaterialTheme.colors.secondary
         )
     } else {
+        val passwordFocusRequest = remember { FocusRequester() }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -82,7 +85,7 @@ fun AuthenticationUI(
                             top = 12.dp
                         ),
                         imeActionPerformed = { _, _ ->
-
+                            passwordFocusRequest.requestFocus()
                         }
                     )
                     Spacer(modifier = Modifier.height(20.dp))
@@ -99,13 +102,13 @@ fun AuthenticationUI(
                             keyboardType = KeyboardType.Password
                         ),
                         imeActionPerformed = { _, _ ->
-                            val s = ""
+                            events(AuthenticationEvent.AuthenticateClicked)
                         },
                         modifier = Modifier.padding(
                             start = 24.dp,
                             end = 24.dp,
                             bottom = 36.dp,
-                        )
+                        ).focusRequester(passwordFocusRequest)
                     )
                 }
             }
