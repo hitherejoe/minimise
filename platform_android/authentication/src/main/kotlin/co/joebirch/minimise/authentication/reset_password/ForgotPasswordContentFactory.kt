@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import co.joebirch.minimise.authentication.Composablefactory
+import co.joebirch.minimise.common_ui.Composablefactory
 import co.joebirch.minimise.authentication.R
 import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
 import co.joebirch.minimise.common_ui.MinimiseTheme

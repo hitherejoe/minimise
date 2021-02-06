@@ -1,7 +1,6 @@
-package co.joebirch.minimise.authentication
+package co.joebirch.minimise.common_ui
 
 import androidx.compose.runtime.Composable
-import co.joebirch.minimise.navigation.NavigationController
 
 abstract class Composablefactory<ViewModel> {
 
