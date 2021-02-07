@@ -114,7 +114,7 @@ class AuthenticationViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignUp(
-                    BuildConfig.FIREBASE_API_KEY,
+                    BuildConfig.API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->
@@ -133,7 +133,7 @@ class AuthenticationViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             authenticate.run(
                 Authenticate.Params.forSignIn(
-                    BuildConfig.FIREBASE_API_KEY,
+                    BuildConfig.API_KEY,
                     uiState.value!!.emailAddress, uiState.value!!.password
                 )
             ) { result ->

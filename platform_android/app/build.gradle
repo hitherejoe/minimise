@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation project(':platform_android:core')
+    implementation project(':platform_android:common-ui')
     implementation project(':platform_android:design')
     implementation project(':platform_android:navigation')
     implementation project(':platform_android:creation')
