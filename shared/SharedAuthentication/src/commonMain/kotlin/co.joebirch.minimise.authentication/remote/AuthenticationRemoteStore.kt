@@ -1,5 +1,6 @@
 package co.joebirch.minimise.authentication.remote
 
+import co.joebirch.minimise.BuildKonfig
 import co.joebirch.minimise.SignInQuery
 import co.joebirch.minimise.SignUpMutation
 import co.joebirch.minimise.authentication.mapper.toAuthenticationModel
@@ -16,7 +17,7 @@ open class AuthenticationRemoteStore: AuthenticationRemote {
 
     private val apolloClient = ApolloClient(
         networkTransport = ApolloHttpNetworkTransport(
-            serverUrl = "http://10.0.2.2:4000/graphql",
+            serverUrl = BuildKonfig.apiUrl,
             headers = mapOf(
                 "Accept" to "application/json",
                 "Content-Type" to "application/json"

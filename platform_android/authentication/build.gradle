@@ -27,7 +27,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-        buildConfigField "String", "FIREBASE_API_KEY", getProps("FIREBASE_API_KEY")
     }
 
     sourceSets {

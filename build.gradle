@@ -33,6 +33,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath Deps.Apollo.plugin
         classpath Deps.Google.Hilt.gradlePlugin
+        classpath 'com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.7.0'
     }
 }
 

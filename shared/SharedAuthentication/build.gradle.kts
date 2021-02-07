@@ -1,12 +1,14 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import co.joebirch.minimise.buildsrc.Deps
-import co.joebirch.minimise.buildsrc.Versions
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     id("org.jetbrains.kotlin.native.cocoapods")
     id("com.apollographql.apollo")
     kotlin("multiplatform")
+    id("com.codingfeline.buildkonfig")
 }
 
 repositories {
@@ -82,6 +84,14 @@ kotlin {
                 implementation(Deps.Kotlin.stdLib)
             }
         }
+    }
+}
+
+buildkonfig {
+    packageName = "co.joebirch.minimise"
+    val props = gradleLocalProperties(rootDir)
+    defaultConfigs {
+        buildConfigField(STRING, "apiUrl", props.getProperty("API_URL"))
     }
 }
 
