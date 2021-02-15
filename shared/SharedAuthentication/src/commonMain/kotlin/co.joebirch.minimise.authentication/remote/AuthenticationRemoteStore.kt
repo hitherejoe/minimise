@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.single
 
 @ExperimentalCoroutinesApi
 @ApolloExperimental
-open class AuthenticationRemoteStore: AuthenticationRemote {
+open class AuthenticationRemoteStore : AuthenticationRemote {
 
     private val apolloClient = ApolloClient(
         networkTransport = ApolloHttpNetworkTransport(
@@ -34,7 +34,8 @@ open class AuthenticationRemoteStore: AuthenticationRemote {
             emailAddress = emailAddress,
             password = password
         )
-        return apolloClient.mutate(signUp).execute().single().data?.createUser?.toAuthenticationModel()
+        val s = apolloClient.mutate(signUp).execute().single()
+        return s.data?.createUser?.toAuthenticationModel()
             ?: AuthenticationModel()
     }
 

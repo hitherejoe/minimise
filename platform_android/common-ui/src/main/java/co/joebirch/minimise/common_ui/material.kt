@@ -1,16 +1,20 @@
 package co.joebirch.minimise.common_ui
 
+import androidx.compose.foundation.InteractionState
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.preferredSizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
+import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.ButtonDefaults.textButtonColors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
@@ -32,8 +36,10 @@ fun FilledButton(
         onClick = {
             onClick()
         },
-        modifier = modifier,
-        colors = textButtonColors(backgroundColor = MaterialTheme.colors.surface),
+        modifier = modifier.alpha(if (enabled) 1f else 0.6f),
+        colors = buttonColors(
+            backgroundColor = MaterialTheme.colors.surface
+        ),
         shape = RoundedCornerShape(10.dp),
         enabled = enabled
     ) {
@@ -54,7 +60,7 @@ fun onSecondaryInputField(
     inputChanged: (value: String) -> Unit,
     label: String,
     keyboardType: KeyboardOptions,
-    imeActionPerformed: (ImeAction, SoftwareKeyboardController?) -> Unit,
+    keyboardActions: KeyboardActions,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     TextField(
@@ -70,9 +76,7 @@ fun onSecondaryInputField(
         },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardType,
-        onImeActionPerformed = { action, controller ->
-            imeActionPerformed(action, controller)
-        },
+        keyboardActions = keyboardActions,
         modifier = modifier.fillMaxWidth(),
         inactiveColor = MaterialTheme.colors.onSecondary,
         activeColor = MaterialTheme.colors.onSecondary,

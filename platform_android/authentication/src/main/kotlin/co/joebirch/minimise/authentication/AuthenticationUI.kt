@@ -1,10 +1,14 @@
 package co.joebirch.minimise.authentication
 
+import androidx.compose.foundation.InteractionState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -83,16 +87,19 @@ fun AuthenticationUI(
                         label = stringResource(id = R.string.hint_email_address),
                         keyboardType = KeyboardOptions(
                             imeAction = ImeAction.Next,
-                            keyboardType = KeyboardType.Email
+                            keyboardType = KeyboardType.Email,
+
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = {
+                                passwordFocusRequest.requestFocus()
+                            }
                         ),
                         modifier = Modifier.padding(
                             start = 24.dp,
                             end = 24.dp,
                             top = 12.dp
-                        ),
-                        imeActionPerformed = { _, _ ->
-                            passwordFocusRequest.requestFocus()
-                        }
+                        )
                     )
                     Spacer(modifier = Modifier.height(20.dp))
 
@@ -107,9 +114,11 @@ fun AuthenticationUI(
                             imeAction = ImeAction.Done,
                             keyboardType = KeyboardType.Password
                         ),
-                        imeActionPerformed = { _, _ ->
-                            events(AuthenticationEvent.AuthenticateClicked)
-                        },
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                events(AuthenticationEvent.AuthenticateClicked)
+                            }
+                        ),
                         modifier = Modifier
                             .padding(
                                 start = 24.dp,
@@ -171,18 +180,17 @@ fun AuthenticationUI(
                     events(AuthenticationEvent.AuthenticationModeToggled)
                 }, modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                ProvideTextStyle(value = TextStyle(textAlign = TextAlign.Center)) {
-                    Text(
-                        text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
-                            stringResource(R.string.no_account)
-                        } else {
-                            stringResource(R.string.existing_account)
-                        },
-                        modifier = Modifier.preferredSizeIn(minWidth = 220.dp),
-                        color = Color.White
-                    )
-                }
-            }
+            Text(
+                text = if (viewState.authenticationMode == AuthenticateMode.SignIn) {
+                    stringResource(R.string.no_account)
+                } else {
+                    stringResource(R.string.existing_account)
+                },
+                modifier = Modifier.preferredSizeIn(minWidth = 220.dp),
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
+        }
             Spacer(Modifier.height(26.dp))
         }
         if (viewState.errorMessage != null) {

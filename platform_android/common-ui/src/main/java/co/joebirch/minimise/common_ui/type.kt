@@ -2,17 +2,17 @@ package co.joebirch.minimise.common_ui
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.font
-import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.unit.sp
 
-private val regular = font(R.font.poppins_regular)
-private val medium = font(R.font.poppins_medium, FontWeight.W500)
-private val semibold = font(R.font.poppins_semi_bold, FontWeight.W600)
-private val bold = font(R.font.poppins_bold, FontWeight.W800)
+private val regular = Font(R.font.poppins_regular)
+private val medium = Font(R.font.poppins_medium, FontWeight.W500)
+private val semibold = Font(R.font.poppins_semi_bold, FontWeight.W600)
+private val bold = Font(R.font.poppins_bold, FontWeight.W800)
 
-private val appFontFamily = fontFamily(
+private val appFontFamily = FontFamily(
     fonts = listOf(
         regular,
         medium,

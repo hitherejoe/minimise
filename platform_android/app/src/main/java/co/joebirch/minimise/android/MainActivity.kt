@@ -2,8 +2,10 @@ package co.joebirch.minimise.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import co.joebirch.minimise.authentication.AuthenticationContentFactory
 import co.joebirch.minimise.authentication.AuthenticationViewModel
 import co.joebirch.minimise.authentication.reset_password.ForgotPasswordContentFactory
+import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.DashboardContentFactory
 import co.joebirch.minimise.dashboard.DashboardViewModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
@@ -38,37 +41,39 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setContent {
-            val navController = rememberNavController()
-            navigationController.navigationCommands.observeAsState().value?.let {
-                navController.navigate(it.direction.getDestination())
-                navigationController.navigationCommands.value = null
-            }
-            NavHost(
-                navController,
-                startDestination = OnboardingDirections.Authentication.getDestination()
-            ) {
-                composable(OnboardingDirections.Authentication.getDestination()) {
-                    authenticationContentFactory.Content(
-                        viewModel(
-                            modelClass = AuthenticationViewModel::class.java,
-                            factory = defaultViewModelProviderFactory
-                        )
-                    )
+            MinimiseTheme {
+                val navController = rememberNavController()
+                navigationController.navigationCommands.observeAsState().value?.let {
+                    navController.navigate(it.direction.getDestination())
+                    navigationController.navigationCommands.value = null
                 }
-                composable(AuthenticationDirections.ForgotPassword.getDestination()) {
-                    resetPasswordContentFactory.Content(
-                        viewModel(
-                            factory = defaultViewModelProviderFactory
+                NavHost(
+                    navController,
+                    startDestination = OnboardingDirections.Authentication.getDestination()
+                ) {
+                    composable(OnboardingDirections.Authentication.getDestination()) {
+                        authenticationContentFactory.Content(
+                            viewModel(
+                                modelClass = AuthenticationViewModel::class.java,
+                                factory = defaultViewModelProviderFactory
+                            )
                         )
-                    )
-                }
-                composable(AuthenticationDirections.Dashboard.getDestination()) {
-                    dashboardContentFactory.Content(
-                        viewModel(
-                            modelClass = DashboardViewModel::class.java,
-                            factory = defaultViewModelProviderFactory
+                    }
+                    composable(AuthenticationDirections.ForgotPassword.getDestination()) {
+                        resetPasswordContentFactory.Content(
+                            viewModel(
+                                factory = defaultViewModelProviderFactory
+                            )
                         )
-                    )
+                    }
+                    composable(AuthenticationDirections.Dashboard.getDestination()) {
+                        dashboardContentFactory.Content(
+                            viewModel(
+                                modelClass = DashboardViewModel::class.java,
+                                factory = defaultViewModelProviderFactory
+                            )
+                        )
+                    }
                 }
             }
         }

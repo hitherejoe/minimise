@@ -47,7 +47,7 @@ dependencies {
     implementation project(':platform_android:common-ui')
     implementation project(':platform_android:design')
     implementation project(':platform_android:navigation')
-    implementation project(':platform_android:creation')
+    //implementation project(':platform_android:creation')
     implementation project(':platform_android:authentication')
     implementation project(':platform_android:dashboard')
     implementation project(':platform_android:onboarding')
@@ -64,6 +64,7 @@ dependencies {
 
     implementation Deps.Google.Hilt.hilt
     implementation Deps.Google.Hilt.viewmodel
+    implementation Deps.Google.Hilt.hiltNavigationFragment
     kapt Deps.Google.Hilt.compiler
     kapt Deps.Google.Hilt.hiltCompiler
 }

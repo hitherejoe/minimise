@@ -1,7 +1,6 @@
 package co.joebirch.minimise.dashboard
 
 import androidx.compose.animation.animate
-import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,8 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.drawOpacity
-import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.imageResource
@@ -23,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.shared.dashboard.Belonging
 import co.joebirch.minimise.shared.dashboard.Category
@@ -111,7 +110,7 @@ class DashboardContentFactory @Inject constructor(
                             Column(
                                 modifier = Modifier.background(
                                     color = MaterialTheme.colors.primary,
-                                    shape = RoundedCornerShape(bottomRight = 18.dp, bottomLeft = 18.dp)
+                                    shape = RoundedCornerShape(bottomEnd = 18.dp, bottomStart = 18.dp)
                                 )
                             ) {
                                 Spacer(modifier = Modifier.preferredHeight(8.dp))
@@ -120,7 +119,7 @@ class DashboardContentFactory @Inject constructor(
                                         text = "",
                                         color = MaterialTheme.colors.onPrimary,
                                         textAlign = TextAlign.Start,
-                                        fontSize = TextUnit.Companion.Sp(20),
+                                        fontSize = 20.sp,
                                         fontWeight = FontWeight.Normal,
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -147,8 +146,8 @@ class DashboardContentFactory @Inject constructor(
                                                 .background(
                                                     Color.White,
                                                     RoundedCornerShape(
-                                                        topLeft = 16.dp,
-                                                        topRight = 16.dp
+                                                        topStart = 16.dp,
+                                                        topEnd = 16.dp
                                                     )
                                                 )
                                         )
@@ -178,7 +177,7 @@ class DashboardContentFactory @Inject constructor(
                                                         start = 16.dp,
                                                         end = 16.dp
                                                     )
-                                                    .drawOpacity(textColor)
+                                                    .alpha(textColor)
                                             )
                                         }
                                     }
@@ -210,7 +209,7 @@ class DashboardContentFactory @Inject constructor(
                         val alpha = if (toState == MultiFabState.EXPANDED) 0.4f else 0f
                         Box(
                             modifier = Modifier
-                                .alpha(animateAsState(alpha).value)
+                               // .alpha(animateAsState(alpha).value)
                                 .background(
                                     Color(AmbientContext.current.resources.getColor(R.color.transparent_black))
                                 )
@@ -228,7 +227,7 @@ class DashboardContentFactory @Inject constructor(
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .padding(16.dp)
-                .drawShadow(2.dp, RoundedCornerShape(16.dp))
+                .shadow(2.dp, RoundedCornerShape(16.dp))
                 .clickable(onClick = {})
                 .background(
                     MaterialTheme.colors.surface,
@@ -245,7 +244,7 @@ class DashboardContentFactory @Inject constructor(
                         start.linkTo(this.parent.start, margin = 20.dp)
                     },
                     fontWeight = FontWeight.W600,
-                    fontSize = TextUnit.Companion.Sp(18),
+                    fontSize = 18.sp,
                     color = MaterialTheme.colors.onSurface
                 )
 
@@ -256,7 +255,7 @@ class DashboardContentFactory @Inject constructor(
                         top.linkTo(text1.bottom, margin = 4.dp)
                         bottom.linkTo(this.parent.bottom, margin = 16.dp)
                     },
-                    fontSize = TextUnit.Companion.Sp(12),
+                    fontSize = 12.sp,
                     color = MaterialTheme.colors.onSurface
                 )
             }
@@ -270,7 +269,7 @@ class DashboardContentFactory @Inject constructor(
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .padding(16.dp)
-                .drawShadow(2.dp, RoundedCornerShape(16.dp))
+                .shadow(2.dp, RoundedCornerShape(16.dp))
                 .clickable(onClick = {})
                 .background(
                     MaterialTheme.colors.surface,
@@ -287,7 +286,7 @@ class DashboardContentFactory @Inject constructor(
                         start.linkTo(this.parent.start, margin = 20.dp)
                     },
                     fontWeight = FontWeight.W600,
-                    fontSize = TextUnit.Companion.Sp(18),
+                    fontSize = 18.sp,
                     color = MaterialTheme.colors.onSurface
                 )
 
@@ -298,7 +297,7 @@ class DashboardContentFactory @Inject constructor(
                         top.linkTo(text1.bottom, margin = 4.dp)
                         bottom.linkTo(this.parent.bottom, margin = 16.dp)
                     },
-                    fontSize = TextUnit.Companion.Sp(12),
+                    fontSize = 12.sp,
                     color = MaterialTheme.colors.onSurface
                 )
 
@@ -314,7 +313,7 @@ class DashboardContentFactory @Inject constructor(
                         progress = 1f,
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .drawOpacity(0.4f)
+                            .alpha(0.4f)
                             .size(55.dp)
                     )
                     CircularProgressIndicator(
@@ -331,7 +330,7 @@ class DashboardContentFactory @Inject constructor(
                             .padding(top = 2.dp),
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colors.primary,
-                        fontSize = TextUnit.Companion.Sp(14)
+                        fontSize = 14.sp
                     )
                 }
             }

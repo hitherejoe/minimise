@@ -9,8 +9,8 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha06"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
@@ -23,13 +23,13 @@ object Deps {
     }
 
     object Kotlin {
-        const val version = "1.4.21-2"
+        const val version = "1.4.30"
         const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
         const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:$version"
         const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$version"
 
-        private const val serializationVersion = "1.0.0-RC"
+        private const val serializationVersion = "1.1.0-RC"
 
         const val serializationRuntimeNative =
             "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serializationVersion"
@@ -64,7 +64,7 @@ object Deps {
 
     object Navigation {
         const val version = "2.3.0-alpha03"
-        const val compose = "androidx.navigation:navigation-compose:1.0.0-alpha05"
+        const val compose = "androidx.navigation:navigation-compose:1.0.0-alpha07"
     }
 
     object Espresso {
@@ -97,7 +97,7 @@ object Deps {
     }
 
     object Compose {
-        const val version = "1.0.0-alpha11"
+        const val version = "1.0.0-alpha12"
 
         const val animation = "androidx.compose.animation:animation:$version"
         const val animationCore = "androidx.compose.animation:animation-core:$version"
@@ -110,7 +110,7 @@ object Deps {
         const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
         const val runtime = "androidx.compose.runtime:runtime:$version"
         const val text = "androidx.compose.foundation:foundation-text:$version"
-        const val tooling = "androidx.ui:ui-tooling:1.0.0-alpha07"
+        const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val test = "androidx.compose.ui:ui-test-junit4:$version"
     }
 
@@ -153,6 +153,7 @@ object Deps {
             val viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
             val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
             val hiltNavigation = "com.google.dagger:hilt-navigation:1.0.0-alpha03"
+            val hiltNavigationFragment = "androidx.hilt:hilt-navigation-fragment:1.0.0-alpha03"
             val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         }
     }

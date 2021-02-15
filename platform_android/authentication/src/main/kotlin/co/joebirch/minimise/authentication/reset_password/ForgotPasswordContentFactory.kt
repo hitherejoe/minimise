@@ -2,6 +2,7 @@ package co.joebirch.minimise.authentication.reset_password
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -64,7 +65,8 @@ class ForgotPasswordContentFactory @Inject constructor(
                                 .fillMaxWidth()
                                 .padding(
                                     start = 32.dp,
-                                    end = 32.dp
+                                    end = 32.dp,
+                                    bottom = 32.dp
                                 )
                         ) {
                             onSecondaryInputField(
@@ -78,9 +80,11 @@ class ForgotPasswordContentFactory @Inject constructor(
                                     keyboardType = KeyboardType.Email,
                                     imeAction = ImeAction.Done
                                 ),
-                                imeActionPerformed = { _, _ ->
-                                    //TODO: Handle IME action
-                                }
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        authenticateClicked()
+                                    }
+                                )
                             )
                         }
                         Spacer(Modifier.weight(1f, fill = true))

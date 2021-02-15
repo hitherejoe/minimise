@@ -1,11 +1,7 @@
 package co.joebirch.minimise.creation
 
-import android.annotation.SuppressLint
-import android.view.ViewGroup
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.core.*
-import androidx.compose.animation.transition
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,10 +16,9 @@ import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -34,26 +29,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
-fun ViewGroup.composeDashboardContent(
-    uiState: LiveData<CreationState>,
-    creationEvents: (event: CreationEvent) -> Unit
-): Any = setContent(Recomposer.current()) {
-    ComposeInventoryContent(
-        uiState, creationEvents
-    )
-}
-
 @OptIn(ExperimentalLayout::class)
 @Composable
-private fun ComposeInventoryContent(
+fun ComposeInventoryContent(
     uiState: LiveData<CreationState>,
     creationEvents: (event: CreationEvent) -> Unit
 ) {
@@ -65,43 +51,8 @@ private fun ComposeInventoryContent(
     }
 }
 
-val sizeState = FloatPropKey()
-val alphaState = FloatPropKey()
-val contentAlphaState = FloatPropKey()
-
 enum class ContentState {
     Hidden, Visible
-}
-
-@SuppressLint("Range")
-private val sizeTransitionDefinition = transitionDefinition<ContentState> {
-    state(ContentState.Hidden) {
-        this[sizeState] = 0f
-        this[alphaState] = 0f
-        this[contentAlphaState] = 0f
-    }
-    state(ContentState.Visible) {
-        this[sizeState] = 80f
-        this[alphaState] = 1f
-        this[contentAlphaState] = 1f
-    }
-
-    transition(fromState = ContentState.Hidden, toState = ContentState.Visible) {
-        sizeState using tween(
-            durationMillis = 200,
-            easing = FastOutLinearInEasing
-        )
-        contentAlphaState using tween(
-            durationMillis = 200,
-            easing = FastOutLinearInEasing
-        )
-        alphaState using keyframes {
-            durationMillis = 400
-            0f at 0
-            0.1f at 225
-            1f at 400
-        }
-    }
 }
 
 @ExperimentalLayout
@@ -124,17 +75,11 @@ internal fun CreationContent(
                             modifier = Modifier.align(Center)
                         )
                     } else {
-                        val state = transition(
-                            definition = sizeTransitionDefinition,
-                            initState = ContentState.Hidden,
-                            toState = ContentState.Visible
-                        )
                         Column(
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
                                 .align(Center)
                                 .fillMaxHeight()
-                                .drawOpacity(state[contentAlphaState])
                         ) {
                             stepCounter(
                                 creationState.currentStep
@@ -219,7 +164,7 @@ internal fun stepCounter(currentStep: CreationStep) {
                 modifier = Modifier
                     .height(6.dp)
                     .weight(1f)
-                    .drawOpacity(if (isStepViewed) 1f else 0.5f)
+                    .alpha(if (isStepViewed) 1f else 0.5f)
                     .background(MaterialTheme.colors.secondary)
                     .testTag(if (isStepViewed) creationStep.name else "")
                     .padding(end = 4.dp)
@@ -266,11 +211,11 @@ private fun nameStepComposable(
 
                     },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                    onImeActionPerformed = { imeAction, _ ->
-                        if (imeAction == ImeAction.Next) {
-                            creationEvents(CreationEvent.NextStepRequested)
-                        }
-                    },
+                  //  onImeActionPerformed = { imeAction, _ ->
+                  //      if (imeAction == ImeAction.Next) {
+                   //         creationEvents(CreationEvent.NextStepRequested)
+                  //      }
+                  //  },
                     activeColor = Color.White,
                     backgroundColor = Color.Transparent,
                     modifier = Modifier
@@ -310,7 +255,7 @@ private fun categoriesStepComposable(
                         }
                         creationEvents(CreationEvent.CategoriesChanged(selectedItems))
                     })
-                    .drawOpacity(if (selectedItems.contains(amenity)) 1f else 0.6f)
+                    .alpha(if (selectedItems.contains(amenity)) 1f else 0.6f)
 
                 RoundedBackgroundBox(modifier = modifier) {
                     Text(
@@ -378,7 +323,7 @@ private fun finishedComposable(
         Text(
             text = stringResource(id = R.string.message_completed),
             textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(18),
+            fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -412,7 +357,7 @@ fun labelTextField(
             .fillMaxWidth()) {
             Text(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
-                fontSize = TextUnit.Companion.Sp(16)
+                fontSize = 16.sp
             )
             TextField(
                 value = states.value,
@@ -422,9 +367,9 @@ fun labelTextField(
                 label = {
 
                 },
-                onImeActionPerformed = { _, _ ->
-                    nextModifier?.requestFocus()
-                },
+               // onImeActionPerformed = { _, _ ->
+              //      nextModifier?.requestFocus()
+              //  },
                 keyboardOptions = KeyboardOptions(
                     imeAction = if (position < 3) ImeAction.Next else ImeAction.Done
                 ),
@@ -458,7 +403,7 @@ internal fun titleComposable(title: String) {
         text = title,
         style = TextStyle(
             textAlign = TextAlign.Center,
-            fontSize = TextUnit.Companion.Sp(26),
+            fontSize = 26.sp,
             color = MaterialTheme.colors.onPrimary
         ),
         modifier = Modifier

@@ -27,7 +27,6 @@ class AuthenticationViewModel @ViewModelInject constructor(
 
     fun handleAuthenticationEvent(event: AuthenticationEvent) {
         if (event is AuthenticationEvent.AuthenticateClicked) {
-            // send data to api
             _uiState.value = uiState.value!!.build {
                 loading = true
             }
@@ -144,8 +143,10 @@ class AuthenticationViewModel @ViewModelInject constructor(
 
     private fun handleResult(result: AuthenticationModel) {
         if (result.token != null) {
-            sharedPrefs.accessToken = result.token
-            // navigate(AuthenticationDirections.Dashboard)
+            viewModelScope.launch {
+                sharedPrefs.setAuthToken(result.token!!)
+                navigationController.navigate(AuthenticationDirections.Dashboard)
+            }
         } else {
             _uiState.postValue(
                 uiState.value!!.build {

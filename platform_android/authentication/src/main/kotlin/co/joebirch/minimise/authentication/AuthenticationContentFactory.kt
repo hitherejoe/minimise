@@ -14,11 +14,9 @@ class AuthenticationContentFactory @Inject constructor() :
         viewModel: AuthenticationViewModel
     ) {
         val state by viewModel.uiState.observeAsState()
-        MinimiseTheme {
-            AuthenticationUI(
-                viewState = state ?: AuthenticationState(),
-                events = viewModel::handleAuthenticationEvent
-            )
-        }
+        AuthenticationUI(
+            viewState = state ?: AuthenticationState(),
+            events = viewModel::handleAuthenticationEvent
+        )
     }
 }
