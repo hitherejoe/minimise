@@ -1,10 +1,10 @@
 package co.joebirch.minimise.navigation
 
-import co.joebirch.minimise.android.core.di.SingleLiveEvent
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class NavigationController {
 
-    var navigationCommands = SingleLiveEvent<NavigationCommand>()
+    var navigationCommands = MutableStateFlow<NavigationCommand>(NavigationCommand.Idle)
 
     fun navigate(
         directions: NavigationDirection

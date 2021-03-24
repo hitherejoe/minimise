@@ -1,19 +1,19 @@
 package co.joebirch.minimise.authentication.reset_password
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.interactor.ResetPassword
-import co.joebirch.minimise.authentication.AuthenticationState
 import co.joebirch.minimise.authentication.ResetPasswordView
 import co.joebirch.minimise.authentication.forgot_password.ForgotPasswordState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ResetPasswordViewModel @ViewModelInject constructor(
-    private val resetPassword: ResetPassword,
-    @Assisted val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class ResetPasswordViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val resetPassword: ResetPassword
 ) : BaseViewModel(), ResetPasswordView {
 
     private val uiState =

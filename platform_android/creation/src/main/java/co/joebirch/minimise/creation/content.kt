@@ -2,12 +2,13 @@ package co.joebirch.minimise.creation
 
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -20,9 +21,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -37,7 +38,6 @@ import co.joebirch.minimise.dashboard.CreationStep
 import androidx.lifecycle.LiveData
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
-@OptIn(ExperimentalLayout::class)
 @Composable
 fun ComposeInventoryContent(
     uiState: LiveData<CreationState>,
@@ -55,15 +55,14 @@ enum class ContentState {
     Hidden, Visible
 }
 
-@ExperimentalLayout
 @Composable
-internal fun CreationContent(
+fun CreationContent(
     creationState: CreationState,
     creationEvents: (event: CreationEvent) -> Unit
 ) {
     MinimiseTheme {
         Scaffold(
-            bodyContent = {
+            content = {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -121,7 +120,7 @@ internal fun CreationContent(
                             ) {
                                 Icon(
                                     contentDescription = "Go back",
-                                    imageVector = vectorResource(id = R.drawable.ic_baseline_arrow_back_24),
+                                    painter = painterResource(id = R.drawable.ic_baseline_arrow_back_24),
                                     tint = Color.White
                                 )
                             }
@@ -143,7 +142,7 @@ internal fun CreationContent(
                                     )
                             ) {
                                 Icon(
-                                    imageVector = vectorResource(id = R.drawable.ic_baseline_arrow_forward_24),
+                                    painter = painterResource(id = R.drawable.ic_baseline_arrow_forward_24),
                                     tint = Color.White,
                                     contentDescription = "Go to next step"
                                 )
@@ -178,10 +177,11 @@ private fun creationStep(
     @StringRes title: Int,
     children: @Composable () -> Unit
 ) {
-    ScrollableColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(48.dp))
         titleComposable(title = stringResource(id = title))
@@ -216,11 +216,10 @@ private fun nameStepComposable(
                    //         creationEvents(CreationEvent.NextStepRequested)
                   //      }
                   //  },
-                    activeColor = Color.White,
-                    backgroundColor = Color.Transparent,
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
+                        .background(Color.Transparent)
                         .sizeIn(minHeight = 80.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -229,7 +228,6 @@ private fun nameStepComposable(
     }
 }
 
-@ExperimentalLayout
 @Composable
 private fun categoriesStepComposable(
     creationState: CreationState,
@@ -238,11 +236,11 @@ private fun categoriesStepComposable(
     creationStep(title = R.string.title_categories) {
         val items = stringArrayResource(id = R.array.category_options)
         val selectedItems = creationState.categories.toMutableList()
-        FlowRow(
-            mainAxisAlignment = MainAxisAlignment.Center,
-            crossAxisSpacing = 16.dp,
-            mainAxisSpacing = 16.dp,
-            mainAxisSize = SizeMode.Expand
+
+        SimpleFlowRow(
+            alignment = CenterHorizontally,
+            verticalGap = 16.dp,
+            horizontalGap = 16.dp
         ) {
             items.forEachIndexed { _, amenity ->
 
@@ -373,11 +371,10 @@ fun labelTextField(
                 keyboardOptions = KeyboardOptions(
                     imeAction = if (position < 3) ImeAction.Next else ImeAction.Done
                 ),
-                activeColor = Color.White,
-                backgroundColor = Color.Transparent,
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
+                    .background(Color.Transparent)
             )
         }
     }
@@ -423,9 +420,11 @@ private fun creationStepSlider(
         onValueChange = {
             onValueChanged(it.toInt())
         },
-        thumbColor = Color.White,
-        activeTrackColor = Color.White,
-        activeTickColor = Color.White,
+        colors = SliderDefaults.colors(
+            thumbColor = Color.White,
+            activeTrackColor = Color.White,
+            activeTickColor = Color.White
+        ),
         valueRange = 0f..4f,
         steps = 3,
         modifier = Modifier

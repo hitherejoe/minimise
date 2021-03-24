@@ -64,7 +64,7 @@ dependencies {
 
     implementation Deps.Google.Hilt.hilt
     implementation Deps.Google.Hilt.viewmodel
-    implementation Deps.Google.Hilt.hiltNavigationFragment
+    implementation Deps.Google.Hilt.hiltNavigationCompose
     kapt Deps.Google.Hilt.compiler
     kapt Deps.Google.Hilt.hiltCompiler
 }

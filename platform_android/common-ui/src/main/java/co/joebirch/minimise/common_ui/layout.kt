@@ -5,14 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.emptyContent
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun RoundedBackgroundBox(
     modifier: Modifier = Modifier,
-    children: @Composable () -> Unit = emptyContent(),
+    children: @Composable () -> Unit
 ) {
     Box(
         modifier = modifier.background(

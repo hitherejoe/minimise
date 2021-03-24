@@ -2,6 +2,7 @@ package co.joebirch.minimise.dashboard
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -111,7 +112,7 @@ private fun MiniFabItem(
                         radius = 20.dp,
                         color = MaterialTheme.colors.onSecondary
                     ),
-                    interactionState = InteractionState()
+                    interactionSource = MutableInteractionSource()
                 )
         ) {
             drawCircle(
@@ -151,7 +152,7 @@ private fun Minimal(
                     radius = 20.dp,
                     color = MaterialTheme.colors.onSecondary
                 ),
-                interactionState = InteractionState()
+                interactionSource = MutableInteractionSource()
             )
     ) {
         drawCircle(color = fabColor, scale)

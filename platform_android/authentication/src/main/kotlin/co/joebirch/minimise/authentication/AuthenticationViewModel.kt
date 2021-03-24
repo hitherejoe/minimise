@@ -1,7 +1,5 @@
 package co.joebirch.minimise.authentication
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import co.joebirch.minimise.android.core.di.Preferences
 import co.joebirch.minimise.android.core.di.default
@@ -9,13 +7,16 @@ import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
 import co.joebirch.minimise.navigation.NavigationController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthenticationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AuthenticationViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val authenticate: Authenticate,
     private val sharedPrefs: Preferences,
-    private val navigationController: NavigationController,
-    @Assisted val savedStateHandle: SavedStateHandle
+    private val navigationController: NavigationController
 ) : ViewModel(), AuthenticateView {
 
     private var _uiState =

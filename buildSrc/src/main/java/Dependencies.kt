@@ -9,8 +9,8 @@ object Versions {
 
 object Deps {
 
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha06"
-    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha09"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31"
 
     const val junit = "junit:junit:4.12"
     const val preferences = "com.russhwolf:multiplatform-settings:0.5.1"
@@ -97,7 +97,7 @@ object Deps {
     }
 
     object Compose {
-        const val version = "1.0.0-alpha12"
+        const val version = "1.0.0-beta02"
 
         const val animation = "androidx.compose.animation:animation:$version"
         const val animationCore = "androidx.compose.animation:animation-core:$version"
@@ -154,6 +154,7 @@ object Deps {
             val compiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
             val hiltNavigation = "com.google.dagger:hilt-navigation:1.0.0-alpha03"
             val hiltNavigationFragment = "androidx.hilt:hilt-navigation-fragment:1.0.0-alpha03"
+            val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
             val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         }
     }

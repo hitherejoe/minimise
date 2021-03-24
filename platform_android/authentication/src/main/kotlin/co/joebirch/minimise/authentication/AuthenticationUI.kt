@@ -1,10 +1,8 @@
 package co.joebirch.minimise.authentication
 
-import androidx.compose.foundation.InteractionState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -13,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -51,7 +49,9 @@ fun AuthenticationUI(
             )
         }
     } else {
+        val titleFocusRequest = remember { FocusRequester() }
         val passwordFocusRequest = remember { FocusRequester() }
+        val authFocusRequest = remember { FocusRequester() }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,7 +61,16 @@ fun AuthenticationUI(
             Text(
                 modifier = Modifier
                     .width(240.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .align(Alignment.CenterHorizontally)
+                    .focusModifier()
+                    .focusable(true)
+                    .focusRequester(titleFocusRequest)
+                    .onFocusChanged {
+                        val s = ""
+                    }
+                    .onFocusEvent {
+                        val e = ""
+                                  },
                 text = if (viewState.authenticationMode == AuthenticateMode.SignUp) {
                     stringResource(id = R.string.title_sign_up)
                 } else stringResource(id = R.string.title_sign_in),
@@ -174,7 +183,7 @@ fun AuthenticationUI(
                 },
                 enabled = viewState.isAuthenticationContentValid,
             )
-            Spacer(Modifier.preferredHeight(16.dp))
+            Spacer(Modifier.heightIn(min = 16.dp))
             TextButton(
                 onClick = {
                     events(AuthenticationEvent.AuthenticationModeToggled)
@@ -186,7 +195,7 @@ fun AuthenticationUI(
                 } else {
                     stringResource(R.string.existing_account)
                 },
-                modifier = Modifier.preferredSizeIn(minWidth = 220.dp),
+                modifier = Modifier.sizeIn(minWidth = 220.dp),
                 color = Color.White,
                 textAlign = TextAlign.Center
             )
