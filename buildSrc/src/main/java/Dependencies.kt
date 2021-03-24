@@ -54,10 +54,10 @@ object Deps {
     object AndroidX {
         const val annotation = "androidx.annotation:annotation:1.1.0"
         const val coreKtx = "androidx.core:core-ktx:1.2.0"
-        const val appCompat = "androidx.appcompat:appcompat:1.1.0"
+        const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
 
-        const val activity = "androidx.activity:activity:1.2.0-alpha07"
-        const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha07"
+        const val activity = "androidx.activity:activity:1.3.0-alpha04"
+        const val activityKtx = "androidx.activity:activity-ktx:1.3.0-alpha04"
 
         const val junit = "androidx.test.ext:junit:1.1.1"
     }
