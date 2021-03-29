@@ -4,19 +4,27 @@ import androidx.navigation.compose.NamedNavArgument
 
 object AuthenticationDirections {
 
+    val Default = object : NavigationDirection {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = ""
+
+    }
+
     val Dashboard = object : NavigationDirection {
 
-        override fun getArguments() = emptyList<NamedNavArgument>()
+        override val arguments = emptyList<NamedNavArgument>()
 
-        override fun getDestination() = "dashboard"
+        override val destination = "dashboard"
 
     }
 
     val ForgotPassword = object : NavigationDirection {
 
-        override fun getArguments() = emptyList<NamedNavArgument>()
+        override val arguments = emptyList<NamedNavArgument>()
 
-        override fun getDestination() = "forgot_password"
+        override val destination = "forgot_password"
 
     }
 }

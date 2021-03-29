@@ -47,6 +47,7 @@ dependencies {
     implementation Deps.Kotlin.stdLib
 
     implementation Deps.Navigation.compose
+    implementation Deps.Google.Hilt.hiltNavigationCompose
 
     testImplementation Deps.junit
 

@@ -24,7 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.*
-import javax.inject.Inject
 
 @Composable
 fun AuthenticationUI(

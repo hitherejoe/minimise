@@ -6,7 +6,7 @@ import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
-import co.joebirch.minimise.navigation.NavigationController
+import co.joebirch.minimise.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class AuthenticationViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val authenticate: Authenticate,
     private val sharedPrefs: Preferences,
-    private val navigationController: NavigationController
+    private val navigationManager: NavigationManager
 ) : ViewModel(), AuthenticateView {
 
     private var _uiState =
@@ -49,7 +49,7 @@ class AuthenticationViewModel @Inject constructor(
                         this.loading = true
                     }
                     AuthenticationEvent.ForgotPasswordClicked -> {
-                        navigationController.navigate(
+                        navigationManager.navigate(
                             AuthenticationDirections.ForgotPassword
                         )
                     }
@@ -146,7 +146,7 @@ class AuthenticationViewModel @Inject constructor(
         if (result.token != null) {
             viewModelScope.launch {
                 sharedPrefs.setAuthToken(result.token!!)
-                navigationController.navigate(AuthenticationDirections.Dashboard)
+                navigationManager.navigate(AuthenticationDirections.Dashboard)
             }
         } else {
             _uiState.postValue(

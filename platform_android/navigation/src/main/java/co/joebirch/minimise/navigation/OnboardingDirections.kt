@@ -6,9 +6,9 @@ object OnboardingDirections {
 
     val Authentication = object : NavigationDirection {
 
-        override fun getArguments() = emptyList<NamedNavArgument>()
+        override val arguments = emptyList<NamedNavArgument>()
 
-        override fun getDestination() = "authentication"
+        override val destination = "authentication"
 
     }
 }

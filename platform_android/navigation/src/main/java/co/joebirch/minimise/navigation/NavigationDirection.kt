@@ -4,7 +4,7 @@ import androidx.navigation.compose.NamedNavArgument
 
 interface NavigationDirection {
 
-    fun getArguments(): List<NamedNavArgument>
+    val arguments: List<NamedNavArgument>
 
-    fun getDestination(): String
+    val destination: String
 }

@@ -2,15 +2,19 @@ package co.joebirch.minimise.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.shared.dashboard.Belonging
 import co.joebirch.minimise.shared.dashboard.Category
 import co.joebirch.minimise.shared.dashboard.DashboardState
 import co.joebirch.minimise.shared.dashboard.DashboardView
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class DashboardViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), DashboardView {
 
     private val _uiState =

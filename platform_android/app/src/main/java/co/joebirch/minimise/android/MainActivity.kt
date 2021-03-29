@@ -14,7 +14,7 @@ import co.joebirch.minimise.authentication.reset_password.ResetPasswordUI
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.DashboardContentUI
 import co.joebirch.minimise.navigation.AuthenticationDirections
-import co.joebirch.minimise.navigation.NavigationController
+import co.joebirch.minimise.navigation.NavigationManager
 import co.joebirch.minimise.navigation.OnboardingDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var navigationController: NavigationController
+    lateinit var navigationManager: NavigationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MinimiseTheme {
                 val navController = rememberNavController()
-                navigationController.navigationCommands.collectAsState().value.direction?.let { direction ->
+                navigationManager.commands.collectAsState().value.direction?.let { direction ->
                     navController.navigate(direction.getDestination())
                 }
                 NavHost(
@@ -41,17 +41,23 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     composable(OnboardingDirections.Authentication.getDestination()) {
                         AuthenticationUI(
-                            navController.hiltNavGraphViewModel(route = OnboardingDirections.Authentication.getDestination())
+                            navController.hiltNavGraphViewModel(
+                                route = OnboardingDirections.Authentication.getDestination()
+                            )
                         )
                     }
                     composable(AuthenticationDirections.ForgotPassword.getDestination()) {
                         ResetPasswordUI(
-                            navController.hiltNavGraphViewModel(route = AuthenticationDirections.ForgotPassword.getDestination())
+                            navController.hiltNavGraphViewModel(
+                                route = AuthenticationDirections.ForgotPassword.getDestination()
+                            )
                         )
                     }
                     composable(AuthenticationDirections.Dashboard.getDestination()) {
                         DashboardContentUI(
-                            navController.hiltNavGraphViewModel(route = AuthenticationDirections.Dashboard.getDestination())
+                            navController.hiltNavGraphViewModel(
+                                route = AuthenticationDirections.Dashboard.getDestination()
+                            )
                         )
                     }
                 }

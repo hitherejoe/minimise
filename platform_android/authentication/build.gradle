@@ -78,7 +78,6 @@ dependencies {
     implementation Deps.Compose.material
     implementation Deps.Compose.tooling
     implementation Deps.Compose.foundation
-    implementation Deps.Navigation.compose
 
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.coreKtx
@@ -87,11 +86,6 @@ dependencies {
     implementation Deps.Google.Hilt.viewmodel
     kapt Deps.Google.Hilt.hiltCompiler
     kapt Deps.Google.Hilt.compiler
-
-    implementation Deps.Fragment.base
-    implementation Deps.Fragment.ktx
-
-    implementation Deps.Google.material
 
     implementation Deps.Kotlin.stdLib
 
