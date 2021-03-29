@@ -32,31 +32,31 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MinimiseTheme {
                 val navController = rememberNavController()
-                navigationManager.commands.collectAsState().value.direction?.let { direction ->
-                    navController.navigate(direction.getDestination())
+                navigationManager.commands.collectAsState().value.destination.also { destination ->
+                    navController.navigate(destination)
                 }
                 NavHost(
                     navController,
-                    startDestination = OnboardingDirections.Authentication.getDestination()
+                    startDestination = OnboardingDirections.Authentication.destination
                 ) {
-                    composable(OnboardingDirections.Authentication.getDestination()) {
+                    composable(OnboardingDirections.Authentication.destination) {
                         AuthenticationUI(
                             navController.hiltNavGraphViewModel(
-                                route = OnboardingDirections.Authentication.getDestination()
+                                route = OnboardingDirections.Authentication.destination
                             )
                         )
                     }
-                    composable(AuthenticationDirections.ForgotPassword.getDestination()) {
+                    composable(AuthenticationDirections.ForgotPassword.destination) {
                         ResetPasswordUI(
                             navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.ForgotPassword.getDestination()
+                                route = AuthenticationDirections.ForgotPassword.destination
                             )
                         )
                     }
-                    composable(AuthenticationDirections.Dashboard.getDestination()) {
+                    composable(AuthenticationDirections.Dashboard.destination) {
                         DashboardContentUI(
                             navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.Dashboard.getDestination()
+                                route = AuthenticationDirections.Dashboard.destination
                             )
                         )
                     }
