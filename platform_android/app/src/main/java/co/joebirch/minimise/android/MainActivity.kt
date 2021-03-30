@@ -37,26 +37,26 @@ class MainActivity : AppCompatActivity() {
                 }
                 NavHost(
                     navController,
-                    startDestination = OnboardingDirections.Authentication.destination
+                    startDestination = OnboardingDirections.authentication().destination
                 ) {
-                    composable(OnboardingDirections.Authentication.destination) {
+                    composable(OnboardingDirections.authentication().destination) {
                         AuthenticationUI(
                             navController.hiltNavGraphViewModel(
-                                route = OnboardingDirections.Authentication.destination
+                                route = OnboardingDirections.authentication().destination
                             )
                         )
                     }
-                    composable(AuthenticationDirections.ForgotPassword.destination) {
+                    composable(AuthenticationDirections.forgotPassword().destination) {
                         ResetPasswordUI(
                             navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.ForgotPassword.destination
+                                route = AuthenticationDirections.forgotPassword().destination
                             )
                         )
                     }
-                    composable(AuthenticationDirections.Dashboard.destination) {
+                    composable(AuthenticationDirections.dashboard().destination) {
                         DashboardContentUI(
                             navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.Dashboard.destination
+                                route = AuthenticationDirections.dashboard().destination
                             )
                         )
                     }

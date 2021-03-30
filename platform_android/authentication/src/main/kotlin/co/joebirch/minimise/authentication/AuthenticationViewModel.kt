@@ -50,7 +50,7 @@ class AuthenticationViewModel @Inject constructor(
                     }
                     AuthenticationEvent.ForgotPasswordClicked -> {
                         navigationManager.navigate(
-                            AuthenticationDirections.ForgotPassword
+                            AuthenticationDirections.forgotPassword()
                         )
                     }
                     is AuthenticationEvent.EmailChanged -> {
@@ -146,7 +146,7 @@ class AuthenticationViewModel @Inject constructor(
         if (result.token != null) {
             viewModelScope.launch {
                 sharedPrefs.setAuthToken(result.token!!)
-                navigationManager.navigate(AuthenticationDirections.Dashboard)
+                navigationManager.navigate(AuthenticationDirections.dashboard())
             }
         } else {
             _uiState.postValue(
