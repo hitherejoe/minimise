@@ -8,7 +8,7 @@ class NavigationManager {
     var commands = MutableStateFlow(Default)
 
     fun navigate(
-        directions: NavigationDirection
+        directions: NavigationCommand
     ) {
         commands.value = directions
     }

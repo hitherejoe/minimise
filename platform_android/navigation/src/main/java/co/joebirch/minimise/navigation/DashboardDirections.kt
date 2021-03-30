@@ -4,9 +4,11 @@ import androidx.navigation.compose.NamedNavArgument
 
 object DashboardDirections {
 
-    val Creation = object : NavigationDirection {
+    fun creation(
+        navArguments: List<NamedNavArgument> = emptyList()
+    ) = object : NavigationCommand {
 
-        override val arguments = emptyList<NamedNavArgument>()
+        override val arguments = navArguments
 
         override val destination = "creation"
 

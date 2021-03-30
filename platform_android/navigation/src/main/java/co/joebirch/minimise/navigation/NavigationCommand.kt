@@ -1,6 +1,10 @@
 package co.joebirch.minimise.navigation
 
-sealed class NavigationCommand(val direction: NavigationDirection? = null) {
-    data class To(private val directions: NavigationDirection) : NavigationCommand(directions)
-    object Idle : NavigationCommand()
+import androidx.navigation.compose.NamedNavArgument
+
+interface NavigationCommand {
+
+    val arguments: List<NamedNavArgument>
+
+    val destination: String
 }
