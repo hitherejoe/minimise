@@ -146,7 +146,7 @@ class AuthenticationViewModel @Inject constructor(
         if (result.token != null) {
             viewModelScope.launch {
                 sharedPrefs.setAuthToken(result.token!!)
-                navigationManager.navigate(AuthenticationDirections.dashboard())
+                navigationManager.navigate(AuthenticationDirections.dashboard)
             }
         } else {
             _uiState.postValue(

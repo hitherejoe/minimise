@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.*
 
 @Composable
-fun AuthenticationUI(
+fun Authentication(
     viewModel: AuthenticationViewModel
 ) {
     val state by viewModel.uiState.observeAsState()

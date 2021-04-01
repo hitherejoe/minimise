@@ -5,14 +5,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
-import co.joebirch.minimise.authentication.AuthenticationUI
+import androidx.navigation.compose.*
+import androidx.navigation.navigation
+import co.joebirch.minimise.authentication.Authentication
 import co.joebirch.minimise.authentication.reset_password.ResetPasswordUI
 import co.joebirch.minimise.common_ui.MinimiseTheme
-import co.joebirch.minimise.dashboard.DashboardContentUI
+import co.joebirch.minimise.dashboard.Dashboard
 import co.joebirch.minimise.navigation.AuthenticationDirections
 import co.joebirch.minimise.navigation.NavigationManager
 import co.joebirch.minimise.navigation.OnboardingDirections
@@ -32,33 +30,45 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MinimiseTheme {
                 val navController = rememberNavController()
-                navigationManager.commands.collectAsState().value.destination.also { destination ->
-                    navController.navigate(destination)
+                navigationManager.commands.collectAsState().value.also { command ->
+                    if (command.destination.isNotEmpty()) {
+                        navController.navigate(command.destination)
+                    }
                 }
                 NavHost(
                     navController,
-                    startDestination = OnboardingDirections.authentication().destination
+                    startDestination = OnboardingDirections.root
                 ) {
-                    composable(OnboardingDirections.authentication().destination) {
-                        AuthenticationUI(
-                            navController.hiltNavGraphViewModel(
-                                route = OnboardingDirections.authentication().destination
+                    navigation(
+                        startDestination = OnboardingDirections.authentication.destination,
+                        route = OnboardingDirections.root
+                    ) {
+                        composable(OnboardingDirections.authentication.destination) {
+                            Authentication(
+                                navController.hiltNavGraphViewModel(
+                                    route = OnboardingDirections.authentication.destination
+                                )
                             )
-                        )
+                        }
+                        composable(AuthenticationDirections.forgotPassword().destination) {
+                            ResetPasswordUI(
+                                navController.hiltNavGraphViewModel(
+                                    route = AuthenticationDirections.forgotPassword().destination
+                                )
+                            )
+                        }
                     }
-                    composable(AuthenticationDirections.forgotPassword().destination) {
-                        ResetPasswordUI(
-                            navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.forgotPassword().destination
+                    navigation(
+                        startDestination = AuthenticationDirections.dashboard.destination,
+                        route = AuthenticationDirections.root
+                    ) {
+                        composable(AuthenticationDirections.dashboard.destination) {
+                            Dashboard(
+                                navController.hiltNavGraphViewModel(
+                                    route = AuthenticationDirections.dashboard.destination
+                                )
                             )
-                        )
-                    }
-                    composable(AuthenticationDirections.dashboard().destination) {
-                        DashboardContentUI(
-                            navController.hiltNavGraphViewModel(
-                                route = AuthenticationDirections.dashboard().destination
-                            )
-                        )
+                        }
                     }
                 }
             }

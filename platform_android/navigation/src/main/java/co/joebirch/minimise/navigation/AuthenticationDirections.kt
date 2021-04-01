@@ -1,8 +1,20 @@
 package co.joebirch.minimise.navigation
 
+import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
+import androidx.navigation.compose.navArgument
 
 object AuthenticationDirections {
+
+    val root = "home"
+
+    val Root = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "home"
+
+    }
 
     val Default = object : NavigationCommand {
 
@@ -12,11 +24,9 @@ object AuthenticationDirections {
 
     }
 
-    fun dashboard(
-        navArguments: List<NamedNavArgument> = emptyList()
-    ) = object : NavigationCommand {
+    val dashboard = object : NavigationCommand {
 
-        override val arguments = navArguments
+        override val arguments = emptyList<NamedNavArgument>()
 
         override val destination = "dashboard"
     }

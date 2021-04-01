@@ -13,5 +13,5 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesNavigationController() = NavigationManager()
+    fun providesNavigationManager() = NavigationManager()
 }

@@ -4,11 +4,11 @@ import androidx.navigation.compose.NamedNavArgument
 
 object OnboardingDirections {
 
-    fun authentication(
-        navArguments: List<NamedNavArgument> = emptyList()
-    ) = object : NavigationCommand {
+    val root = "onboarding"
 
-        override val arguments = navArguments
+    val authentication  = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
 
         override val destination = "authentication"
 

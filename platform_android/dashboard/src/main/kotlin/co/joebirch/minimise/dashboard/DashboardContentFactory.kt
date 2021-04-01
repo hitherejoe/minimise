@@ -30,7 +30,7 @@ import co.joebirch.minimise.shared.dashboard.Belonging
 import co.joebirch.minimise.shared.dashboard.Category
 
 @Composable
-fun DashboardContentUI(
+fun Dashboard(
     viewModel: DashboardViewModel
 ) {
     val state by viewModel.uiState.observeAsState()
