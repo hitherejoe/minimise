@@ -1,31 +1,26 @@
 package co.joebirch.minimise.creation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import co.joebirch.minimise.android.core.di.BaseViewModel
-import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class CreationViewModel @Inject constructor() : BaseViewModel() {
 
-    private var _uiState =
-        MutableLiveData<CreationState>().default(
-            CreationState(CreationStep.NAME)
-        )
-
-    val uiState = _uiState as LiveData<CreationState>
+    private var _uiState = MutableStateFlow(CreationState(CreationStep.NAME))
+    val uiState: StateFlow<CreationState> = _uiState
 
     fun handleCreationEvent(event: CreationEvent) {
         if (event is CreationEvent.FormCompleted) {
             // send data to api
-            _uiState.value = uiState.value!!.build {
+            _uiState.value = uiState.value.build {
                 isLoading = true
             }
         } else {
             _uiState.value =
-                uiState.value!!.build {
+                uiState.value.build {
                     when (event) {
                         is CreationEvent.NameChanged -> this.name = event.name
                         is CreationEvent.CategoriesChanged -> this.categories = event.categories
@@ -35,12 +30,12 @@ class CreationViewModel @Inject constructor() : BaseViewModel() {
                         is CreationEvent.NegativeNotesChanged -> this.negativeReasons = event.notes
                         CreationEvent.NextStepRequested -> {
                             creationStep = CreationStep.fromPosition(
-                                uiState.value?.currentStep?.position!! + 1
+                                uiState.value.currentStep.position + 1
                             )
                         }
                         CreationEvent.PreviousStepRequested -> {
                             creationStep = CreationStep.fromPosition(
-                                uiState.value?.currentStep?.position!! - 1
+                                uiState.value.currentStep.position - 1
                             )
                         }
                     }
@@ -48,13 +43,13 @@ class CreationViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
-    fun currentStep() = uiState.value?.currentStep?.position ?: 0
+    fun currentStep() = uiState.value.currentStep.position
 
     fun navigateToPreviousStep() {
         _uiState.value =
-            uiState.value!!.build {
+            uiState.value.build {
                 creationStep = CreationStep.fromPosition(
-                    uiState.value?.currentStep?.position!! - 1
+                    uiState.value.currentStep.position - 1
                 )
             }
     }

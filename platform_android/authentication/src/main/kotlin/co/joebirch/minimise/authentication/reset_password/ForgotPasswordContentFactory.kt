@@ -6,7 +6,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,9 +26,9 @@ import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 fun ResetPasswordUI(
     viewModel: ResetPasswordViewModel
 ) {
-    val state by viewModel.observeAuthenticationState().observeAsState()
+    val state by viewModel.uiState.collectAsState()
     ResetPasswordContent(
-        state ?: ForgotPasswordState(),
+        state,
         {},
         {}
     )

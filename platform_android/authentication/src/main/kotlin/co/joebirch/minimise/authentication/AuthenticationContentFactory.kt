@@ -8,7 +8,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.*
@@ -29,9 +28,9 @@ import co.joebirch.minimise.common_ui.*
 fun Authentication(
     viewModel: AuthenticationViewModel
 ) {
-    val state by viewModel.uiState.observeAsState()
+    val state by viewModel.uiState.collectAsState()
     Authentication(
-        viewState = state ?: AuthenticationState(),
+        viewState = state,
         events = viewModel::handleAuthenticationEvent
     )
 }

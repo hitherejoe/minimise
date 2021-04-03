@@ -1,15 +1,14 @@
 package co.joebirch.minimise.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import co.joebirch.minimise.android.core.di.BaseViewModel
-import co.joebirch.minimise.android.core.di.default
 import co.joebirch.minimise.shared.dashboard.Belonging
 import co.joebirch.minimise.shared.dashboard.Category
 import co.joebirch.minimise.shared.dashboard.DashboardState
 import co.joebirch.minimise.shared.dashboard.DashboardView
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,11 +16,8 @@ class DashboardViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), DashboardView {
 
-    private val _uiState =
-        MutableLiveData<DashboardState>().default(
-            DashboardState()
-        )
-    val uiState: LiveData<DashboardState> = _uiState
+    private val _uiState = MutableStateFlow(DashboardState())
+    val uiState: StateFlow<DashboardState> = _uiState
 
     fun getBelongings(userId: String) {
         /*
@@ -43,24 +39,20 @@ class DashboardViewModel @Inject constructor(
                 val e = ""
             }
          */
-        _uiState.postValue(
-            _uiState.value!!.build {
-                this.pendingBelongings = listOf(
-                    Belonging(
+        _uiState.value = _uiState.value.build {
+            this.pendingBelongings = listOf(
+                Belonging(
                     "id",
                     "Name",
                     "Store"
                 )
-                )
-            }
-        )
+            )
+        }
     }
 
     override fun setSelectedCategory(category: Category) {
-        _uiState.postValue(
-            _uiState.value!!.build {
-                this.category = category
-            }
-        )
+        _uiState.value = _uiState.value.build {
+            this.category = category
+        }
     }
 }
