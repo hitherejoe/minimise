@@ -55,7 +55,6 @@ private fun Authentication(
     } else {
         val titleFocusRequest = remember { FocusRequester() }
         val passwordFocusRequest = remember { FocusRequester() }
-        val authFocusRequest = remember { FocusRequester() }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -68,13 +67,7 @@ private fun Authentication(
                     .align(Alignment.CenterHorizontally)
                     .focusModifier()
                     .focusable(true)
-                    .focusRequester(titleFocusRequest)
-                    .onFocusChanged {
-                        val s = ""
-                    }
-                    .onFocusEvent {
-                        val e = ""
-                    },
+                    .focusRequester(titleFocusRequest),
                 text = if (viewState.authenticationMode == AuthenticateMode.SignUp) {
                     stringResource(id = R.string.title_sign_up)
                 } else stringResource(id = R.string.title_sign_in),
