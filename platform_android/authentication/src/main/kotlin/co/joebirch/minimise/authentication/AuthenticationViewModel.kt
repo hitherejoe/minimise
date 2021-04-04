@@ -19,7 +19,7 @@ class AuthenticationViewModel @Inject constructor(
     private val navigationManager: NavigationManager
 ) : ViewModel(), AuthenticateView {
 
-    private var _uiState = MutableStateFlow(AuthenticationState())
+    private val _uiState = MutableStateFlow(AuthenticationState())
     val uiState: StateFlow<AuthenticationState> = _uiState
 
     fun handleAuthenticationEvent(event: AuthenticationEvent) {

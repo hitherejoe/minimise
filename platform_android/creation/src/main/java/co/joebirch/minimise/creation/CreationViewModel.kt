@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class CreationViewModel @Inject constructor() : BaseViewModel() {
 
-    private var _uiState = MutableStateFlow(CreationState(CreationStep.NAME))
+    private val _uiState = MutableStateFlow(CreationState(CreationStep.NAME))
     val uiState: StateFlow<CreationState> = _uiState
 
     fun handleCreationEvent(event: CreationEvent) {

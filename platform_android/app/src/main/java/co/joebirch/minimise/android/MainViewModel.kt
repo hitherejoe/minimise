@@ -10,7 +10,7 @@ class MainViewModel @ViewModelInject constructor(
     sharedPreferences: Preferences
 ) : ViewModel() {
 
-    private var _uiState = MutableStateFlow<MainState>(MainState.Loading)
+    private val _uiState = MutableStateFlow<MainState>(MainState.Loading)
     val uiState: StateFlow<MainState> = _uiState
 
     init {
