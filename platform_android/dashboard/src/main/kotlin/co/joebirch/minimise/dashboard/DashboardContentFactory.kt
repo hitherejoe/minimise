@@ -51,148 +51,98 @@ private fun DashboardContent(
     MinimiseTheme {
         val tabTitles = categories.map { it }
         val animatingFab = remember { mutableStateOf(false) }
-        var toState by remember { mutableStateOf(MultiFabState.COLLAPSED) }
         Scaffold(
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colors.background,
             floatingActionButton = {
-                MultiFloatingActionButton(
-                    ImageBitmap.imageResource(id = R.drawable.plus),
-                    listOf(
-                        MultiFabItem(
-                            "new",
-                            ImageBitmap.imageResource(id = R.drawable.plus), "New item"
-                        ),
-                        MultiFabItem(
-                            "existing",
-                            ImageBitmap.imageResource(id = R.drawable.plus), "Owned item"
-                        )
-                    ), toState, true, {
-                        toState = it
+                FloatingActionButton(
+                    onClick = {
+                        navigateToCreation()
                     }
                 ) {
-
+                    ImageBitmap.imageResource(id = R.drawable.plus)
                 }
-                /*
-                val resources = ContextAmbient.current.resources
-                Box(
-                    modifier = Modifier.clickable(
-                        onClick = {
-                            animatingFab.value = true
-                            //Timer().schedule(450) {
-                               // navigateToCreation()
-                           // }
-                        }, indication = rememberRipple(
-                            bounded = false,
-                            radius = 26.dp
-                        )
-                    ).wrapContentSize()
-                ) {
-                    val state = transition(
-                        definition = sizeTransitionDefinition(
-                            MaterialTheme.colors.secondary,
-                            MaterialTheme.colors.primary
-                        ),
-                        initState = FabState.Idle,
-                        toState = if (!animatingFab.value) {
-                            FabState.Idle
-                        } else FabState.Exploded
+            },
+            topBar = {
+                Column(
+                    modifier = Modifier.background(
+                        color = MaterialTheme.colors.primary,
+                        shape = RoundedCornerShape(bottomEnd = 18.dp, bottomStart = 18.dp)
                     )
-                    Canvas(
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        drawCircle(state[colorState], state[sizeState])
-                        val i = imageFromResource(resources, R.drawable.plus)
-                        drawImage(
-                            imageFromResource(resources, R.drawable.plus),
-                            topLeft = Offset(
-                                (this.center.x) - (i.width / 2),
-                                (this.center.y) - (i.width / 2)
-                            ),
-                            alpha = state[alphaState]
+                ) {
+                    Spacer(modifier = Modifier.heightIn(8.dp))
+                    TopAppBar(title = {
+                        Text(
+                            text = "",
+                            color = MaterialTheme.colors.onPrimary,
+                            textAlign = TextAlign.Start,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .alpha(animateFloatAsState(if (animatingFab.value) 0f else 1f).value)
+                                .padding(top = 20.dp, start = 10.dp)
                         )
+                    }, elevation = 0.dp)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ScrollableTabRow(
+                        modifier = Modifier.width(350.dp),
+                        edgePadding = 24.dp,
+                        contentColor = Color.White,
+                        selectedTabIndex = categories.indexOf(currentCategory),
+                        divider = { },
+                        indicator = { tabPositions: List<TabPosition> ->
+                            val modifier = Modifier.tabIndicatorOffset(
+                                tabPositions[categories.indexOf(currentCategory)]
+                            )
+                            Modifier.offset()
+                            Box(
+                                modifier
+                                    .fillMaxWidth()
+                                    .heightIn(5.dp)
+                                    .background(
+                                        Color.White,
+                                        RoundedCornerShape(
+                                            topStart = 16.dp,
+                                            topEnd = 16.dp
+                                        )
+                                    )
+                            )
+                        }
+                    ) {
+                        tabTitles.forEachIndexed { index, category ->
+                            Tab(
+                                selected = categories.indexOf(currentCategory) == index,
+                                onClick = { updateSelectedCategory(categories[index]) }
+                            )
+                            {
+                                val textColor =
+                                    if (categories.indexOf(currentCategory) == index) {
+                                        1f
+                                    } else {
+                                        0.65f
+                                    }
+                                Text(
+                                    text = category.title,
+                                    fontWeight = FontWeight.Normal,
+                                    textAlign = TextAlign.Center,
+                                    color = Color.White,
+                                    modifier = Modifier
+                                        .padding(
+                                            top = 16.dp,
+                                            bottom = 12.dp,
+                                            start = 16.dp,
+                                            end = 16.dp
+                                        )
+                                        .alpha(textColor)
+                                )
+                            }
+                        }
                     }
                 }
-                 */
             },
             content = {
                 Box {
                     Column {
-                        Column(
-                            modifier = Modifier.background(
-                                color = MaterialTheme.colors.primary,
-                                shape = RoundedCornerShape(bottomEnd = 18.dp, bottomStart = 18.dp)
-                            )
-                        ) {
-                            Spacer(modifier = Modifier.heightIn(8.dp))
-                            TopAppBar(title = {
-                                Text(
-                                    text = "",
-                                    color = MaterialTheme.colors.onPrimary,
-                                    textAlign = TextAlign.Start,
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Normal,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .alpha(animateFloatAsState(if (animatingFab.value) 0f else 1f).value)
-                                        .padding(top = 20.dp, start = 10.dp)
-                                )
-                            }, elevation = 0.dp)
-                            Spacer(modifier = Modifier.height(16.dp))
-                            ScrollableTabRow(
-                                modifier = Modifier.width(350.dp),
-                                edgePadding = 24.dp,
-                                contentColor = Color.White,
-                                selectedTabIndex = categories.indexOf(currentCategory),
-                                divider = { },
-                                indicator = { tabPositions: List<TabPosition> ->
-                                    val modifier = Modifier.tabIndicatorOffset(
-                                        tabPositions[categories.indexOf(currentCategory)]
-                                    )
-                                    Modifier.offset()
-                                    Box(
-                                        modifier
-                                            .fillMaxWidth()
-                                            .heightIn(5.dp)
-                                            .background(
-                                                Color.White,
-                                                RoundedCornerShape(
-                                                    topStart = 16.dp,
-                                                    topEnd = 16.dp
-                                                )
-                                            )
-                                    )
-                                }
-                            ) {
-                                tabTitles.forEachIndexed { index, category ->
-                                    Tab(
-                                        selected = categories.indexOf(currentCategory) == index,
-                                        onClick = { updateSelectedCategory(categories[index]) }
-                                    )
-                                    {
-                                        val textColor =
-                                            if (categories.indexOf(currentCategory) == index) {
-                                                1f
-                                            } else {
-                                                0.65f
-                                            }
-                                        Text(
-                                            text = category.title,
-                                            fontWeight = FontWeight.Normal,
-                                            textAlign = TextAlign.Center,
-                                            color = Color.White,
-                                            modifier = Modifier
-                                                .padding(
-                                                    top = 16.dp,
-                                                    bottom = 12.dp,
-                                                    start = 16.dp,
-                                                    end = 16.dp
-                                                )
-                                                .alpha(textColor)
-                                        )
-                                    }
-                                }
-                            }
-                        }
                         Box(
                             modifier = Modifier.background(Color.White)
                         ) {
@@ -216,15 +166,6 @@ private fun DashboardContent(
                             }
                         }
                     }
-                    val alpha = if (toState == MultiFabState.EXPANDED) 0.4f else 0f
-                    Box(
-                        modifier = Modifier
-                            // .alpha(animateAsState(alpha).value)
-                            .background(
-                                Color(LocalContext.current.resources.getColor(R.color.transparent_black))
-                            )
-                            .fillMaxSize()
-                    )
                 }
             })
     }
