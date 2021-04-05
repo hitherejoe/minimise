@@ -39,16 +39,13 @@ import androidx.lifecycle.LiveData
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
 @Composable
-fun ComposeInventoryContent(
-    uiState: LiveData<CreationState>,
-    creationEvents: (event: CreationEvent) -> Unit
+fun Creation(
+    viewModel: CreationViewModel
 ) {
-    val viewState by uiState.observeAsState()
-    viewState?.let {
-        CreationContent(
-            creationEvents = creationEvents, creationState = it
-        )
-    }
+    val viewState by viewModel.uiState.collectAsState()
+    CreationContent(
+        creationEvents = viewModel::handleCreationEvent, creationState = viewState
+    )
 }
 
 enum class ContentState {

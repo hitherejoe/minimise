@@ -2,6 +2,8 @@ package co.joebirch.minimise.dashboard
 
 import androidx.lifecycle.SavedStateHandle
 import co.joebirch.minimise.android.core.di.BaseViewModel
+import co.joebirch.minimise.navigation.DashboardDirections
+import co.joebirch.minimise.navigation.NavigationManager
 import co.joebirch.minimise.shared.dashboard.Belonging
 import co.joebirch.minimise.shared.dashboard.Category
 import co.joebirch.minimise.shared.dashboard.DashboardState
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val navigationManager: NavigationManager
 ) : BaseViewModel(), DashboardView {
 
     private val _uiState = MutableStateFlow(DashboardState())
@@ -54,5 +57,9 @@ class DashboardViewModel @Inject constructor(
         _uiState.value = _uiState.value.build {
             this.category = category
         }
+    }
+
+    fun navigateToCreation() {
+        navigationManager.navigate(DashboardDirections.creation)
     }
 }

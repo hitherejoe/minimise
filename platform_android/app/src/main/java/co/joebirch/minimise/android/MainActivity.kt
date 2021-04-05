@@ -10,8 +10,10 @@ import androidx.navigation.navigation
 import co.joebirch.minimise.authentication.Authentication
 import co.joebirch.minimise.authentication.reset_password.ResetPasswordUI
 import co.joebirch.minimise.common_ui.MinimiseTheme
+import co.joebirch.minimise.creation.Creation
 import co.joebirch.minimise.dashboard.Dashboard
 import co.joebirch.minimise.navigation.AuthenticationDirections
+import co.joebirch.minimise.navigation.DashboardDirections
 import co.joebirch.minimise.navigation.NavigationManager
 import co.joebirch.minimise.navigation.OnboardingDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 NavHost(
                     navController,
-                    startDestination = OnboardingDirections.root
+                    startDestination = "home"
                 ) {
                     navigation(
                         startDestination = OnboardingDirections.authentication.destination,
@@ -66,6 +68,13 @@ class MainActivity : AppCompatActivity() {
                             Dashboard(
                                 navController.hiltNavGraphViewModel(
                                     route = AuthenticationDirections.dashboard.destination
+                                )
+                            )
+                        }
+                        composable(DashboardDirections.creation.destination) {
+                            Creation(
+                                navController.hiltNavGraphViewModel(
+                                    route = DashboardDirections.creation.destination
                                 )
                             )
                         }

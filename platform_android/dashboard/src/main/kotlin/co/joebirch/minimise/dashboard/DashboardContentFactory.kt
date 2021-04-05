@@ -36,7 +36,7 @@ fun Dashboard(
         listOf(Category.PendingBelongings, Category.Belongings),
         state.pendingBelongings,
         viewModel::setSelectedCategory,
-        {  }
+        viewModel::navigateToCreation
     )
 }
 

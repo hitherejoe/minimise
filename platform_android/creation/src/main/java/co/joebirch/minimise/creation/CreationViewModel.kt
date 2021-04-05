@@ -3,10 +3,12 @@ package co.joebirch.minimise.creation
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
+@HiltViewModel
 class CreationViewModel @Inject constructor() : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(CreationState(CreationStep.NAME))
