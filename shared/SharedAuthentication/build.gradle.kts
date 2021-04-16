@@ -48,9 +48,7 @@ kotlin {
             dependencies {
                 implementation(Deps.Kotlin.common)
                 implementation(Deps.Coroutines.core) {
-                    version {
-                        strictly(Deps.Coroutines.version)
-                    }
+                    isForce = true
                 }
                 implementation(Deps.Apollo.api)
                 implementation(Deps.Apollo.runtime)
@@ -63,11 +61,7 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
                 implementation(Deps.junit)
-                implementation(Deps.Coroutines.core) {
-                    version {
-                        strictly(Deps.Coroutines.version)
-                    }
-                }
+                implementation(Deps.Coroutines.core)
             }
         }
 

@@ -25,5 +25,5 @@ dependencies {
 
     implementation Deps.Kotlin.stdLib
 
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha08"
 }
