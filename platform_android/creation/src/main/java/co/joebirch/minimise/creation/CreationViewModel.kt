@@ -3,6 +3,7 @@ package co.joebirch.minimise.creation
 import co.joebirch.minimise.android.core.di.BaseViewModel
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
+import co.joebirch.minimise.dashboard.ItemType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +26,11 @@ class CreationViewModel @Inject constructor() : BaseViewModel() {
                 uiState.value.build {
                     when (event) {
                         is CreationEvent.NameChanged -> this.name = event.name
+                        is CreationEvent.ItemTypeChanged -> {
+                            this.itemType = if (itemType == event.itemType) {
+                                null
+                            } else event.itemType
+                        }
                         is CreationEvent.CategoriesChanged -> this.categories = event.categories
                         is CreationEvent.FrequencyChanged -> this.frequency = event.frequency
                         is CreationEvent.ReminderLengthChanged -> this.daysToRemind = event.days

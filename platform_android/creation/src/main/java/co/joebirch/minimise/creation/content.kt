@@ -82,6 +82,8 @@ fun CreationContent(
                             when (creationState.currentStep) {
                                 CreationStep.NAME ->
                                     ItemNameStep(creationState, creationEvents)
+                                CreationStep.TYPE ->
+                                    ItemTypeStep(creationState, creationEvents)
                                 CreationStep.CATEGORY ->
                                     categoriesStepComposable(creationState, creationEvents)
                                 CreationStep.FREQUENCY ->
@@ -186,7 +188,7 @@ private fun CreationStep(
 }
 
 @Composable
-private fun OwnOrPurchaseStep(
+private fun ItemTypeStep(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
@@ -200,18 +202,35 @@ private fun OwnOrPurchaseStep(
                     checked = creationState.itemType == ItemType.OWNED,
                     onCheckedChange = {
                         creationEvents(CreationEvent.ItemTypeChanged(ItemType.OWNED))
-                    }
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = MaterialTheme.colors.onPrimary,
+                        uncheckedColor = MaterialTheme.colors.onPrimary,
+                    )
                 )
-                Text(text = stringResource(id = R.string.label_owned_item_type))
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(id = R.string.label_owned_item_type),
+                    color = MaterialTheme.colors.onPrimary
+                )
             }
+            Spacer(modifier = Modifier.height(36.dp))
             Row {
                 Checkbox(
                     checked = creationState.itemType == ItemType.PURCHASE,
                     onCheckedChange = {
                         creationEvents(CreationEvent.ItemTypeChanged(ItemType.PURCHASE))
-                    }
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = MaterialTheme.colors.onPrimary,
+                        uncheckedColor = MaterialTheme.colors.onPrimary,
+                    )
                 )
-                Text(text = stringResource(id = R.string.label_purchase_item_type))
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(id = R.string.label_purchase_item_type),
+                    color = MaterialTheme.colors.onPrimary
+                )
             }
         }
     }
