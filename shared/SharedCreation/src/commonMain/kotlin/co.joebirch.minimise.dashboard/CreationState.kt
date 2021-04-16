@@ -8,7 +8,8 @@ class CreationState(
     val frequencyCount: Float = 0f,
     val positiveReasons: List<String> = emptyList(),
     val negativeReasons: List<String> = emptyList(),
-    val daysToRemind: Int = 2
+    val daysToRemind: Int = 2,
+    val itemType: ItemType? = null
 ) {
 
     fun build(block: Builder.() -> Unit) = Builder(this).apply(block).build()
@@ -23,10 +24,12 @@ class CreationState(
         var positiveReasons = currentState.positiveReasons
         var negativeReasons = currentState.negativeReasons
         var daysToRemind = currentState.daysToRemind
+        var itemType = currentState.itemType
 
         fun build() = CreationState(
             creationStep, isLoading, name, categories,
-            frequency, positiveReasons, negativeReasons, daysToRemind
+            frequency, positiveReasons, negativeReasons, daysToRemind,
+            itemType
         )
     }
 }

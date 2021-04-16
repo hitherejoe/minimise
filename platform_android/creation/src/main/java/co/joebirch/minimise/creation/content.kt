@@ -36,6 +36,7 @@ import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
+import co.joebirch.minimise.dashboard.ItemType
 
 @Composable
 fun Creation(
@@ -174,13 +175,45 @@ private fun CreationStep(
             .fillMaxSize()
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(48.dp))
         titleComposable(title = stringResource(id = title))
 
         Spacer(modifier = Modifier.height(48.dp))
         children()
+    }
+}
+
+@Composable
+private fun OwnOrPurchaseStep(
+    creationState: CreationState,
+    creationEvents: (name: CreationEvent) -> Unit
+) {
+    CreationStep(title = R.string.title_item_type) {
+        Column(
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row {
+                Checkbox(
+                    checked = creationState.itemType == ItemType.OWNED,
+                    onCheckedChange = {
+                        creationEvents(CreationEvent.ItemTypeChanged(ItemType.OWNED))
+                    }
+                )
+                Text(text = stringResource(id = R.string.label_owned_item_type))
+            }
+            Row {
+                Checkbox(
+                    checked = creationState.itemType == ItemType.PURCHASE,
+                    onCheckedChange = {
+                        creationEvents(CreationEvent.ItemTypeChanged(ItemType.PURCHASE))
+                    }
+                )
+                Text(text = stringResource(id = R.string.label_purchase_item_type))
+            }
+        }
     }
 }
 

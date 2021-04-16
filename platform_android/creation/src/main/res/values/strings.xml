@@ -9,6 +9,10 @@
     <string name="title_categories">What categories does this item belong to?</string>
     <string name="title_finished">All done!</string>
 
+    <string name="title_item_type">Do you own this item or are you thinking of purchasing it?</string>
+    <string name="label_owned_item_type">I already own it</string>
+    <string name="label_purchase_item_type">I\'m thinking of buying it</string>
+
     <string name="frequency_hardly">Hardly</string>
     <string name="frequency_not_often">Not very often</string>
     <string name="frequency_often">Often</string>
