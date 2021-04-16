@@ -11,7 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import co.joebirch.minimise.common_ui.MinimiseTheme
 import co.joebirch.minimise.dashboard.CreationState
 import co.joebirch.minimise.dashboard.CreationStep
-import androidx.lifecycle.LiveData
 import co.joebirch.minimise.common_ui.RoundedBackgroundBox
 
 @Composable
@@ -46,10 +45,6 @@ fun Creation(
     CreationContent(
         creationEvents = viewModel::handleCreationEvent, creationState = viewState
     )
-}
-
-enum class ContentState {
-    Hidden, Visible
 }
 
 @Composable
@@ -77,7 +72,7 @@ fun CreationContent(
                                 .align(Center)
                                 .fillMaxHeight()
                         ) {
-                            stepCounter(
+                            StepCounter(
                                 creationState.currentStep
                             )
 
@@ -85,7 +80,7 @@ fun CreationContent(
 
                             when (creationState.currentStep) {
                                 CreationStep.NAME ->
-                                    nameStepComposable(creationState, creationEvents)
+                                    ItemNameStep(creationState, creationEvents)
                                 CreationStep.CATEGORY ->
                                     categoriesStepComposable(creationState, creationEvents)
                                 CreationStep.FREQUENCY ->
@@ -152,7 +147,7 @@ fun CreationContent(
 }
 
 @Composable
-internal fun stepCounter(currentStep: CreationStep) {
+internal fun StepCounter(currentStep: CreationStep) {
     Row(modifier = Modifier.padding(top = 8.dp, start = 4.dp)) {
         CreationStep.values().forEachIndexed { index, creationStep ->
             val isStepViewed = index <= currentStep.ordinal
@@ -170,7 +165,7 @@ internal fun stepCounter(currentStep: CreationStep) {
 }
 
 @Composable
-private fun creationStep(
+private fun CreationStep(
     @StringRes title: Int,
     children: @Composable () -> Unit
 ) {
@@ -178,7 +173,8 @@ private fun creationStep(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(48.dp))
         titleComposable(title = stringResource(id = title))
@@ -189,39 +185,35 @@ private fun creationStep(
 }
 
 @Composable
-private fun nameStepComposable(
+private fun ItemNameStep(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
-    creationStep(title = R.string.hint_product_name) {
-        RoundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()) {
-                Spacer(modifier = Modifier.width(16.dp))
-                TextField(
-                    value = creationState.name,
-                    onValueChange = { value ->
-                        creationEvents(CreationEvent.NameChanged(value))
-                    },
-                    label = {
-
-                    },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                  //  onImeActionPerformed = { imeAction, _ ->
-                  //      if (imeAction == ImeAction.Next) {
-                   //         creationEvents(CreationEvent.NextStepRequested)
-                  //      }
-                  //  },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .background(Color.Transparent)
-                        .sizeIn(minHeight = 80.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-        }
+    CreationStep(title = R.string.hint_product_name) {
+        TextField(
+            colors = TextFieldDefaults.textFieldColors(
+                unfocusedIndicatorColor = MaterialTheme.colors.secondary,
+                focusedIndicatorColor = MaterialTheme.colors.onSecondary,
+                cursorColor = MaterialTheme.colors.onSecondary
+            ),
+            value = creationState.name,
+            textStyle = TextStyle(color = MaterialTheme.colors.onSecondary),
+            onValueChange = { value ->
+                creationEvents(CreationEvent.NameChanged(value))
+            },
+            label = { },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            //  onImeActionPerformed = { imeAction, _ ->
+            //      if (imeAction == ImeAction.Next) {
+            //         creationEvents(CreationEvent.NextStepRequested)
+            //      }
+            //  },
+            modifier = Modifier
+                .padding(32.dp)
+                .fillMaxWidth()
+                .background(Color.Transparent)
+                .sizeIn(minHeight = 50.dp)
+        )
     }
 }
 
@@ -230,7 +222,7 @@ private fun categoriesStepComposable(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
-    creationStep(title = R.string.title_categories) {
+    CreationStep(title = R.string.title_categories) {
         val items = stringArrayResource(id = R.array.category_options)
         val selectedItems = creationState.categories.toMutableList()
 
@@ -271,7 +263,7 @@ private fun positiveStepComposable(
 ) {
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
 
-    creationStep(title = R.string.title_positive_reasons) {
+    CreationStep(title = R.string.title_positive_reasons) {
         labelTextField(
             1,
             focusModifiers[0],
@@ -293,7 +285,7 @@ internal fun negativeStepComposable(
 ) {
     val focusModifiers = listOf(FocusRequester(), FocusRequester(), FocusRequester())
 
-    creationStep(title = R.string.title_negative_reasons) {
+    CreationStep(title = R.string.title_negative_reasons) {
         labelTextField(
             1,
             focusModifiers[0],
@@ -314,7 +306,7 @@ internal fun negativeStepComposable(
 private fun finishedComposable(
     creationEvents: (name: CreationEvent) -> Unit
 ) {
-    creationStep(title = R.string.title_finished) {
+    CreationStep(title = R.string.title_finished) {
         Text(
             text = stringResource(id = R.string.message_completed),
             textAlign = TextAlign.Center,
@@ -347,9 +339,11 @@ fun labelTextField(
     val states = remember { mutableStateOf(TextFieldValue()) }
     val hasFocus = remember { mutableStateOf(false) }
     RoundedBackgroundBox(modifier = Modifier.fillMaxWidth()) {
-        Row(modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
             Text(
                 text = "$position. ", color = Color.White, fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
@@ -362,9 +356,9 @@ fun labelTextField(
                 label = {
 
                 },
-               // onImeActionPerformed = { _, _ ->
-              //      nextModifier?.requestFocus()
-              //  },
+                // onImeActionPerformed = { _, _ ->
+                //      nextModifier?.requestFocus()
+                //  },
                 keyboardOptions = KeyboardOptions(
                     imeAction = if (position < 3) ImeAction.Next else ImeAction.Done
                 ),
@@ -382,7 +376,7 @@ private fun frequencyStepComposable(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
-    creationStep(title = R.string.hint_frequency) {
+    CreationStep(title = R.string.hint_frequency) {
         creationStepSlider(value = creationState.frequencyCount,
             options = R.array.frequency_options,
             onValueChanged = {
@@ -431,6 +425,7 @@ private fun creationStepSlider(
 
     Text(
         text = stringArrayResource(id = options)[value.toInt()],
+        color = MaterialTheme.colors.onPrimary,
         modifier = Modifier
             .wrapContentWidth(align = CenterHorizontally)
             .padding(16.dp)
@@ -442,7 +437,7 @@ private fun remindStepComposable(
     creationState: CreationState,
     creationEvents: (name: CreationEvent) -> Unit
 ) {
-    creationStep(title = R.string.hint_remind_days) {
+    CreationStep(title = R.string.hint_remind_days) {
         creationStepSlider(value = creationState.daysToRemind.toFloat(),
             options = R.array.reminder_options,
             onValueChanged = {
