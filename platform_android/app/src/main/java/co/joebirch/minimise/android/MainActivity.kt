@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.*
-import androidx.navigation.navigation
 import co.joebirch.minimise.authentication.Authentication
 import co.joebirch.minimise.authentication.reset_password.ResetPasswordUI
 import co.joebirch.minimise.common_ui.MinimiseTheme
@@ -15,7 +14,6 @@ import co.joebirch.minimise.dashboard.Dashboard
 import co.joebirch.minimise.navigation.AuthenticationDirections
 import co.joebirch.minimise.navigation.DashboardDirections
 import co.joebirch.minimise.navigation.NavigationManager
-import co.joebirch.minimise.navigation.OnboardingDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,30 +37,30 @@ class MainActivity : AppCompatActivity() {
                 }
                 NavHost(
                     navController,
-                    startDestination = "home"
+                    startDestination = AuthenticationDirections.root.destination
                 ) {
                     navigation(
-                        startDestination = OnboardingDirections.authentication.destination,
-                        route = OnboardingDirections.root
+                        startDestination = AuthenticationDirections.authentication.destination,
+                        route = AuthenticationDirections.root.destination
                     ) {
-                        composable(OnboardingDirections.authentication.destination) {
+                        composable(AuthenticationDirections.authentication.destination) {
                             Authentication(
                                 navController.hiltNavGraphViewModel(
-                                    route = OnboardingDirections.authentication.destination
+                                    route = AuthenticationDirections.authentication.destination
                                 )
                             )
                         }
-                        composable(AuthenticationDirections.forgotPassword().destination) {
+                        composable(AuthenticationDirections.forgotPassword.destination) {
                             ResetPasswordUI(
                                 navController.hiltNavGraphViewModel(
-                                    route = AuthenticationDirections.forgotPassword().destination
+                                    route = AuthenticationDirections.forgotPassword.destination
                                 )
                             )
                         }
                     }
                     navigation(
                         startDestination = AuthenticationDirections.dashboard.destination,
-                        route = AuthenticationDirections.root
+                        route = DashboardDirections.root.destination
                     ) {
                         composable(AuthenticationDirections.dashboard.destination) {
                             Dashboard(

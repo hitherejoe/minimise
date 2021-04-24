@@ -1,18 +1,22 @@
 package co.joebirch.minimise.navigation
 
-import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
-import androidx.navigation.compose.navArgument
 
 object AuthenticationDirections {
 
-    val root = "home"
-
-    val Root = object : NavigationCommand {
+    val root = object : NavigationCommand {
 
         override val arguments = emptyList<NamedNavArgument>()
 
-        override val destination = "home"
+        override val destination = "connect"
+
+    }
+
+    val authentication  = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "authentication"
 
     }
 
@@ -31,11 +35,9 @@ object AuthenticationDirections {
         override val destination = "dashboard"
     }
 
-    fun forgotPassword(
-        navArguments: List<NamedNavArgument> = emptyList()
-    ) = object : NavigationCommand {
+    val forgotPassword = object : NavigationCommand {
 
-        override val arguments = navArguments
+        override val arguments = emptyList<NamedNavArgument>()
 
         override val destination = "forgot_password"
 

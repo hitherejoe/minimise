@@ -5,6 +5,7 @@ import co.joebirch.minimise.android.core.di.Preferences
 import co.joebirch.minimise.authentication.interactor.Authenticate
 import co.joebirch.minimise.authentication.model.AuthenticationModel
 import co.joebirch.minimise.navigation.AuthenticationDirections
+import co.joebirch.minimise.navigation.DashboardDirections
 import co.joebirch.minimise.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,7 +47,7 @@ class AuthenticationViewModel @Inject constructor(
                     }
                     AuthenticationEvent.ForgotPasswordClicked -> {
                         navigationManager.navigate(
-                            AuthenticationDirections.forgotPassword()
+                            AuthenticationDirections.forgotPassword
                         )
                     }
                     is AuthenticationEvent.EmailChanged -> {
